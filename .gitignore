@@ -1,0 +1,7 @@
+Debug
+.vs
+ipch
+*.log
+*.opendb
+*.db
+*.user
