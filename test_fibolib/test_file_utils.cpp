@@ -16,7 +16,7 @@ using namespace fibo::FileUtils;
 using json = nlohmann::json;
 
 template<typename T>
-std::vector<FileNameInformation<T>> readJsonData(std::string fpath)
+decltype(auto) readJsonData(std::string fpath)
 {
 	std::vector<FileNameInformation<T>> data;
 	std::ifstream ifs(fpath);
