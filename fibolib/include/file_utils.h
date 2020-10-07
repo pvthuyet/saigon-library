@@ -10,23 +10,82 @@ namespace fibo::FileUtils
         || std::is_same<std::wstring, typename std::decay_t<T>>::value
         >
     >
-    T getFilename(const T& filePath)
+    struct FileNameInformation
+    {
+        T mFullPath;
+        T mParentPath;
+        T mRootPath;
+        T mFileName;
+        T mStem;
+        T mExtension;
+    };
+
+    template<typename T, typename = typename std::enable_if_t<
+        std::is_same<std::string, typename std::decay_t<T>>::value
+        || std::is_same<std::wstring, typename std::decay_t<T>>::value
+        >
+    >
+    _NODISCARD decltype(auto) parseFileName(const T& filePath)
     {
         namespace fs = std::filesystem;
         try
         {
+            auto pa = fs::path{ filePath };
+            FileNameInformation<T> info;
             if constexpr (std::is_same<std::wstring, typename std::decay_t<T>>::value)
             {
-                return fs::path(filePath).filename().wstring();
+                // full path
+                info.mFullPath = filePath;
+                // parent path
+                if (pa.has_parent_path()) {
+                    info.mParentPath = pa.parent_path().wstring();
+                }
+                // root path
+                if (pa.has_root_path()) {
+                    info.mRootPath = pa.root_path().wstring();
+                }
+                // file name
+                if (pa.has_filename()) {
+                    info.mFileName = pa.filename().wstring();
+                }
+                // stem
+                if (pa.has_stem()) {
+                    info.mStem = pa.stem().wstring();
+                }
+                // extension
+                if (pa.has_extension()) {
+                    info.mExtension = pa.extension().wstring();
+                }
             }
             else
             {
-                return fs::path(filePath).filename().string();
+                // full path
+                info.mFullPath = filePath;
+                // parent path
+                if (pa.has_parent_path()) {
+                    info.mParentPath = pa.parent_path().string();
+                }
+                // root path
+                if (pa.has_root_path()) {
+                    info.mRootPath = pa.root_path().string();
+                }
+                // file name
+                if (pa.has_filename()) {
+                    info.mFileName = pa.filename().string();
+                }
+                // stem
+                if (pa.has_stem()) {
+                    info.mStem = pa.stem().string();
+                }
+                // extension
+                if (pa.has_extension()) {
+                    info.mExtension = pa.extension().string();
+                }
             }
+            return info;
         }
-        catch (...)
-        {
-        }
-        return T{};
+        catch(...)
+        { }
+        return FileNameInformation<T>{};
     }
 }
