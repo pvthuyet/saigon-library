@@ -1,19 +1,19 @@
 {
 	"parse_file_name":[
 		{
-			"full_path":"C:\\path1.txt",
+			"full_path":"C:\\test.txt",
 			"parent":"C:\\",
 			"root":"C:\\",
-			"name":"path1.txt",
-			"stem":"path1",
+			"name":"test.txt",
+			"stem":"test",
 			"extension":".txt"
 		},
 		{
-			"full_path":"C:\\tmp\\path1.txt",
+			"full_path":"C:\\tmp\\test.txt",
 			"parent":"C:\\tmp",
 			"root":"C:\\",
-			"name":"path1.txt",
-			"stem":"path1",
+			"name":"test.txt",
+			"stem":"test",
 			"extension":".txt"
 		}
 	]

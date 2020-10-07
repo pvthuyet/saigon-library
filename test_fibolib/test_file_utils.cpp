@@ -5,12 +5,12 @@
 #include <fstream>
 
 #define	K_PARSE_FILE_NAME		"parse_file_name"
-#define	K_FULL_PATH		"full_path"
-#define	K_PARENT		"parent"
-#define	K_ROOT			"root"
-#define	K_NAME			"name"
-#define	K_STEM			"stem"
-#define	K_EXTENSION		"extension"
+#define	K_FULL_PATH				"full_path"
+#define	K_PARENT				"parent"
+#define	K_ROOT					"root"
+#define	K_NAME					"name"
+#define	K_STEM					"stem"
+#define	K_EXTENSION				"extension"
 
 using namespace fibo::FileUtils;
 using json = nlohmann::json;
