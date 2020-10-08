@@ -13,8 +13,11 @@ namespace fibo::FileUtils
     struct FileNameInformation
     {
         T mFullPath;
-        T mParentPath;
+        T mRootName;
+        T mRootDirectory;
         T mRootPath;
+        T mRelativePath;
+        T mParentPath;
         T mFileName;
         T mStem;
         T mExtension;
@@ -36,13 +39,25 @@ namespace fibo::FileUtils
             {
                 // full path
                 info.mFullPath = filePath;
-                // parent path
-                if (pa.has_parent_path()) {
-                    info.mParentPath = pa.parent_path().wstring();
+                // root name
+                if (pa.has_root_name()) {
+                    info.mRootName = pa.root_name().wstring();
+                }
+                // root directory
+                if (pa.has_root_directory()) {
+                    info.mRootDirectory = pa.root_directory().wstring();
                 }
                 // root path
                 if (pa.has_root_path()) {
                     info.mRootPath = pa.root_path().wstring();
+                }
+                // relative path
+                if (pa.has_relative_path()) {
+                    info.mRelativePath = pa.relative_path().wstring();
+                }
+                // parent path
+                if (pa.has_parent_path()) {
+                    info.mParentPath = pa.parent_path().wstring();
                 }
                 // file name
                 if (pa.has_filename()) {
@@ -61,13 +76,25 @@ namespace fibo::FileUtils
             {
                 // full path
                 info.mFullPath = filePath;
-                // parent path
-                if (pa.has_parent_path()) {
-                    info.mParentPath = pa.parent_path().string();
+                // root name
+                if (pa.has_root_name()) {
+                    info.mRootName = pa.root_name().string();
+                }
+                // root directory
+                if (pa.has_root_directory()) {
+                    info.mRootDirectory = pa.root_directory().string();
                 }
                 // root path
                 if (pa.has_root_path()) {
                     info.mRootPath = pa.root_path().string();
+                }
+                // relative path
+                if (pa.has_relative_path()) {
+                    info.mRelativePath = pa.relative_path().string();
+                }
+                // parent path
+                if (pa.has_parent_path()) {
+                    info.mParentPath = pa.parent_path().string();
                 }
                 // file name
                 if (pa.has_filename()) {

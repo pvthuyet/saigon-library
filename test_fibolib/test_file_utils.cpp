@@ -6,8 +6,11 @@
 
 #define	K_PARSE_FILE_NAME		"parse_file_name"
 #define	K_FULL_PATH				"full_path"
-#define	K_PARENT				"parent"
-#define	K_ROOT					"root"
+#define	K_ROOT_NAME				"root_name"
+#define	K_ROOT_DIR				"root_dir"
+#define	K_ROOT_PATH				"root_path"
+#define	K_RELATIVE_PATH			"relative_path"
+#define	K_PARENT_PATH			"parent_path"
 #define	K_NAME					"name"
 #define	K_STEM					"stem"
 #define	K_EXTENSION				"extension"
@@ -29,11 +32,20 @@ decltype(auto) readJsonData(std::string fpath)
 		str = e[K_FULL_PATH];
 		info.mFullPath		= T(str.begin(), str.end());
 
-		str = e[K_PARENT];
-		info.mParentPath	= T(str.begin(), str.end());
+		str = e[K_ROOT_NAME];
+		info.mRootName = T(str.begin(), str.end());
 
-		str = e[K_ROOT];
-		info.mRootPath		= T(str.begin(), str.end());
+		str = e[K_ROOT_DIR];
+		info.mRootDirectory = T(str.begin(), str.end());
+
+		str = e[K_ROOT_PATH];
+		info.mRootPath = T(str.begin(), str.end());
+
+		str = e[K_RELATIVE_PATH];
+		info.mRelativePath = T(str.begin(), str.end());
+
+		str = e[K_PARENT_PATH];
+		info.mParentPath	= T(str.begin(), str.end());
 
 		str = e[K_NAME];
 		info.mFileName		= T(str.begin(), str.end());
@@ -56,8 +68,11 @@ bool testParseFileName()
 	{
 		auto info = parseFileName(pa.mFullPath);
 		EXPECT_EQ(info.mFullPath, pa.mFullPath);
-		EXPECT_EQ(info.mParentPath, pa.mParentPath);
+		EXPECT_EQ(info.mRootName, pa.mRootName);
+		EXPECT_EQ(info.mRootDirectory, pa.mRootDirectory);
 		EXPECT_EQ(info.mRootPath, pa.mRootPath);
+		EXPECT_EQ(info.mRelativePath, pa.mRelativePath);
+		EXPECT_EQ(info.mParentPath, pa.mParentPath);
 		EXPECT_EQ(info.mFileName, pa.mFileName);
 		EXPECT_EQ(info.mStem, pa.mStem);
 		EXPECT_EQ(info.mExtension, pa.mExtension);
@@ -69,6 +84,10 @@ bool testParseFileName()
 	{
 		auto info = parseFileName(pa.mFullPath);
 		EXPECT_EQ(info.mFullPath, pa.mFullPath);
+		EXPECT_EQ(info.mRootName, pa.mRootName);
+		EXPECT_EQ(info.mRootDirectory, pa.mRootDirectory);
+		EXPECT_EQ(info.mRootPath, pa.mRootPath);
+		EXPECT_EQ(info.mRelativePath, pa.mRelativePath);
 		EXPECT_EQ(info.mParentPath, pa.mParentPath);
 		EXPECT_EQ(info.mRootPath, pa.mRootPath);
 		EXPECT_EQ(info.mFileName, pa.mFileName);

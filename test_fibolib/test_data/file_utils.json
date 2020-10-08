@@ -2,16 +2,22 @@
 	"parse_file_name":[
 		{
 			"full_path":"C:\\test.txt",
-			"parent":"C:\\",
-			"root":"C:\\",
+			"root_name":"C:",
+			"root_dir":"\\",
+			"root_path":"C:\\",
+			"relative_path":"test.txt",
+			"parent_path":"C:\\",
 			"name":"test.txt",
 			"stem":"test",
 			"extension":".txt"
 		},
 		{
-			"full_path":"C:\\tmp\\test.txt",
-			"parent":"C:\\tmp",
-			"root":"C:\\",
+			"full_path":"C:\\tmp\\test.txt",	
+			"root_name":"C:",
+			"root_dir":"\\",
+			"root_path":"C:\\",
+			"relative_path":"tmp\\test.txt",
+			"parent_path":"C:\\tmp",
 			"name":"test.txt",
 			"stem":"test",
 			"extension":".txt"
