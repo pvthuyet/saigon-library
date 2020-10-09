@@ -42,13 +42,13 @@
     <ClInclude Include="include\string_utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\string_converter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\path_utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\windows\file_api.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="include\windows\string_api.h">
       <Filter>Windows</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,9 +68,6 @@
     <ClCompile Include="source\string_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\string_converter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\path_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,6 +78,9 @@
       <Filter>3rd_party\fmt</Filter>
     </ClCompile>
     <ClCompile Include="source\windows\file_api.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\string_api.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>
