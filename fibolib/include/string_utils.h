@@ -64,9 +64,6 @@ namespace fibo
 		bool regexSearch(const std::string& str, const std::string& rex, bool icase = false, const std::locale& loc = std::locale());
 		bool regexSearch(const std::wstring& str, const std::wstring& rex, bool icase = false, const std::locale& loc = std::locale());
 
-		std::string wc2mb(const wchar_t* str, size_t len, unsigned int codePage = 65001); // CP_UTF8
-		std::wstring mb2wc(const char* str, size_t len, unsigned int codePage = 65001); // CP_UTF8
-
 		std::vector<std::wstring> split(const std::wstring& s, const std::wstring& regex = L"\\s+");
 
 		// Generate random filename

@@ -3,5 +3,6 @@
 
 TEST(TestCaseName, TestName) 
 {
-	testParseFileName();
+	testAbsolutePath();
+	//testParseFileName();
 }
