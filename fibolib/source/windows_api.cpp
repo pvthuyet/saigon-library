@@ -19,11 +19,18 @@ namespace fibo::WindowsApi
 	_NODISCARD std::wstring absolutePath(std::wstring_view relativePath)
 	{
 		WCHAR wcAbsPath[kMaxAbPath] = { 0 };
-		WCHAR* lppPart = NULL;
-		auto res = ::GetFullPathNameW(relativePath.data(), (int)relativePath.length(), wcAbsPath, &lppPart);
+		WCHAR** lppPart = { NULL };
 
-		if (0 == wcsnlen_s(wcAbsPath, kMaxAbPath)) {
-			throw std::exception(fmt::format("Failed to convert relative path to absolute path by GetFullPathNameW. Error: {}", ::GetLastError()).c_str());
+		// Retrieve the full path name for a file. 
+		// The file does not need to exist.
+		auto retVal = ::GetFullPathNameW(relativePath.data(), kMaxAbPath, wcAbsPath, lppPart);
+
+		if (0 == retVal)
+		{
+			throw std::exception(fmt::format("[{}:{}] Failed to convert relative path. Error: {}", 
+				__FUNCTION__,
+				__LINE__,
+				::GetLastError()).c_str());
 		}
 		return std::wstring(wcAbsPath);
 	}
@@ -31,12 +38,15 @@ namespace fibo::WindowsApi
 	std::wstring canonicalize(std::wstring_view sPath)
 	{
 		WCHAR wcAbsPath[kMaxAbPath] = { 0 };
-		auto res = ::PathCchCanonicalize(wcAbsPath, kMaxAbPath, sPath.data());
-		if (SUCCEEDED(res))
+		auto retVal = ::PathCchCanonicalize(wcAbsPath, kMaxAbPath, sPath.data());
+		if (FAILED(retVal))
 		{
-			return std::wstring(wcAbsPath);
+			throw std::exception(fmt::format("[{}:{}] Failed to convert canonical path. Error: {}",
+				__FUNCTION__,
+				__LINE__,
+				::GetLastError()).c_str());
 		}
-		return std::wstring{};
+		return std::wstring(wcAbsPath);
 	}
 }
 #endif // _WIN32

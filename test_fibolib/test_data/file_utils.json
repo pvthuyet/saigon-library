@@ -1,25 +1,33 @@
 {
 	"absolute_path":[
 		{
-			"ori_path":".\\x64",
-			"exp_path":""
+			"ori_path":":",
+			"exp_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib\\:"
+		},	
+		{
+			"ori_path":"E:",
+			"exp_path":"E:\\"
+		},
+		{
+			"ori_path":"D:",
+			"exp_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib"
+		},		
+		{
+			"ori_path":"C:",
+			"exp_path":"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE"
+		},				
+		{
+			"ori_path":".",
+			"exp_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib"
 		},		
 		{
 			"ori_path":".\\",
-			"exp_path":""
-		},	
-		{
-			"ori_path":".",
-			"exp_path":""
+			"exp_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib\\"
 		},
 		{
 			"ori_path":"C",
-			"exp_path":""
+			"exp_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib\\C"
 		},
-		{
-			"ori_path":"C:",
-			"exp_path":""
-		},	
 		{
 			"ori_path":"C:\\..",
 			"exp_path":"C:\\"
