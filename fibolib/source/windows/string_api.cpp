@@ -11,8 +11,8 @@ namespace fibo::WindowsApi
 	string wc2mb(std::wstring_view str, unsigned int codePage)
 	{
 		int len = static_cast<int>(str.length());
-		auto size_needed = ::WideCharToMultiByte(codePage, 0, str.data(), len, NULL, 0, NULL, NULL);
-		if (0 == size_needed)
+		auto numOfChars = ::WideCharToMultiByte(codePage, 0, str.data(), len, NULL, 0, NULL, NULL);
+		if (0 == numOfChars)
 		{
 			throw std::exception(fmt::format("[{}:{}] Failed to convert wide char to multibyte. Error: {}",
 				__FUNCTION__,
@@ -20,8 +20,8 @@ namespace fibo::WindowsApi
 				::GetLastError()).c_str());
 		}
 
-		std::string strTo(size_needed, 0);
-		auto retVal = ::WideCharToMultiByte(codePage, 0, str.data(), len, &strTo[0], size_needed, NULL, NULL);
+		std::string strResult(numOfChars, 0);
+		auto retVal = ::WideCharToMultiByte(codePage, 0, str.data(), len, &strResult[0], numOfChars, NULL, NULL);
 		if (0 == retVal)
 		{
 			throw std::exception(fmt::format("[{}:{}] Failed to convert wide char to multibyte. Error: {}",
@@ -29,14 +29,14 @@ namespace fibo::WindowsApi
 				__LINE__,
 				::GetLastError()).c_str());
 		}
-		return strTo;
+		return strResult;
 	}
 
 	wstring mb2wc(std::string_view str, unsigned int codePage)
 	{
 		int len = static_cast<int>(str.length());
-		int size_needed = ::MultiByteToWideChar(codePage, 0, str.data(), len, NULL, 0);
-		if (0 == size_needed)
+		int numOfWideChars = ::MultiByteToWideChar(codePage, 0, str.data(), len, NULL, 0);
+		if (0 == numOfWideChars)
 		{
 			throw std::exception(fmt::format("[{}:{}] Failed to convert multibyte to wide char. Error: {}",
 				__FUNCTION__,
@@ -44,8 +44,8 @@ namespace fibo::WindowsApi
 				::GetLastError()).c_str());
 		}
 
-		std::wstring wstrTo(size_needed, 0);
-		auto retVal = ::MultiByteToWideChar(codePage, 0, str.data(), len, &wstrTo[0], size_needed);
+		std::wstring strResult(numOfWideChars, 0);
+		auto retVal = ::MultiByteToWideChar(codePage, 0, str.data(), len, &strResult[0], numOfWideChars);
 		if (0 == retVal)
 		{
 			throw std::exception(fmt::format("[{}:{}] Failed to convert multibyte to wide char. Error: {}",
@@ -53,7 +53,7 @@ namespace fibo::WindowsApi
 				__LINE__,
 				::GetLastError()).c_str());
 		}
-		return wstrTo;
+		return strResult;
 	}
 }
 #endif // _WIN32
