@@ -60,40 +60,8 @@
 	
 	"parse_file_name":[
 		{
-			"full_path":"C:\\test\\copy\\..\\move\\",
-			"root_name":"",
-			"root_dir":"",
-			"root_path":"",
-			"relative_path":"C",
-			"parent_path":"",
-			"name":"C",
-			"stem":"C",
-			"extension":""
-		},
-		{
-			"full_path":"C:",
-			"root_name":"C:",
-			"root_dir":"",
-			"root_path":"C:",
-			"relative_path":"",
-			"parent_path":"C:",
-			"name":"",
-			"stem":"",
-			"extension":""
-		},
-		{
-			"full_path":"C:\\",
-			"root_name":"C:",
-			"root_dir":"\\",
-			"root_path":"C:\\",
-			"relative_path":"",
-			"parent_path":"C:\\",
-			"name":"",
-			"stem":"",
-			"extension":""
-		},
-		{
-			"full_path":"C:\\test.txt",
+			"ori_path":"C:\\test.txt",
+			"full_path":"C:\\test.txt",	
 			"root_name":"C:",
 			"root_dir":"\\",
 			"root_path":"C:\\",
@@ -102,8 +70,9 @@
 			"name":"test.txt",
 			"stem":"test",
 			"extension":".txt"
-		},
+		},		
 		{
+			"ori_path":"C:\\tmp\\test.txt",
 			"full_path":"C:\\tmp\\test.txt",	
 			"root_name":"C:",
 			"root_dir":"\\",
@@ -113,6 +82,18 @@
 			"name":"test.txt",
 			"stem":"test",
 			"extension":".txt"
+		},	
+		{
+			"ori_path":":",
+			"full_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib\\:",
+			"root_name":"D:",
+			"root_dir":"\\",
+			"root_path":"D:\\",
+			"relative_path":"thuyet\\github\\fibo-library\\test_fibolib\\:",
+			"parent_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib",
+			"name":":",
+			"stem":"",
+			"extension":""
 		}
 	]
 }

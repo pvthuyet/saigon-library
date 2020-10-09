@@ -31,6 +31,6 @@ namespace fibo::PathUtils
         std::wstring mExtension;
     };
 
-    _NODISCARD std::wstring absolutePath(std::wstring const& inPath);
-    _NODISCARD std::optional<FileNameInformation> parseFileName(const std::wstring& sPath, unsigned int flag = ParseFlag::All);
+    _NODISCARD std::wstring absolutePath(std::wstring_view inPath);
+    _NODISCARD std::optional<FileNameInformation> parseFileName(std::wstring_view inPath, unsigned int flag = ParseFlag::All);
 }

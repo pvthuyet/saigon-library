@@ -67,65 +67,83 @@ bool testAbsolutePath()
 	return true;
 }
 
+struct FileNameDataTest
+{
+	std::wstring orgi;
+	FileNameInformation info;
+};
+
 decltype(auto) readJsonDataParseFileName(std::string_view fpath)
 {
-	std::vector<FileNameInformation> data;
+	std::vector<FileNameDataTest> data;
 	std::ifstream ifs(fpath.data());
 	json js = json::parse(ifs);
 
 	for (auto& e : js[K_PARSE_FILE_NAME])
 	{
-		FileNameInformation info;
-		std::string str = e[K_FULL_PATH];
-		info.mFullPath	= std::wstring(str.begin(), str.end());
+		FileNameDataTest inputData;
+
+		std::string str = e[K_ORI_PATH];
+		inputData.orgi = std::wstring(str.begin(), str.end());
+
+		str = e[K_FULL_PATH];
+		inputData.info.mFullPath	= std::wstring(str.begin(), str.end());
 
 		str = e[K_ROOT_NAME];
-		info.mRootName = std::wstring(str.begin(), str.end());
+		inputData.info.mRootName = std::wstring(str.begin(), str.end());
 
 		str = e[K_ROOT_DIR];
-		info.mRootDirectory = std::wstring(str.begin(), str.end());
+		inputData.info.mRootDirectory = std::wstring(str.begin(), str.end());
 
 		str = e[K_ROOT_PATH];
-		info.mRootPath = std::wstring(str.begin(), str.end());
+		inputData.info.mRootPath = std::wstring(str.begin(), str.end());
 
 		str = e[K_RELATIVE_PATH];
-		info.mRelativePath = std::wstring(str.begin(), str.end());
+		inputData.info.mRelativePath = std::wstring(str.begin(), str.end());
 
 		str = e[K_PARENT_PATH];
-		info.mParentPath = std::wstring(str.begin(), str.end());
+		inputData.info.mParentPath = std::wstring(str.begin(), str.end());
 
 		str = e[K_NAME];
-		info.mFileName = std::wstring(str.begin(), str.end());
+		inputData.info.mFileName = std::wstring(str.begin(), str.end());
 
 		str = e[K_STEM];
-		info.mStem = std::wstring(str.begin(), str.end());
+		inputData.info.mStem = std::wstring(str.begin(), str.end());
 
 		str = e[K_EXTENSION];
-		info.mExtension = std::wstring(str.begin(), str.end());
-		data.push_back(std::move(info));
+		inputData.info.mExtension = std::wstring(str.begin(), str.end());
+		data.push_back(std::move(inputData));
 	}
 	return data;
 }
 
 bool testParseFileName()
 {
-	// test wstring
-	auto input1 = readJsonDataParseFileName("test_data\\file_utils.json");
-	for (const auto& pa : input1)
+	try
 	{
-		auto info = parseFileName(pa.mFullPath);
-		if (info)
+		// test wstring
+		auto input1 = readJsonDataParseFileName("test_data\\file_utils.json");
+		for (const auto& pa : input1)
 		{
-			EXPECT_EQ(info->mFullPath, pa.mFullPath);
-			EXPECT_EQ(info->mRootName, pa.mRootName);
-			EXPECT_EQ(info->mRootDirectory, pa.mRootDirectory);
-			EXPECT_EQ(info->mRootPath, pa.mRootPath);
-			EXPECT_EQ(info->mRelativePath, pa.mRelativePath);
-			EXPECT_EQ(info->mParentPath, pa.mParentPath);
-			EXPECT_EQ(info->mFileName, pa.mFileName);
-			EXPECT_EQ(info->mStem, pa.mStem);
-			EXPECT_EQ(info->mExtension, pa.mExtension);
+			auto info = parseFileName(pa.orgi);
+			if (info)
+			{
+				EXPECT_EQ(info->mFullPath, pa.info.mFullPath);
+				EXPECT_EQ(info->mRootName, pa.info.mRootName);
+				EXPECT_EQ(info->mRootDirectory, pa.info.mRootDirectory);
+				EXPECT_EQ(info->mRootPath, pa.info.mRootPath);
+				EXPECT_EQ(info->mRelativePath, pa.info.mRelativePath);
+				EXPECT_EQ(info->mParentPath, pa.info.mParentPath);
+				EXPECT_EQ(info->mFileName, pa.info.mFileName);
+				EXPECT_EQ(info->mStem, pa.info.mStem);
+				EXPECT_EQ(info->mExtension, pa.info.mExtension);
+			}
 		}
+	}
+	catch (const std::exception & ex)
+	{
+		std::cout << ex.what() << std::endl;
+		EXPECT_TRUE(false);
 	}
 	return true;
 }

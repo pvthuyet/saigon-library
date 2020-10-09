@@ -1,5 +1,6 @@
 #include "path_utils.h"
 #include <filesystem>
+#include <fmt/core.h>
 
 #if USE_WINDOWS_API
 #include "windows_api.h"
@@ -27,18 +28,21 @@ namespace fibo::PathUtils
         return std::cend(sPath) != it;
     }
 
-    std::wstring absolutePath(std::wstring const& inPath)
+    std::wstring absolutePath(std::wstring_view inPath)
     {
         std::wstring absPath{ inPath };
 
-        fs::path pa{ inPath };
+        fs::path pa{ absPath };
         if (pa.is_relative()) {
             absPath = OSAPI::absolutePath(inPath);
         }
 
         // absolute path length valid
-        if (!OSAPI::validPathLength(absPath.length())) {
-            return std::wstring{};
+        if (!OSAPI::validPathLength(absPath.length())) 
+        {
+            throw std::exception(fmt::format("[{}:{}] Invalid file path length",
+                __FUNCTION__,
+                __LINE__).c_str());
         }
 
         if (isCanonical(absPath)) {
@@ -47,54 +51,46 @@ namespace fibo::PathUtils
         return absPath;
     }
 
-    std::optional<FileNameInformation> parseFileName(const std::wstring& sPath, unsigned int flag)
+    std::optional<FileNameInformation> parseFileName(std::wstring_view inPath, unsigned int flag)
     {
-        /*
-        namespace fs = std::filesystem;
-        try
-        {
-            auto pa = absolutePath(fs::path{ sPath });
-            FileNameInformation info;
+        fs::path pa{ absolutePath(inPath) };
+        FileNameInformation info;
 
-            // full path
-            info.mFullPath = pa.native();
-            // root name
-            if (flag & ParseFlag::RootName) {
-                info.mRootName = pa.root_name().native();
-            }
-            // root directory
-            if (flag & ParseFlag::RootDirectory) {
-                info.mRootDirectory = pa.root_directory().native();
-            }
-            // root path
-            if (flag & ParseFlag::RootPath) {
-                info.mRootPath = pa.root_path().native();
-            }
-            // relative path
-            if (flag & ParseFlag::RelativePath) {
-                info.mRelativePath = pa.relative_path().native();
-            }
-            // parent path
-            if (flag & ParseFlag::ParentPath) {
-                info.mParentPath = pa.parent_path().native();
-            }
-            // file name
-            if (flag & ParseFlag::FileName) {
-                info.mFileName = pa.filename().native();
-            }
-            // stem
-            if (flag & ParseFlag::Stem) {
-                info.mStem = pa.stem().native();
-            }
-            // extension
-            if (flag & ParseFlag::Extension) {
-                info.mExtension = pa.extension().native();
-            }
+        // full path
+        info.mFullPath = pa.native();
+        // root name
+        if (flag & ParseFlag::RootName) {
+            info.mRootName = pa.root_name().native();
         }
-        catch (...)
-        {
+        // root directory
+        if (flag & ParseFlag::RootDirectory) {
+            info.mRootDirectory = pa.root_directory().native();
         }
-        */
-        return std::nullopt;
+        // root path
+        if (flag & ParseFlag::RootPath) {
+            info.mRootPath = pa.root_path().native();
+        }
+        // relative path
+        if (flag & ParseFlag::RelativePath) {
+            info.mRelativePath = pa.relative_path().native();
+        }
+        // parent path
+        if (flag & ParseFlag::ParentPath) {
+            info.mParentPath = pa.parent_path().native();
+        }
+        // file name
+        if (flag & ParseFlag::FileName) {
+            info.mFileName = pa.filename().native();
+        }
+        // stem
+        if (flag & ParseFlag::Stem) {
+            info.mStem = pa.stem().native();
+        }
+        // extension
+        if (flag & ParseFlag::Extension) {
+            info.mExtension = pa.extension().native();
+        }
+        
+        return info;
     }
 }

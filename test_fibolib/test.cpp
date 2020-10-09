@@ -1,8 +1,12 @@
 #include "pch.h"
 #include "test_file_utils.h"
 
-TEST(TestCaseName, TestName) 
+TEST(AbsolutePath, absolute_path)
 {
 	testAbsolutePath();
-	//testParseFileName();
+}
+
+TEST(ParseFileName, parse_file_name)
+{
+	testParseFileName();
 }
