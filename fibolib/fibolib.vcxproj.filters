@@ -48,7 +48,7 @@
     <ClInclude Include="include\path_utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\windows_api.h">
+    <ClInclude Include="include\windows\file_api.h">
       <Filter>Windows</Filter>
     </ClInclude>
   </ItemGroup>
@@ -74,14 +74,14 @@
     <ClCompile Include="source\path_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\windows_api.cpp">
-      <Filter>Windows</Filter>
-    </ClCompile>
     <ClCompile Include="3rd_party\fmtlib\src\format.cc">
       <Filter>3rd_party\fmt</Filter>
     </ClCompile>
     <ClCompile Include="3rd_party\fmtlib\src\os.cc">
       <Filter>3rd_party\fmt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\file_api.cpp">
+      <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

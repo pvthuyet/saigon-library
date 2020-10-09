@@ -161,7 +161,7 @@
     <ClInclude Include="include\string_utils.h" />
     <ClInclude Include="include\task.h" />
     <ClInclude Include="include\task_timer.h" />
-    <ClInclude Include="include\windows_api.h" />
+    <ClInclude Include="include\windows\file_api.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -174,7 +174,7 @@
     <ClCompile Include="source\string_utils.cpp" />
     <ClCompile Include="source\task.cpp" />
     <ClCompile Include="source\task_timer.cpp" />
-    <ClCompile Include="source\windows_api.cpp" />
+    <ClCompile Include="source\windows\file_api.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
