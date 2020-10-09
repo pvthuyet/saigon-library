@@ -31,7 +31,7 @@ struct AbsolutePathData
 decltype(auto) readJsonDataAbsolutePath(std::string_view sPath)
 {
 	std::vector<AbsolutePathData> data;
-	std::ifstream ifs(sPath);
+	std::ifstream ifs(sPath.data());
 	json js = json::parse(ifs);
 	for (auto& e : js[K_ABSOLUTE_PATH])
 	{
@@ -69,7 +69,7 @@ bool testAbsolutePath()
 decltype(auto) readJsonDataParseFileName(std::string_view fpath)
 {
 	std::vector<FileNameInformation> data;
-	std::ifstream ifs(fpath);
+	std::ifstream ifs(fpath.data());
 	json js = json::parse(ifs);
 
 	for (auto& e : js[K_PARSE_FILE_NAME])

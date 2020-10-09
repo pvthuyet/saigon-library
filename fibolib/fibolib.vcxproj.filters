@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{38cc6919-8646-4591-83e8-7ce08c1c23c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -33,14 +36,14 @@
     <ClInclude Include="include\string_utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\platform_api.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\string_converter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\path_utils.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\windows_api.h">
+      <Filter>Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -59,14 +62,14 @@
     <ClCompile Include="source\string_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\platform_api.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\string_converter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\path_utils.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows_api.cpp">
+      <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

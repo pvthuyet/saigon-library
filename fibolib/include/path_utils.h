@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <filesystem>
 #include <optional>
 
 namespace fibo::PathUtils
@@ -32,24 +31,6 @@ namespace fibo::PathUtils
         std::wstring mExtension;
     };
 
-    template<typename T, typename = typename std::enable_if_t<
-        std::is_same<std::string, typename std::decay_t<T>>::value
-        || std::is_same<std::string_view, typename std::decay_t<T>>::value
-        || std::is_same<std::wstring, typename std::decay_t<T>>::value
-        || std::is_same<std::wstring_view, typename std::decay_t<T>>::value
-        >
-    >
-    _NODISCARD bool isCanonical(const T& sPath)
-    {
-        auto it = std::find_if(std::cbegin(sPath), std::cend(sPath), [](auto c) {
-            return '.' == c;
-            });
-        return std::cend(sPath) != it;
-    }
-
     _NODISCARD std::wstring absolutePath(std::wstring const& inPath);
-    //_NODISCARD std::filesystem::path absolutePath(const std::filesystem::path& inPath);
-
     _NODISCARD std::optional<FileNameInformation> parseFileName(const std::wstring& sPath, unsigned int flag = ParseFlag::All);
-    
 }

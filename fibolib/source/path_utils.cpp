@@ -1,29 +1,50 @@
 #include "path_utils.h"
-#include <algorithm>
-#include "platform_api.h"
+#include <filesystem>
+
+#if _WIN32
+#include "windows_api.h"
+#define OSAPI	fibo::WindowsApi
+#else
+#define OSAPI	fibo::Standard
+#endif // _WIN32
 
 namespace fs = std::filesystem;
 
 namespace fibo::PathUtils
 {
+    template<typename T, typename = typename std::enable_if_t<
+        std::is_same<std::string, typename std::decay_t<T>>::value
+        || std::is_same<std::string_view, typename std::decay_t<T>>::value
+        || std::is_same<std::wstring, typename std::decay_t<T>>::value
+        || std::is_same<std::wstring_view, typename std::decay_t<T>>::value
+        >
+    >
+    _NODISCARD bool isCanonical(const T& sPath)
+    {
+        auto it = std::find_if(std::cbegin(sPath), std::cend(sPath), [](auto c) {
+            return '.' == c;
+            });
+        return std::cend(sPath) != it;
+    }
+
     std::wstring absolutePath(std::wstring const& inPath)
     {
-        std::wstring abPath{ inPath };
+        std::wstring absPath{ inPath };
 
         fs::path pa{ inPath };
         if (pa.is_relative()) {
-            abPath = PlatformAPI::absolutePath(inPath);
+            absPath = OSAPI::absolutePath(inPath);
         }
 
         // absolute path length valid
-        if (!PlatformAPI::validPathLength(abPath.length())) {
+        if (!OSAPI::validPathLength(absPath.length())) {
             return std::wstring{};
         }
 
-        if (isCanonical(abPath)) {
-            abPath = PlatformAPI::canonicalize(abPath);
+        if (isCanonical(absPath)) {
+            absPath = OSAPI::canonicalize(absPath);
         }
-        return abPath;
+        return absPath;
     }
 
     //std::filesystem::path absolutePath(const std::filesystem::path& inPath)
