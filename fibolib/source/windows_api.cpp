@@ -11,12 +11,12 @@ constexpr int kMaxAbPath = MAX_PATH;
 
 namespace fibo::WindowsApi
 {
-	bool validPathLength(size_t len)
+	bool validPathLength(size_t len) noexcept
 	{
 		return (len >= kMinAbPath) && (len < kMaxAbPath);
 	}
 
-	_NODISCARD std::wstring absolutePath(std::wstring_view relativePath)
+	std::wstring absolutePath(std::wstring_view relativePath)
 	{
 		WCHAR wcAbsPath[kMaxAbPath] = { 0 };
 		WCHAR** lppPart = { NULL };

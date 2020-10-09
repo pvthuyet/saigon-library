@@ -47,19 +47,6 @@ namespace fibo::PathUtils
         return absPath;
     }
 
-    //std::filesystem::path absolutePath(const std::filesystem::path& inPath)
-    //{
-    //    fs::path pa{ inPath };
-    //    if (pa.is_relative()) {
-    //        pa = fs::absolute(pa);
-    //    }
-
-    //    if (isCanonical(pa.native())) {
-    //        pa = fs::canonical(pa);
-    //    }
-    //    return pa;
-    //}
-
     std::optional<FileNameInformation> parseFileName(const std::wstring& sPath, unsigned int flag)
     {
         /*

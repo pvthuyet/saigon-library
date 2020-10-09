@@ -3,7 +3,7 @@
 		{
 			"ori_path":":",
 			"exp_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib\\:"
-		},	
+		},
 		{
 			"ori_path":"E:",
 			"exp_path":"E:\\"
@@ -23,10 +23,6 @@
 		{
 			"ori_path":".\\",
 			"exp_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib\\"
-		},
-		{
-			"ori_path":"C",
-			"exp_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib\\C"
 		},
 		{
 			"ori_path":"C:\\..",
