@@ -16,6 +16,9 @@
     <Filter Include="Windows">
       <UniqueIdentifier>{38cc6919-8646-4591-83e8-7ce08c1c23c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="fmt">
+      <UniqueIdentifier>{d4dc139a-afc3-4631-abf3-b9b535614f16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -70,6 +73,12 @@
     </ClCompile>
     <ClCompile Include="source\windows_api.cpp">
       <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd_party\fmtlib\src\format.cc">
+      <Filter>fmt</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd_party\fmtlib\src\os.cc">
+      <Filter>fmt</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

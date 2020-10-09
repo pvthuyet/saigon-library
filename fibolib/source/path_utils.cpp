@@ -1,7 +1,7 @@
 #include "path_utils.h"
 #include <filesystem>
 
-#if _WIN32
+#if USE_WINDOWS_API
 #include "windows_api.h"
 #define OSAPI	fibo::WindowsApi
 #else
@@ -14,8 +14,8 @@ namespace fibo::PathUtils
 {
     template<typename T, typename = typename std::enable_if_t<
         std::is_same<std::string, typename std::decay_t<T>>::value
-        || std::is_same<std::string_view, typename std::decay_t<T>>::value
         || std::is_same<std::wstring, typename std::decay_t<T>>::value
+        || std::is_same<std::string_view, typename std::decay_t<T>>::value
         || std::is_same<std::wstring_view, typename std::decay_t<T>>::value
         >
     >

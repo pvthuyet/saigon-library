@@ -62,6 +62,7 @@ bool testAbsolutePath()
 	catch (const std::exception & ex)
 	{
 		std::cout << ex.what() << std::endl;
+		EXPECT_TRUE(false);
 	}
 	return true;
 }

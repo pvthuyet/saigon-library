@@ -3,6 +3,7 @@
 #include "windows_api.h"
 #include <Windows.h>
 #include <pathcch.h>
+#include <fmt/core.h>
 
 #pragma comment(lib, "Pathcch.lib")
 constexpr int kMinAbPath = 3;
@@ -17,23 +18,23 @@ namespace fibo::WindowsApi
 
 	_NODISCARD std::wstring absolutePath(std::wstring_view relativePath)
 	{
-		WCHAR wcAbPath[kMaxAbPath] = { 0 };
+		WCHAR wcAbsPath[kMaxAbPath] = { 0 };
 		WCHAR* lppPart = NULL;
-		auto res = ::GetFullPathNameW(relativePath.data(), (int)relativePath.length(), wcAbPath, &lppPart);
-		if (res > 0)
-		{
-			return std::wstring(wcAbPath);
+		auto res = ::GetFullPathNameW(relativePath.data(), (int)relativePath.length(), wcAbsPath, &lppPart);
+
+		if (0 == wcsnlen_s(wcAbsPath, kMaxAbPath)) {
+			throw std::exception(fmt::format("Failed to convert relative path to absolute path by GetFullPathNameW. Error: {}", ::GetLastError()).c_str());
 		}
-		return std::wstring{};
+		return std::wstring(wcAbsPath);
 	}
 
 	std::wstring canonicalize(std::wstring_view sPath)
 	{
-		WCHAR wcAbPath[kMaxAbPath] = { 0 };
-		auto res = ::PathCchCanonicalize(wcAbPath, kMaxAbPath, sPath.data());
+		WCHAR wcAbsPath[kMaxAbPath] = { 0 };
+		auto res = ::PathCchCanonicalize(wcAbsPath, kMaxAbPath, sPath.data());
 		if (SUCCEEDED(res))
 		{
-			return std::wstring(wcAbPath);
+			return std::wstring(wcAbsPath);
 		}
 		return std::wstring{};
 	}

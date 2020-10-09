@@ -1,9 +1,21 @@
 {
 	"absolute_path":[
 		{
-			"ori_path":"C",
+			"ori_path":".\\x64",
 			"exp_path":""
 		},		
+		{
+			"ori_path":".\\",
+			"exp_path":""
+		},	
+		{
+			"ori_path":".",
+			"exp_path":""
+		},
+		{
+			"ori_path":"C",
+			"exp_path":""
+		},
 		{
 			"ori_path":"C:",
 			"exp_path":""
