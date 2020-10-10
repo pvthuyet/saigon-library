@@ -48,12 +48,12 @@ namespace fibo
 		>
 		_NODISCARD static std::vector<T> split(const T& s, const T& rexToken) // whitespace: \\s+
 		{
-			// Invalid parameter
-			assert(!rexToken.empty());
-
 			if (s.empty()) {
 				return std::vector<T>{};
 			}
+
+			// Invalid parameter
+			assert(!rexToken.empty());
 
 			std::vector<T> result;
 			const Regex rex(rexToken);
