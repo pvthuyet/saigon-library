@@ -1,6 +1,14 @@
 {
 	"absolute_path":[
 		{
+			"ori_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib\\github\\fibo-library\\test_fibolib\\github\\fibo-library\\test_fibolib\\github\\fibo-library\\test_fibolib\\github\\fibo-library\\test_fibolib\\github\\fibo-library\\test_fibolib\\github\\fibo-library\\test_fibolib\\github\\fibo-library\\test_fibolib\\github\\fibo-library\\test_fibolib\\github\\fibo-library\\test_fibolib\\",
+			"exp_path":""
+		},		
+		{
+			"ori_path":"",
+			"exp_path":""
+		},	
+		{
 			"ori_path":":",
 			"exp_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib\\:"
 		},
@@ -60,6 +68,18 @@
 	
 	"parse_file_name":[
 		{
+			"ori_path":"",
+			"full_path":"",	
+			"root_name":"",
+			"root_dir":"",
+			"root_path":"",
+			"relative_path":"",
+			"parent_path":"",
+			"name":"",
+			"stem":"",
+			"extension":""
+		},	
+		{
 			"ori_path":"C:\\test.txt",
 			"full_path":"C:\\test.txt",	
 			"root_name":"C:",
@@ -82,7 +102,7 @@
 			"name":"test.txt",
 			"stem":"test",
 			"extension":".txt"
-		},	
+		},
 		{
 			"ori_path":":",
 			"full_path":"D:\\thuyet\\github\\fibo-library\\test_fibolib\\:",

@@ -27,10 +27,10 @@ namespace fibo::WindowsApi
 
 		if (0 == retVal)
 		{
-			throw std::runtime_error(fmt::format("[{}:{}] Failed to convert relative path. Error: {}", 
-				__FUNCTION__,
-				__LINE__,
-				::GetLastError()));
+			throw std::runtime_error(fmt::format("Failed to convert relative path. Error: {}. {}:{}", 
+				::GetLastError(),
+				__FILE__,
+				__LINE__));
 		}
 		return std::wstring(wcAbsPath);
 	}
@@ -41,10 +41,10 @@ namespace fibo::WindowsApi
 		auto retVal = ::PathCchCanonicalize(wcAbsPath, kMaxAbPath, sPath.data());
 		if (FAILED(retVal))
 		{
-			throw std::runtime_error(fmt::format("[{}:{}] Failed to convert canonical path. Error: {}",
-				__FUNCTION__,
-				__LINE__,
-				::GetLastError()));
+			throw std::runtime_error(fmt::format("Failed to convert canonical path. Error: {}. {}:{}",
+				::GetLastError(),
+				__FILE__,
+				__LINE__));
 		}
 		return std::wstring(wcAbsPath);
 	}

@@ -11,7 +11,6 @@ namespace fibo
 
 namespace fibo::WindowsApi
 {
-	
 	class FileApi
 	{
 		friend class PathUtils;

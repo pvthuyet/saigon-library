@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <optional>
 
 namespace fibo
 {
@@ -18,23 +17,31 @@ namespace fibo
         All             = 0xFFFF
     };
 
+    template<typename T, typename = typename std::enable_if_t<
+        std::is_same<std::string, typename std::decay_t<T>>::value
+        || std::is_same<std::wstring, typename std::decay_t<T>>::value
+        >
+    >
     struct FileNameInformation
     {
-        std::wstring mFullPath;
-        std::wstring mRootName;
-        std::wstring mRootDirectory;
-        std::wstring mRootPath;
-        std::wstring mRelativePath;
-        std::wstring mParentPath;
-        std::wstring mFileName;
-        std::wstring mStem;
-        std::wstring mExtension;
+        T mFullPath;
+        T mRootName;
+        T mRootDirectory;
+        T mRootPath;
+        T mRelativePath;
+        T mParentPath;
+        T mFileName;
+        T mStem;
+        T mExtension;
     };
 
     class PathUtils
     {
     public:
+        _NODISCARD static std::string absolutePath(std::string_view inPath);
         _NODISCARD static std::wstring absolutePath(std::wstring_view inPath);
-        _NODISCARD static std::optional<FileNameInformation> parseFileName(std::wstring_view inPath, unsigned int flag = ParseFlag::All);
+
+        _NODISCARD static FileNameInformation<std::string> parseFileName(std::string_view inPath, unsigned int flag = ParseFlag::All);
+        _NODISCARD static FileNameInformation<std::wstring> parseFileName(std::wstring_view inPath, unsigned int flag = ParseFlag::All);
     };
 }

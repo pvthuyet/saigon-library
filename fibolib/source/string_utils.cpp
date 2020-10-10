@@ -4,10 +4,28 @@
 #include <random>
 #include <Windows.h>
 
+#if USE_WINDOWS_API
+#include "windows/string_api.h"
+using OSAPI	= fibo::WindowsApi::StringApi;
+#else
+using OSAPI = fibo::Standard;
+#endif // _WIN32
+
 using namespace std;
-namespace died
+
+namespace fibo
 {
-	namespace StringUtils
+	std::string StringUtils::wc2mb(std::wstring_view str, unsigned int codePage)
+	{
+		return OSAPI::wc2mb(str, codePage);
+	}
+
+	std::wstring StringUtils::mb2wc(std::string_view str, unsigned int codePage)
+	{
+		return OSAPI::mb2wc(str, codePage);
+	}
+
+	namespace StringUtils____
 	{
 		bool regexSearch(const std::string& str, const std::string& rex, bool icase, const std::locale& loc)
 		{

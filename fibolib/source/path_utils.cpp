@@ -1,12 +1,13 @@
 #include "path_utils.h"
+#include "string_utils.h"
 #include <filesystem>
 #include <fmt/core.h>
 
 #if USE_WINDOWS_API
 #include "windows/file_api.h"
-#define OSAPI	fibo::WindowsApi::FileApi
+using OSAPI	= fibo::WindowsApi::FileApi;
 #else
-#define OSAPI	fibo::Standard
+using OSAPI = fibo::Standard;
 #endif // _WIN32
 
 namespace fs = std::filesystem;
@@ -28,8 +29,56 @@ namespace fibo
         return std::cend(sPath) != it;
     }
 
+    template<typename T, typename = typename std::enable_if_t<
+        std::is_same<std::string, typename std::decay_t<T>>::value
+        || std::is_same<std::wstring, typename std::decay_t<T>>::value
+        >
+    >
+    decltype(auto) convertFileNameInfo(const FileNameInformation<T>& input)
+    {
+        // convert wstring => string
+        if constexpr (std::is_same<std::wstring, typename std::decay_t<T>>::value)
+        {
+            FileNameInformation<std::string> info;
+            info.mFullPath      = StringUtils::wc2mb(input.mFullPath);
+            info.mRootName      = StringUtils::wc2mb(input.mRootName);
+            info.mRootDirectory = StringUtils::wc2mb(input.mRootDirectory);
+            info.mRootPath      = StringUtils::wc2mb(input.mRootPath);
+            info.mRelativePath  = StringUtils::wc2mb(input.mRelativePath);
+            info.mParentPath    = StringUtils::wc2mb(input.mParentPath);
+            info.mFileName      = StringUtils::wc2mb(input.mFileName);
+            info.mStem          = StringUtils::wc2mb(input.mStem);
+            info.mExtension     = StringUtils::wc2mb(input.mExtension);
+            return info;
+        }
+        else // convert string => wstring
+        {
+            FileNameInformation<std::wstring> info;
+            info.mFullPath      = StringUtils::mb2wc(input.mFullPath);
+            info.mRootName      = StringUtils::mb2wc(input.mRootName);
+            info.mRootDirectory = StringUtils::mb2wc(input.mRootDirectory);
+            info.mRootPath      = StringUtils::mb2wc(input.mRootPath);
+            info.mRelativePath  = StringUtils::mb2wc(input.mRelativePath);
+            info.mParentPath    = StringUtils::mb2wc(input.mParentPath);
+            info.mFileName      = StringUtils::mb2wc(input.mFileName);
+            info.mStem          = StringUtils::mb2wc(input.mStem);
+            info.mExtension     = StringUtils::mb2wc(input.mExtension);
+            return info;
+        }
+    }
+
+    std::string PathUtils::absolutePath(std::string_view inPath)
+    {
+        return inPath.empty() ? std::string{} : StringUtils::wc2mb(absolutePath(StringUtils::mb2wc(inPath)));
+    }
+
     std::wstring PathUtils::absolutePath(std::wstring_view inPath)
     {
+        // Empty input path
+        if (inPath.empty()) {
+            return std::wstring{};
+        }
+
         std::wstring absPath{ inPath };
 
         fs::path pa{ absPath };
@@ -40,8 +89,8 @@ namespace fibo
         // absolute path length valid
         if (!OSAPI::validPathLength(absPath.length())) 
         {
-            throw std::length_error(fmt::format("[{}:{}] Invalid file path length",
-                __FUNCTION__,
+            throw std::length_error(fmt::format("Invalid file path length. {}:{}",
+                __FILE__,
                 __LINE__));
         }
 
@@ -51,10 +100,27 @@ namespace fibo
         return absPath;
     }
 
-    std::optional<FileNameInformation> PathUtils::parseFileName(std::wstring_view inPath, unsigned int flag)
+    FileNameInformation<std::string> PathUtils::parseFileName(std::string_view inPath, unsigned int flag)
     {
+        // Empty input path
+        if (inPath.empty()) {
+            return FileNameInformation<std::string>{};
+        }
+
+        FileNameInformation<std::string> resInfo;
+        auto winfo = parseFileName(StringUtils::mb2wc(inPath), flag);
+        return convertFileNameInfo(winfo);
+    }
+
+    FileNameInformation<std::wstring> PathUtils::parseFileName(std::wstring_view inPath, unsigned int flag)
+    {
+        // Empty input path
+        if (inPath.empty()) {
+            return FileNameInformation<std::wstring>{};
+        }
+
         fs::path pa{ absolutePath(inPath) };
-        FileNameInformation info;
+        FileNameInformation<std::wstring> info;
 
         // full path
         info.mFullPath = pa.native();
