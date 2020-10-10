@@ -8,7 +8,7 @@ using namespace std;
 
 namespace fibo::WindowsApi
 {
-	string wc2mb(std::wstring_view str, unsigned int codePage)
+	string StringApi::wc2mb(std::wstring_view str, unsigned int codePage)
 	{
 		int len = static_cast<int>(str.length());
 		auto numOfChars = ::WideCharToMultiByte(codePage, 0, str.data(), len, NULL, 0, NULL, NULL);
@@ -32,7 +32,7 @@ namespace fibo::WindowsApi
 		return strResult;
 	}
 
-	wstring mb2wc(std::string_view str, unsigned int codePage)
+	wstring StringApi::mb2wc(std::string_view str, unsigned int codePage)
 	{
 		int len = static_cast<int>(str.length());
 		int numOfWideChars = ::MultiByteToWideChar(codePage, 0, str.data(), len, NULL, 0);
