@@ -3,10 +3,15 @@
 
 TEST(AbsolutePath, absolute_path)
 {
-	testAbsolutePath();
+	//testAbsolutePath();
 }
 
 TEST(ParseFileName, parse_file_name)
 {
-	testParseFileName();
+	//testParseFileName();
+}
+
+TEST(StringUtils, split_)
+{
+	testSplit();
 }

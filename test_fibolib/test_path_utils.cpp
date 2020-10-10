@@ -149,3 +149,19 @@ bool testParseFileName()
 	}
 	return true;
 }
+
+#include "string_utils.h"
+bool testSplit()
+{
+	{
+		std::wstring str(L"abc def");
+		std::wstring token(L"\\s+");
+		auto rs = fibo::StringUtils::split(str, token);
+	}
+	{
+		std::string str("abc def");
+		std::string token("\\s+");
+		auto rs = fibo::StringUtils::split(str, token);
+	}
+	return true;
+}

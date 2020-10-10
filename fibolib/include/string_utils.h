@@ -5,7 +5,6 @@
 #include <locale>
 #include <algorithm>
 #include <regex>
-#include <fmt/format.h>
 
 namespace fibo
 {
@@ -18,38 +17,28 @@ namespace fibo
 		// Generate random filename
 		_NODISCARD std::string randAlphabetString(unsigned len) noexcept;
 
-		template<typename T, typename = typename std::enable_if_t<
+		template<typename T, 
+			typename = typename std::enable_if_t<
 			std::is_same<std::string, typename std::decay_t<T>>::value
 			|| std::is_same<std::wstring, typename std::decay_t<T>>::value
-			>
+			>,
+			typename Regex = std::conditional_t<std::is_same<std::string, typename std::decay_t<T>>::value, std::regex, std::wregex>,
+			typename RegexTokenIt = std::regex_token_iterator<typename T::const_iterator>
 		>
-		_NODISCARD std::vector<T> split(const T& s, const T& rex) // whitespace: \\s+
+		_NODISCARD static std::vector<T> split(const T& s, const T& rexToken) // whitespace: \\s+
 		{
 			// Invalid parameter
-			if (s.empty() || rex.empty())
-			{
-				std::runtime_error(fmt::format("Invalid paramenter. {}:{}", 
-					__FILE__, 
-					__LINE__));
+			assert(!rexToken.empty());
+
+			if (s.empty()) {
+				return std::vector<T>{};
 			}
 
 			std::vector<T> result;
-
-			// For std::wstring
-			if constexpr (std::is_same<std::wstring, typename std::decay_t<T>>::value)
-			{
-				const std::wregex wrex(rex);
-				std::copy(std::wsregex_token_iterator(std::cbegin(s), std::cend(s), wrex, -1),
-					std::wsregex_token_iterator(),
-					std::back_inserter(result));
-			}
-			else // for std::string
-			{
-				const std::regex srex(rex);
-				std::copy(std::sregex_token_iterator(std::cbegin(s), std::cend(s), srex, -1),
-					std::sregex_token_iterator(),
-					std::back_inserter(result));
-			}
+			const Regex rex(rexToken);
+			std::copy(RegexTokenIt(std::cbegin(s), std::cend(s), rex, -1),
+				RegexTokenIt(),
+				std::back_inserter(result));
 			return result;
 		}
 
