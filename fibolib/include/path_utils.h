@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <optional>
 
 namespace fibo
 {
@@ -41,7 +42,7 @@ namespace fibo
         _NODISCARD static std::string absolutePath(std::string_view inPath);
         _NODISCARD static std::wstring absolutePath(std::wstring_view inPath);
 
-        _NODISCARD static FileNameInformation<std::string> parseFileName(std::string_view inPath, unsigned int flag = ParseFlag::All);
-        _NODISCARD static FileNameInformation<std::wstring> parseFileName(std::wstring_view inPath, unsigned int flag = ParseFlag::All);
+        _NODISCARD static std::optional<FileNameInformation<std::string>> parseFileName(std::string_view inPath, unsigned int flag = ParseFlag::All);
+        _NODISCARD static std::optional<FileNameInformation<std::wstring>> parseFileName(std::wstring_view inPath, unsigned int flag = ParseFlag::All);
     };
 }

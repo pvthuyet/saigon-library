@@ -128,15 +128,18 @@ bool testParseFileName()
 		for (const auto& pa : input1)
 		{
 			auto info = PathUtils::parseFileName(pa.orgi);
-			EXPECT_EQ(info.mFullPath, pa.info.mFullPath);
-			EXPECT_EQ(info.mRootName, pa.info.mRootName);
-			EXPECT_EQ(info.mRootDirectory, pa.info.mRootDirectory);
-			EXPECT_EQ(info.mRootPath, pa.info.mRootPath);
-			EXPECT_EQ(info.mRelativePath, pa.info.mRelativePath);
-			EXPECT_EQ(info.mParentPath, pa.info.mParentPath);
-			EXPECT_EQ(info.mFileName, pa.info.mFileName);
-			EXPECT_EQ(info.mStem, pa.info.mStem);
-			EXPECT_EQ(info.mExtension, pa.info.mExtension);
+			if (info)
+			{
+				EXPECT_EQ(info->mFullPath, pa.info.mFullPath);
+				EXPECT_EQ(info->mRootName, pa.info.mRootName);
+				EXPECT_EQ(info->mRootDirectory, pa.info.mRootDirectory);
+				EXPECT_EQ(info->mRootPath, pa.info.mRootPath);
+				EXPECT_EQ(info->mRelativePath, pa.info.mRelativePath);
+				EXPECT_EQ(info->mParentPath, pa.info.mParentPath);
+				EXPECT_EQ(info->mFileName, pa.info.mFileName);
+				EXPECT_EQ(info->mStem, pa.info.mStem);
+				EXPECT_EQ(info->mExtension, pa.info.mExtension);
+			}
 		}
 	}
 	catch (const std::exception & ex)

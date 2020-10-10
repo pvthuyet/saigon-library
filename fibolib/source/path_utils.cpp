@@ -14,7 +14,8 @@ namespace fs = std::filesystem;
 
 namespace fibo
 {
-    template<typename T, typename = typename std::enable_if_t<
+    template<typename T, 
+        typename = typename std::enable_if_t<
         std::is_same<std::string, typename std::decay_t<T>>::value
         || std::is_same<std::wstring, typename std::decay_t<T>>::value
         || std::is_same<std::string_view, typename std::decay_t<T>>::value
@@ -100,23 +101,27 @@ namespace fibo
         return absPath;
     }
 
-    FileNameInformation<std::string> PathUtils::parseFileName(std::string_view inPath, unsigned int flag)
+    std::optional<FileNameInformation<std::string>> PathUtils::parseFileName(std::string_view inPath, unsigned int flag)
     {
         // Empty input path
         if (inPath.empty()) {
-            return FileNameInformation<std::string>{};
+            return std::nullopt;
         }
 
-        FileNameInformation<std::string> resInfo;
         auto winfo = parseFileName(StringUtils::mb2wc(inPath), flag);
-        return convertFileNameInfo(winfo);
+        if (!winfo) {
+            return std::nullopt;
+        }
+
+        // Convert to std::string
+        return convertFileNameInfo(*winfo);
     }
 
-    FileNameInformation<std::wstring> PathUtils::parseFileName(std::wstring_view inPath, unsigned int flag)
+    std::optional<FileNameInformation<std::wstring>> PathUtils::parseFileName(std::wstring_view inPath, unsigned int flag)
     {
         // Empty input path
         if (inPath.empty()) {
-            return FileNameInformation<std::wstring>{};
+            return std::nullopt;
         }
 
         fs::path pa{ absolutePath(inPath) };
