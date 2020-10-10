@@ -2,7 +2,7 @@
 
 #include "windows/string_api.h"
 #include <Windows.h>
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 using namespace std;
 
@@ -14,20 +14,20 @@ namespace fibo::WindowsApi
 		auto numOfChars = ::WideCharToMultiByte(codePage, 0, str.data(), len, NULL, 0, NULL, NULL);
 		if (0 == numOfChars)
 		{
-			throw std::exception(fmt::format("[{}:{}] Failed to convert wide char to multibyte. Error: {}",
+			throw std::runtime_error(fmt::format("[{}:{}] Failed to convert wide char to multibyte. Error: {}",
 				__FUNCTION__,
 				__LINE__,
-				::GetLastError()).c_str());
+				::GetLastError()));
 		}
 
 		std::string strResult(numOfChars, 0);
 		auto retVal = ::WideCharToMultiByte(codePage, 0, str.data(), len, &strResult[0], numOfChars, NULL, NULL);
 		if (0 == retVal)
 		{
-			throw std::exception(fmt::format("[{}:{}] Failed to convert wide char to multibyte. Error: {}",
+			throw std::runtime_error(fmt::format("[{}:{}] Failed to convert wide char to multibyte. Error: {}",
 				__FUNCTION__,
 				__LINE__,
-				::GetLastError()).c_str());
+				::GetLastError()));
 		}
 		return strResult;
 	}
@@ -38,20 +38,20 @@ namespace fibo::WindowsApi
 		int numOfWideChars = ::MultiByteToWideChar(codePage, 0, str.data(), len, NULL, 0);
 		if (0 == numOfWideChars)
 		{
-			throw std::exception(fmt::format("[{}:{}] Failed to convert multibyte to wide char. Error: {}",
+			throw std::runtime_error(fmt::format("[{}:{}] Failed to convert multibyte to wide char. Error: {}",
 				__FUNCTION__,
 				__LINE__,
-				::GetLastError()).c_str());
+				::GetLastError()));
 		}
 
 		std::wstring strResult(numOfWideChars, 0);
 		auto retVal = ::MultiByteToWideChar(codePage, 0, str.data(), len, &strResult[0], numOfWideChars);
 		if (0 == retVal)
 		{
-			throw std::exception(fmt::format("[{}:{}] Failed to convert multibyte to wide char. Error: {}",
+			throw std::runtime_error(fmt::format("[{}:{}] Failed to convert multibyte to wide char. Error: {}",
 				__FUNCTION__,
 				__LINE__,
-				::GetLastError()).c_str());
+				::GetLastError()));
 		}
 		return strResult;
 	}
