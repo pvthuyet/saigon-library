@@ -3,7 +3,7 @@
 #include <string>
 #include <optional>
 
-namespace fibo::PathUtils
+namespace fibo
 {
     enum ParseFlag : unsigned int
     {
@@ -31,6 +31,10 @@ namespace fibo::PathUtils
         std::wstring mExtension;
     };
 
-    _NODISCARD std::wstring absolutePath(std::wstring_view inPath);
-    _NODISCARD std::optional<FileNameInformation> parseFileName(std::wstring_view inPath, unsigned int flag = ParseFlag::All);
+    class PathUtils
+    {
+    public:
+        _NODISCARD static std::wstring absolutePath(std::wstring_view inPath);
+        _NODISCARD static std::optional<FileNameInformation> parseFileName(std::wstring_view inPath, unsigned int flag = ParseFlag::All);
+    };
 }

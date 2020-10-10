@@ -11,12 +11,12 @@ constexpr int kMaxAbPath = MAX_PATH;
 
 namespace fibo::WindowsApi
 {
-	bool validPathLength(size_t len) noexcept
+	bool FileApi::validPathLength(size_t len) noexcept
 	{
 		return (len >= kMinAbPath) && (len < kMaxAbPath);
 	}
 
-	std::wstring absolutePath(std::wstring_view relativePath)
+	std::wstring FileApi::absolutePath(std::wstring_view relativePath)
 	{
 		WCHAR wcAbsPath[kMaxAbPath] = { 0 };
 		WCHAR** lppPart = { NULL };
@@ -35,7 +35,7 @@ namespace fibo::WindowsApi
 		return std::wstring(wcAbsPath);
 	}
 
-	std::wstring canonicalize(std::wstring_view sPath)
+	std::wstring FileApi::canonicalize(std::wstring_view sPath)
 	{
 		WCHAR wcAbsPath[kMaxAbPath] = { 0 };
 		auto retVal = ::PathCchCanonicalize(wcAbsPath, kMaxAbPath, sPath.data());

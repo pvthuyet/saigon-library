@@ -4,14 +4,14 @@
 
 #if USE_WINDOWS_API
 #include "windows/file_api.h"
-#define OSAPI	fibo::WindowsApi
+#define OSAPI	fibo::WindowsApi::FileApi
 #else
 #define OSAPI	fibo::Standard
 #endif // _WIN32
 
 namespace fs = std::filesystem;
 
-namespace fibo::PathUtils
+namespace fibo
 {
     template<typename T, typename = typename std::enable_if_t<
         std::is_same<std::string, typename std::decay_t<T>>::value
@@ -28,7 +28,7 @@ namespace fibo::PathUtils
         return std::cend(sPath) != it;
     }
 
-    std::wstring absolutePath(std::wstring_view inPath)
+    std::wstring PathUtils::absolutePath(std::wstring_view inPath)
     {
         std::wstring absPath{ inPath };
 
@@ -51,7 +51,7 @@ namespace fibo::PathUtils
         return absPath;
     }
 
-    std::optional<FileNameInformation> parseFileName(std::wstring_view inPath, unsigned int flag)
+    std::optional<FileNameInformation> PathUtils::parseFileName(std::wstring_view inPath, unsigned int flag)
     {
         fs::path pa{ absolutePath(inPath) };
         FileNameInformation info;
