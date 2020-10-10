@@ -11,12 +11,34 @@ namespace fibo
 	class StringUtils
 	{
 	public:
+		/**
+		* Maps a UTF-16 (wide character) string to a new character string
+		*
+		* @exception: runtime_error
+		*/
 		_NODISCARD static std::string wc2mb(std::wstring_view str, unsigned int codePage = 65001); // 65001: CP_UTF8
+
+		/**
+		* Maps a character string to a UTF-16 (wide character) string
+		*
+		* @exception: runtime_error
+		*/
 		_NODISCARD static std::wstring mb2wc(std::string_view str, unsigned int codePage = 65001); // 65001: CP_UTF8
 
-		// Generate random filename
+		/**
+		* Random an alphabet string from 0-9a-zA-Z
+		*
+		* @exception: noexcept
+		*/
 		_NODISCARD std::string randAlphabetString(unsigned len) noexcept;
 
+		/**
+		* Parse a string by token
+		*
+		* @param s : The string is parsed. Accept only std::string or std::wstring
+		* @param rexToken: Regular expression token string format
+		* @exception: std::exception
+		*/
 		template<typename T, 
 			typename = typename std::enable_if_t<
 			std::is_same<std::string, typename std::decay_t<T>>::value
@@ -40,6 +62,11 @@ namespace fibo
 				std::back_inserter(result));
 			return result;
 		}
+
+
+
+
+
 
 		template<typename T, typename = typename std::enable_if_t<
 			std::is_same<std::string, typename std::decay_t<T>>::value
