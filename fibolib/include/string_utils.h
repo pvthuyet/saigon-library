@@ -20,8 +20,7 @@ namespace fibo
 		template<typename T, 
 			typename = typename std::enable_if_t<
 			std::is_same<std::string, typename std::decay_t<T>>::value
-			|| std::is_same<std::wstring, typename std::decay_t<T>>::value
-			>,
+			|| std::is_same<std::wstring, typename std::decay_t<T>>::value>,
 			typename Regex = std::conditional_t<std::is_same<std::string, typename std::decay_t<T>>::value, std::regex, std::wregex>,
 			typename RegexTokenIt = std::regex_token_iterator<typename T::const_iterator>
 		>
