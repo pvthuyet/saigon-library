@@ -3,7 +3,7 @@
 #include "windows/file_api.h"
 #include <Windows.h>
 #include <pathcch.h>
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 #pragma comment(lib, "Pathcch.lib")
 constexpr int kMinAbPath = 3;
@@ -27,10 +27,10 @@ namespace fibo::WindowsApi
 
 		if (0 == retVal)
 		{
-			throw std::exception(fmt::format("[{}:{}] Failed to convert relative path. Error: {}", 
+			throw std::runtime_error(fmt::format("[{}:{}] Failed to convert relative path. Error: {}", 
 				__FUNCTION__,
 				__LINE__,
-				::GetLastError()).c_str());
+				::GetLastError()));
 		}
 		return std::wstring(wcAbsPath);
 	}
@@ -41,10 +41,10 @@ namespace fibo::WindowsApi
 		auto retVal = ::PathCchCanonicalize(wcAbsPath, kMaxAbPath, sPath.data());
 		if (FAILED(retVal))
 		{
-			throw std::exception(fmt::format("[{}:{}] Failed to convert canonical path. Error: {}",
+			throw std::runtime_error(fmt::format("[{}:{}] Failed to convert canonical path. Error: {}",
 				__FUNCTION__,
 				__LINE__,
-				::GetLastError()).c_str());
+				::GetLastError()));
 		}
 		return std::wstring(wcAbsPath);
 	}

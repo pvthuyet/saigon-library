@@ -40,9 +40,9 @@ namespace fibo::PathUtils
         // absolute path length valid
         if (!OSAPI::validPathLength(absPath.length())) 
         {
-            throw std::exception(fmt::format("[{}:{}] Invalid file path length",
+            throw std::length_error(fmt::format("[{}:{}] Invalid file path length",
                 __FUNCTION__,
-                __LINE__).c_str());
+                __LINE__));
         }
 
         if (isCanonical(absPath)) {

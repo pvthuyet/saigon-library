@@ -33,9 +33,6 @@
     <ClInclude Include="include\task.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\minidump.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\task_timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -51,15 +48,15 @@
     <ClInclude Include="include\windows\string_api.h">
       <Filter>Windows</Filter>
     </ClInclude>
+    <ClInclude Include="include\windows\minidump.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\task.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\minidump.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\task_timer.cpp">
@@ -81,6 +78,9 @@
       <Filter>Windows</Filter>
     </ClCompile>
     <ClCompile Include="source\windows\string_api.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\minidump.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>
