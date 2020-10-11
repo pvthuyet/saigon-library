@@ -162,3 +162,18 @@ bool testSplit()
 	}
 	return true;
 }
+
+bool testRegexSearch()
+{
+	{
+		std::wstring str(L"abc def");
+		std::wstring token(L"\\s+");
+		auto rs = fibo::StringUtils::regexSearch(str, token);
+	}
+	{
+		std::string str("abc def");
+		std::string token("\\s+");
+		auto rs = fibo::StringUtils::regexSearch(str, token);
+	}
+	return true;
+}

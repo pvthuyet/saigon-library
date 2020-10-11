@@ -49,39 +49,5 @@ namespace fibo
 
 	namespace StringUtils____
 	{
-		bool regexSearch(const std::string& str, const std::string& rex, bool icase, const std::locale& loc)
-		{
-			std::locale oldLoc = std::locale::global(loc);
-			bool ret = false;
-			try
-			{
-				std::smatch sm;
-				std::regex re(rex, icase ? (std::regex_constants::ECMAScript | std::regex_constants::icase) : std::regex_constants::ECMAScript);
-				ret = std::regex_search(str, sm, re);
-			}
-			catch(...)
-			{ }
-			std::locale::global(oldLoc);
-
-			return ret;
-		}
-
-		bool regexSearch(const std::wstring& str, const std::wstring& rex, bool icase, const std::locale& loc)
-		{
-			std::locale oldLoc = std::locale::global(loc);
-			bool ret = false;
-			try
-			{
-				std::wsmatch sm;
-				std::wregex re(rex, icase ? (std::regex_constants::ECMAScript | std::regex_constants::icase) : std::regex_constants::ECMAScript);
-				ret = std::regex_search(str, sm, re);
-			}
-			catch (...)
-			{
-			}
-			std::locale::global(oldLoc);
-
-			return ret;
-		}
 	}
 }

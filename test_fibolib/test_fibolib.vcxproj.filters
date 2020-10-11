@@ -15,10 +15,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="test_data\file_utils.json">
+      <Filter>data</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="path utils">
       <UniqueIdentifier>{46f129ed-b306-48e2-974a-434fe83407a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{a64b5402-39f4-4119-8803-1bf375227139}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

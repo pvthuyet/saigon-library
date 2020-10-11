@@ -15,3 +15,8 @@ TEST(StringUtils, split_)
 {
 	testSplit();
 }
+
+TEST(StringUtils, regexSearch_)
+{
+	testRegexSearch();
+}

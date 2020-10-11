@@ -6,4 +6,5 @@ bool testParseFileName();
 
 // string_util
 bool testSplit();
+bool testRegexSearch();
 

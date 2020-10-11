@@ -36,7 +36,7 @@ namespace fibo
 		* Parse a string by token
 		*
 		* @param s : The string is parsed. Accept only std::string or std::wstring
-		* @param rexToken: Regular expression token string format
+		* @param rexToken: Regular expression token string format. Ex: whitespace: \\s+
 		* @exception: std::exception
 		*/
 		template<typename T, 
@@ -46,7 +46,7 @@ namespace fibo
 			typename Regex = std::conditional_t<std::is_same<std::string, typename std::decay_t<T>>::value, std::regex, std::wregex>,
 			typename RegexTokenIt = std::regex_token_iterator<typename T::const_iterator>
 		>
-		_NODISCARD static std::vector<T> split(const T& s, const T& rexToken) // whitespace: \\s+
+		_NODISCARD static std::vector<T> split(const T& s, const T& rexToken)
 		{
 			if (s.empty()) {
 				return std::vector<T>{};
@@ -60,20 +60,23 @@ namespace fibo
 			std::copy(RegexTokenIt(std::cbegin(s), std::cend(s), rex, -1),
 				RegexTokenIt(),
 				std::back_inserter(result));
+
 			return result;
 		}
 
-
-
-
-
-
+		/**
+		* Regular expression search in string
+		*
+		* @param s : The string search. Accept only std::string or std::wstring
+		* @param rex: Regular expression string format.
+		* @exception: std::exception
+		*/
 		template<typename T, typename = typename std::enable_if_t<
 			std::is_same<std::string, typename std::decay_t<T>>::value
-			|| std::is_same<std::wstring, typename std::decay_t<T>>::value
-			>
+			|| std::is_same<std::wstring, typename std::decay_t<T>>::value>,
+			typename Regex = std::conditional_t<std::is_same<std::string, typename std::decay_t<T>>::value, std::regex, std::wregex>
 		>
-		_NODISCARD bool regexSearch(const T& s, const T& rex, bool icase = false, const std::locale& loc = std::locale()) noexcept
+		_NODISCARD static bool regexSearch(const T& s, const T& rex, bool icase = false, const std::locale& loc = std::locale()) noexcept
 		{
 			// Invalid parameter
 			if (s.empty() || rex.empty()) {
@@ -84,18 +87,8 @@ namespace fibo
 			bool ret = false;
 			try
 			{
-				if constexpr (std::is_same<std::wstring, typename std::decay_t<T>>::value)
-				{
-					std::wsmatch sm;
-					std::wregex re(rex, icase ? (std::regex_constants::ECMAScript | std::regex_constants::icase) : std::regex_constants::ECMAScript);
-					ret = std::regex_search(s, sm, re);
-				}
-				else
-				{
-					std::smatch sm;
-					std::regex re(rex, icase ? (std::regex_constants::ECMAScript | std::regex_constants::icase) : std::regex_constants::ECMAScript);
-					ret = std::regex_search(s, sm, re);
-				}
+				Regex re(rex, icase ? (std::regex_constants::ECMAScript | std::regex_constants::icase) : std::regex_constants::ECMAScript);
+				ret = std::regex_search(s, re);
 			}
 			catch (...)
 			{
@@ -104,6 +97,12 @@ namespace fibo
 
 			return ret;
 		}
+
+
+
+
+
+
 	};
 
 	namespace StringUtils____
@@ -159,8 +158,5 @@ namespace fibo
 				return (it != std::cend(cont)) ? std::distance(std::cbegin(cont), it) : T::npos;
 			}
 		}
-		
-		bool regexSearch(const std::string& str, const std::string& rex, bool icase = false, const std::locale& loc = std::locale());
-		bool regexSearch(const std::wstring& str, const std::wstring& rex, bool icase = false, const std::locale& loc = std::locale());
 	}
 }
