@@ -48,12 +48,16 @@ namespace fibo
 		>
 		_NODISCARD static std::vector<TString> split(const TString& s, const TString& rexToken)
 		{
-			if (s.empty()) {
+			if (s.empty()) 
+			{
 				return std::vector<TString>{};
 			}
 
 			// Invalid parameter
-			assert(!rexToken.empty());
+			if (rexToken.empty())
+			{
+				return std::vector<TString>{ s };
+			}
 
 			std::vector<TString> result;
 			const TRegex rex(rexToken);
@@ -125,9 +129,16 @@ namespace fibo
 		>
 		_NODISCARD static std::size_t search(const TString& s, const TString& ss, bool icase = false, const std::locale& loc = std::locale())
 		{
-			if (std::size(s) < std::size(ss))
+			auto ssSz = std::size(ss);
+			if (std::size(s) < ssSz)
 			{
 				return TString::npos;
+			}
+
+			// ss is empty
+			if (0 == ssSz)
+			{
+				return 0;
 			}
 
 			if (icase)
