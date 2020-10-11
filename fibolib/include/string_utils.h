@@ -30,7 +30,7 @@ namespace fibo
 		*
 		* @exception: noexcept
 		*/
-		_NODISCARD std::string randAlphabetString(unsigned len) noexcept;
+		_NODISCARD static std::string randAlphabetString(unsigned len) noexcept;
 
 		/**
 		* Parse a string by token
@@ -43,8 +43,8 @@ namespace fibo
 			typename = typename std::enable_if_t<
 			std::is_same<std::string, typename std::decay_t<TString>>::value
 			|| std::is_same<std::wstring, typename std::decay_t<TString>>::value>,
-			typename Regex = std::conditional_t<std::is_same<std::string, typename std::decay_t<TString>>::value, std::regex, std::wregex>,
-			typename RegexTokenIt = std::regex_token_iterator<typename TString::const_iterator>
+			typename TRegex = std::conditional_t<std::is_same<std::string, typename std::decay_t<TString>>::value, std::regex, std::wregex>,
+			typename TRegexTokenIt = std::regex_token_iterator<typename TString::const_iterator>
 		>
 		_NODISCARD static std::vector<TString> split(const TString& s, const TString& rexToken)
 		{
@@ -56,9 +56,9 @@ namespace fibo
 			assert(!rexToken.empty());
 
 			std::vector<TString> result;
-			const Regex rex(rexToken);
-			std::copy(RegexTokenIt(std::cbegin(s), std::cend(s), rex, -1),
-				RegexTokenIt(),
+			const TRegex rex(rexToken);
+			std::copy(TRegexTokenIt(std::cbegin(s), std::cend(s), rex, -1),
+				TRegexTokenIt(),
 				std::back_inserter(result));
 
 			return result;
@@ -87,9 +87,34 @@ namespace fibo
 		};
 
 		/**
-		* search a sub string in a string
+		* Compare to string with locale. Accept only std::string or std::wstring
 		*
-		* @param s : The string search. Accept only std::string or std::wstring
+		* @exception: std::exception
+		* @return: true if equal. Othewise false.
+		*/
+		template<typename TString, typename = typename std::enable_if_t<
+			std::is_same<std::string, typename std::decay_t<TString>>::value
+			|| std::is_same<std::wstring, typename std::decay_t<TString>>::value>
+		>
+		_NODISCARD static bool equal(const TString& s1, const TString& s2, bool icase = false, const std::locale& loc = std::locale())
+		{
+			if (std::size(s1) != std::size(s2))
+			{
+				return false;
+			}
+
+			if (icase)
+			{
+				return std::equal(std::cbegin(s1), std::cend(s1), std::cbegin(s2), std::cend(s2), ICmp<typename TString::value_type>(loc));
+			}
+
+			return std::equal(std::cbegin(s1), std::cend(s1), std::cbegin(s2), std::cend(s2));
+		}
+
+		/**
+		* search a sub string in a string. Accept only std::string or std::wstring
+		*
+		* @param s : The string search.
 		* @param ss: sub string
 		* @exception: std::exception
 		* @return: position of ss in s if found. Otherwise npos
@@ -98,7 +123,7 @@ namespace fibo
 			std::is_same<std::string, typename std::decay_t<TString>>::value
 			|| std::is_same<std::wstring, typename std::decay_t<TString>>::value>
 		>
-		std::size_t search(const TString& s, const TString& ss, bool icase = false, const std::locale& loc = std::locale())
+		_NODISCARD static std::size_t search(const TString& s, const TString& ss, bool icase = false, const std::locale& loc = std::locale())
 		{
 			if (std::size(s) < std::size(ss))
 			{
@@ -150,31 +175,5 @@ namespace fibo
 
 			return ret;
 		}
-
-
-
-
-
-
 	};
-
-	namespace StringUtils____
-	{
-
-		template<typename T>
-		bool equal(const T& s1, const T& s2, bool icase = false, const std::locale& loc = std::locale())
-		{
-			if (std::size(s1) != std::size(s2))
-			{
-				return false;
-			}
-
-			if (icase)
-			{
-				return std::equal(std::cbegin(s1), std::cend(s1), std::cbegin(s2), std::cend(s2), ICmp<typename T::value_type>(loc));
-			}
-
-			return std::equal(std::cbegin(s1), std::cend(s1), std::cbegin(s2), std::cend(s2));
-		}
-	}
 }

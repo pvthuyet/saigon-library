@@ -1,7 +1,6 @@
 #include "string_utils.h"
 #include <chrono>
 #include <random>
-#include <Windows.h>
 
 #if USE_WINDOWS_API
 #include "windows/string_api.h"
