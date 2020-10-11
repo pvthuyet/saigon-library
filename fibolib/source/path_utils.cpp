@@ -14,15 +14,15 @@ namespace fs = std::filesystem;
 
 namespace fibo
 {
-    template<typename T, 
+    template<typename TString,
         typename = typename std::enable_if_t<
-        std::is_same<std::string, typename std::decay_t<T>>::value
-        || std::is_same<std::wstring, typename std::decay_t<T>>::value
-        || std::is_same<std::string_view, typename std::decay_t<T>>::value
-        || std::is_same<std::wstring_view, typename std::decay_t<T>>::value
+        std::is_same<std::string, typename std::decay_t<TString>>::value
+        || std::is_same<std::wstring, typename std::decay_t<TString>>::value
+        || std::is_same<std::string_view, typename std::decay_t<TString>>::value
+        || std::is_same<std::wstring_view, typename std::decay_t<TString>>::value
         >
     >
-    _NODISCARD bool isCanonical(const T& sPath)
+    _NODISCARD bool isCanonical(const TString& sPath)
     {
         auto it = std::find_if(std::cbegin(sPath), std::cend(sPath), [](auto c) {
             return '.' == c;
@@ -30,16 +30,16 @@ namespace fibo
         return std::cend(sPath) != it;
     }
 
-    template<typename T, typename = typename std::enable_if_t<
-        std::is_same<std::string, typename std::decay_t<T>>::value
-        || std::is_same<std::wstring, typename std::decay_t<T>>::value>,
-        typename U = std::conditional_t<std::is_same<std::string, typename std::decay_t<T>>::value, std::wstring, std::string>
+    template<typename TString, typename = typename std::enable_if_t<
+        std::is_same<std::string, typename std::decay_t<TString>>::value
+        || std::is_same<std::wstring, typename std::decay_t<TString>>::value>,
+        typename U = std::conditional_t<std::is_same<std::string, typename std::decay_t<TString>>::value, std::wstring, std::string>
     >
-    decltype(auto) convertFileNameInfo(const FileNameInformation<T>& input)
+    decltype(auto) convertFileNameInfo(const FileNameInformation<TString>& input)
     {
         FileNameInformation<U> info;
         // convert wstring => string
-        if constexpr (std::is_same<std::wstring, typename std::decay_t<T>>::value)
+        if constexpr (std::is_same<std::wstring, typename std::decay_t<TString>>::value)
         {
             info.mFullPath      = StringUtils::wc2mb(input.mFullPath);
             info.mRootName      = StringUtils::wc2mb(input.mRootName);

@@ -17,22 +17,22 @@ namespace fibo
         All             = 0xFFFF
     };
 
-    template<typename T, typename = typename std::enable_if_t<
-        std::is_same<std::string, typename std::decay_t<T>>::value
-        || std::is_same<std::wstring, typename std::decay_t<T>>::value
+    template<typename TString, typename = typename std::enable_if_t<
+        std::is_same<std::string, typename std::decay_t<TString>>::value
+        || std::is_same<std::wstring, typename std::decay_t<TString>>::value
         >
     >
     struct FileNameInformation
     {
-        T mFullPath;
-        T mRootName;
-        T mRootDirectory;
-        T mRootPath;
-        T mRelativePath;
-        T mParentPath;
-        T mFileName;
-        T mStem;
-        T mExtension;
+        TString mFullPath;
+        TString mRootName;
+        TString mRootDirectory;
+        TString mRootPath;
+        TString mRelativePath;
+        TString mParentPath;
+        TString mFileName;
+        TString mStem;
+        TString mExtension;
     };
 
     class PathUtils

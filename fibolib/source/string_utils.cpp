@@ -46,8 +46,4 @@ namespace fibo
 		}
 		return str;
 	}
-
-	namespace StringUtils____
-	{
-	}
 }
