@@ -32,15 +32,15 @@ namespace fibo
 
     template<typename T, typename = typename std::enable_if_t<
         std::is_same<std::string, typename std::decay_t<T>>::value
-        || std::is_same<std::wstring, typename std::decay_t<T>>::value
-        >
+        || std::is_same<std::wstring, typename std::decay_t<T>>::value>,
+        typename U = std::conditional_t<std::is_same<std::string, typename std::decay_t<T>>::value, std::wstring, std::string>
     >
     decltype(auto) convertFileNameInfo(const FileNameInformation<T>& input)
     {
+        FileNameInformation<U> info;
         // convert wstring => string
         if constexpr (std::is_same<std::wstring, typename std::decay_t<T>>::value)
         {
-            FileNameInformation<std::string> info;
             info.mFullPath      = StringUtils::wc2mb(input.mFullPath);
             info.mRootName      = StringUtils::wc2mb(input.mRootName);
             info.mRootDirectory = StringUtils::wc2mb(input.mRootDirectory);
@@ -54,7 +54,6 @@ namespace fibo
         }
         else // convert string => wstring
         {
-            FileNameInformation<std::wstring> info;
             info.mFullPath      = StringUtils::mb2wc(input.mFullPath);
             info.mRootName      = StringUtils::mb2wc(input.mRootName);
             info.mRootDirectory = StringUtils::mb2wc(input.mRootDirectory);
@@ -101,27 +100,22 @@ namespace fibo
         return absPath;
     }
 
-    std::optional<FileNameInformation<std::string>> PathUtils::parseFileName(std::string_view inPath, unsigned int flag)
+    FileNameInformation<std::string> PathUtils::parseFileName(std::string_view inPath, unsigned int flag)
     {
         // Empty input path
         if (inPath.empty()) {
-            return std::nullopt;
-        }
-
-        auto winfo = parseFileName(StringUtils::mb2wc(inPath), flag);
-        if (!winfo) {
-            return std::nullopt;
+            return FileNameInformation<std::string>{};
         }
 
         // Convert to std::string
-        return convertFileNameInfo(*winfo);
+        return convertFileNameInfo(parseFileName(StringUtils::mb2wc(inPath), flag));
     }
 
-    std::optional<FileNameInformation<std::wstring>> PathUtils::parseFileName(std::wstring_view inPath, unsigned int flag)
+    FileNameInformation<std::wstring> PathUtils::parseFileName(std::wstring_view inPath, unsigned int flag)
     {
         // Empty input path
         if (inPath.empty()) {
-            return std::nullopt;
+            return FileNameInformation<std::wstring>{};
         }
 
         fs::path pa{ absolutePath(inPath) };

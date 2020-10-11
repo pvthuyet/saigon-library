@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <optional>
 
 namespace fibo
 {
@@ -39,10 +38,42 @@ namespace fibo
     class PathUtils
     {
     public:
+        /**
+        * Retrieves the full path and file name of the specified file.
+        * This function does not verify that the resulting path and file name are valid, 
+        * or that they see an existing file on the associated volume.
+        * Path length should be between 3 - 260
+        * Version string
+        *
+        * @exception: runtime_error, length_error
+        */
         _NODISCARD static std::string absolutePath(std::string_view inPath);
+
+        /**
+        * Retrieves the full path and file name of the specified file.
+        * This function does not verify that the resulting path and file name are valid,
+        * or that they see an existing file on the associated volume.
+        * Path length should be between 3 - 260
+        * Version wstring
+        *
+        * @exception: runtime_error, length_error
+        */
         _NODISCARD static std::wstring absolutePath(std::wstring_view inPath);
 
-        _NODISCARD static std::optional<FileNameInformation<std::string>> parseFileName(std::string_view inPath, unsigned int flag = ParseFlag::All);
-        _NODISCARD static std::optional<FileNameInformation<std::wstring>> parseFileName(std::wstring_view inPath, unsigned int flag = ParseFlag::All);
+        /**
+        * Retrieves modules of full file path
+        * Version string
+        *
+        * @exception: runtime_error, length_error
+        */
+        _NODISCARD static FileNameInformation<std::string> parseFileName(std::string_view inPath, unsigned int flag = ParseFlag::All);
+
+        /**
+        * Retrieves modules of full file path
+        * Version wstring
+        *
+        * @exception: runtime_error, length_error
+        */
+        _NODISCARD static FileNameInformation<std::wstring> parseFileName(std::wstring_view inPath, unsigned int flag = ParseFlag::All);
     };
 }
