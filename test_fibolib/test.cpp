@@ -1,22 +1,18 @@
 #include "pch.h"
 #include "test_path_utils.h"
+#include "test_string_utils.h"
 
-TEST(AbsolutePath, absolute_path)
+TEST(TestPathUtils, absolute_path)
 {
 	//testAbsolutePath();
 }
 
-TEST(ParseFileName, parse_file_name)
+TEST(TestPathUtils, parse_file_name)
 {
 	//testParseFileName();
 }
 
-TEST(StringUtils, split_)
+TEST(StringUtils, split)
 {
 	testSplit();
-}
-
-TEST(StringUtils, regexSearch_)
-{
-	testRegexSearch();
 }

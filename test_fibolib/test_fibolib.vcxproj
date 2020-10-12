@@ -35,6 +35,7 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="test_path_utils.h" />
+    <ClInclude Include="test_string_utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp" />
@@ -45,6 +46,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="test_path_utils.cpp" />
+    <ClCompile Include="test_string_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\fibolib\fibolib.vcxproj">
@@ -53,7 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="test_data\file_utils.json" />
+    <None Include="test_data\path_utils.json" />
+    <None Include="test_data\string_utils.json" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

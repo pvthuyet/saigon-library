@@ -6,16 +6,21 @@
     <ClCompile Include="test_path_utils.cpp">
       <Filter>path utils</Filter>
     </ClCompile>
+    <ClCompile Include="test_string_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="test_path_utils.h">
       <Filter>path utils</Filter>
     </ClInclude>
+    <ClInclude Include="test_string_utils.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="test_data\file_utils.json">
+    <None Include="test_data\path_utils.json">
+      <Filter>data</Filter>
+    </None>
+    <None Include="test_data\string_utils.json">
       <Filter>data</Filter>
     </None>
   </ItemGroup>
