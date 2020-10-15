@@ -13,12 +13,12 @@ using namespace std;
 
 namespace fibo
 {
-	std::string StringUtils::wc2mb(std::wstring_view str, unsigned int codePage)
+	std::string StringUtils::convert(std::wstring_view str, unsigned int codePage)
 	{
 		return OSAPI::wc2mb(str, codePage);
 	}
 
-	std::wstring StringUtils::mb2wc(std::string_view str, unsigned int codePage)
+	std::wstring StringUtils::convert(std::string_view str, unsigned int codePage)
 	{
 		return OSAPI::mb2wc(str, codePage);
 	}

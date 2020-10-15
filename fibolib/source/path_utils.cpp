@@ -38,38 +38,21 @@ namespace fibo
     decltype(auto) convertFileNameInfo(const FileNameInformation<TString>& input)
     {
         FileNameInformation<U> info;
-        // convert wstring => string
-        if constexpr (std::is_same<std::wstring, typename std::decay_t<TString>>::value)
-        {
-            info.mFullPath      = StringUtils::wc2mb(input.mFullPath);
-            info.mRootName      = StringUtils::wc2mb(input.mRootName);
-            info.mRootDirectory = StringUtils::wc2mb(input.mRootDirectory);
-            info.mRootPath      = StringUtils::wc2mb(input.mRootPath);
-            info.mRelativePath  = StringUtils::wc2mb(input.mRelativePath);
-            info.mParentPath    = StringUtils::wc2mb(input.mParentPath);
-            info.mFileName      = StringUtils::wc2mb(input.mFileName);
-            info.mStem          = StringUtils::wc2mb(input.mStem);
-            info.mExtension     = StringUtils::wc2mb(input.mExtension);
-            return info;
-        }
-        else // convert string => wstring
-        {
-            info.mFullPath      = StringUtils::mb2wc(input.mFullPath);
-            info.mRootName      = StringUtils::mb2wc(input.mRootName);
-            info.mRootDirectory = StringUtils::mb2wc(input.mRootDirectory);
-            info.mRootPath      = StringUtils::mb2wc(input.mRootPath);
-            info.mRelativePath  = StringUtils::mb2wc(input.mRelativePath);
-            info.mParentPath    = StringUtils::mb2wc(input.mParentPath);
-            info.mFileName      = StringUtils::mb2wc(input.mFileName);
-            info.mStem          = StringUtils::mb2wc(input.mStem);
-            info.mExtension     = StringUtils::mb2wc(input.mExtension);
-            return info;
-        }
+        info.mFullPath      = StringUtils::convert(input.mFullPath);
+        info.mRootName      = StringUtils::convert(input.mRootName);
+        info.mRootDirectory = StringUtils::convert(input.mRootDirectory);
+        info.mRootPath      = StringUtils::convert(input.mRootPath);
+        info.mRelativePath  = StringUtils::convert(input.mRelativePath);
+        info.mParentPath    = StringUtils::convert(input.mParentPath);
+        info.mFileName      = StringUtils::convert(input.mFileName);
+        info.mStem          = StringUtils::convert(input.mStem);
+        info.mExtension     = StringUtils::convert(input.mExtension);
+        return info;
     }
 
     std::string PathUtils::absolutePath(std::string_view inPath)
     {
-        return inPath.empty() ? std::string{} : StringUtils::wc2mb(absolutePath(StringUtils::mb2wc(inPath)));
+        return inPath.empty() ? std::string{} : StringUtils::convert(absolutePath(StringUtils::convert(inPath)));
     }
 
     std::wstring PathUtils::absolutePath(std::wstring_view inPath)
@@ -108,7 +91,7 @@ namespace fibo
         }
 
         // Convert to std::string
-        return convertFileNameInfo(parseFileName(StringUtils::mb2wc(inPath), flag));
+        return convertFileNameInfo(parseFileName(StringUtils::convert(inPath), flag));
     }
 
     FileNameInformation<std::wstring> PathUtils::parseFileName(std::wstring_view inPath, unsigned int flag)

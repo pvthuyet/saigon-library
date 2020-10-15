@@ -16,14 +16,14 @@ namespace fibo
 		*
 		* @exception: runtime_error
 		*/
-		_NODISCARD static std::string wc2mb(std::wstring_view str, unsigned int codePage = 65001); // 65001: CP_UTF8
+		_NODISCARD static std::string convert(std::wstring_view str, unsigned int codePage = 65001); // 65001: CP_UTF8
 
 		/**
 		* Maps a character string to a UTF-16 (wide character) string
 		*
 		* @exception: runtime_error
 		*/
-		_NODISCARD static std::wstring mb2wc(std::string_view str, unsigned int codePage = 65001); // 65001: CP_UTF8
+		_NODISCARD static std::wstring convert(std::string_view str, unsigned int codePage = 65001); // 65001: CP_UTF8
 
 		/**
 		* Random an alphabet string from 0-9a-zA-Z
