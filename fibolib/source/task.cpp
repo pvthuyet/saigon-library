@@ -1,17 +1,7 @@
-#include "Task.h"
+#include "task.h"
 
 namespace fibo
 {
-	Task::Task() noexcept
-		: mStop{ false }
-	{
-	}
-
-	Task::~Task() noexcept
-	{
-		stopTask();
-	}
-
 	bool Task::startTask() noexcept
 	{
 		try

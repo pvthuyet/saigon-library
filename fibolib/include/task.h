@@ -8,8 +8,7 @@ namespace fibo
 	class Task
 	{
 	public:
-		Task() noexcept;
-		virtual ~Task() noexcept;
+		virtual ~Task() noexcept {};
 		Task(const Task&) = delete;
 		Task& operator=(const Task&) = delete;
 
@@ -20,7 +19,7 @@ namespace fibo
 		virtual void onRun() = 0;
 
 	protected:
-		std::atomic_bool mStop;
+		std::atomic_bool mStop{ false };
 		std::mutex mMux;
 		std::condition_variable mCV;
 		std::future<void> mFut;

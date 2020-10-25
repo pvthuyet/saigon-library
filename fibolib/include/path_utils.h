@@ -1,5 +1,6 @@
 #pragma once
 
+#include "define.h"
 #include <string>
 
 namespace fibo
@@ -47,7 +48,7 @@ namespace fibo
         *
         * @exception: runtime_error, length_error
         */
-        _NODISCARD static std::string absolutePath(std::string_view inPath);
+        F_NODISCARD static std::string absolutePath(std::string_view inPath);
 
         /**
         * Retrieves the full path and file name of the specified file.
@@ -58,7 +59,7 @@ namespace fibo
         *
         * @exception: runtime_error, length_error
         */
-        _NODISCARD static std::wstring absolutePath(std::wstring_view inPath);
+        F_NODISCARD static std::wstring absolutePath(std::wstring_view inPath);
 
         /**
         * Retrieves modules of full file path
@@ -66,7 +67,7 @@ namespace fibo
         *
         * @exception: runtime_error, length_error
         */
-        _NODISCARD static FileNameInformation<std::string> parseFileName(std::string_view inPath, unsigned int flag = ParseFlag::All);
+        F_NODISCARD static FileNameInformation<std::string> parseFileName(std::string_view inPath, unsigned int flag = ParseFlag::All);
 
         /**
         * Retrieves modules of full file path
@@ -74,6 +75,6 @@ namespace fibo
         *
         * @exception: runtime_error, length_error
         */
-        _NODISCARD static FileNameInformation<std::wstring> parseFileName(std::wstring_view inPath, unsigned int flag = ParseFlag::All);
+        F_NODISCARD static FileNameInformation<std::wstring> parseFileName(std::wstring_view inPath, unsigned int flag = ParseFlag::All);
     };
 }

@@ -1,15 +1,10 @@
 #include "task_timer.h"
 namespace fibo
 {
-	TaskTimer::TaskTimer(unsigned long interval) noexcept
-		: mStop{ false },
-		mInterval{ interval }
+	TaskTimer::TaskTimer(unsigned long interval) noexcept :
+		mInterval{ interval },
+		mStop{ false }
 	{
-	}
-
-	TaskTimer::~TaskTimer() noexcept
-	{
-		stopTimer();
 	}
 
 	bool TaskTimer::startTimer() noexcept

@@ -16,9 +16,8 @@ namespace fibo
 	class TaskTimer
 	{
 	public:
-		TaskTimer() = delete;
-		TaskTimer(unsigned long interval) noexcept; // in milli-second
-		virtual ~TaskTimer() noexcept;
+		TaskTimer(unsigned long interval = 1000) noexcept; // in milli-second
+		virtual ~TaskTimer() noexcept {};
 
 		TaskTimer(const TaskTimer&) = delete;
 		TaskTimer& operator=(const TaskTimer&) = delete;

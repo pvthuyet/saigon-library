@@ -22,7 +22,7 @@ namespace fibo
         || std::is_same<std::wstring_view, typename std::decay_t<TString>>::value
         >
     >
-    _NODISCARD bool isCanonical(const TString& sPath)
+    F_NODISCARD bool isCanonical(const TString& sPath)
     {
         auto it = std::find_if(std::cbegin(sPath), std::cend(sPath), [](auto c) {
             return '.' == c;

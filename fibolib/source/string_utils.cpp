@@ -23,7 +23,7 @@ namespace fibo
 		return OSAPI::mb2wc(str, codePage);
 	}
 
-	std::string StringUtils::randAlphabetString(unsigned len) noexcept
+	std::string StringUtils::randAlphabetString(unsigned len)
 	{
 		constexpr const char alphabet[] =
 		{ '0','1','2','3','4','5','6','7','8','9',

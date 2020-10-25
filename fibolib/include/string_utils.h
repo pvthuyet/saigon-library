@@ -1,5 +1,6 @@
 #pragma once
 
+#include "define.h"
 #include <string>
 #include <vector>
 #include <locale>
@@ -16,21 +17,21 @@ namespace fibo
 		*
 		* @exception: runtime_error
 		*/
-		_NODISCARD static std::string convert(std::wstring_view str, unsigned int codePage = 65001); // 65001: CP_UTF8
+		F_NODISCARD static std::string convert(std::wstring_view str, unsigned int codePage = 65001); // 65001: CP_UTF8
 
 		/**
 		* Maps a character string to a UTF-16 (wide character) string
 		*
 		* @exception: runtime_error
 		*/
-		_NODISCARD static std::wstring convert(std::string_view str, unsigned int codePage = 65001); // 65001: CP_UTF8
+		F_NODISCARD static std::wstring convert(std::string_view str, unsigned int codePage = 65001); // 65001: CP_UTF8
 
 		/**
 		* Random an alphabet string from 0-9a-zA-Z
 		*
 		* @exception: noexcept
 		*/
-		_NODISCARD static std::string randAlphabetString(unsigned len) noexcept;
+		F_NODISCARD static std::string randAlphabetString(unsigned len);
 
 		/**
 		* Parse a string by token
@@ -46,7 +47,7 @@ namespace fibo
 			typename TRegex = std::conditional_t<std::is_same<std::string, typename std::decay_t<TString>>::value, std::regex, std::wregex>,
 			typename TRegexTokenIt = std::regex_token_iterator<typename TString::const_iterator>
 		>
-		_NODISCARD static std::vector<TString> split(const TString& s, const TString& rexToken)
+		F_NODISCARD static std::vector<TString> split(const TString& s, const TString& rexToken)
 		{
 			if (s.empty()) 
 			{
@@ -81,7 +82,7 @@ namespace fibo
 				mLoc(loc)
 			{}
 
-			bool operator()(const TChar& ch1, const TChar& ch2) const noexcept
+			bool operator()(const TChar& ch1, const TChar& ch2) const
 			{
 				return std::toupper(ch1, mLoc) == std::toupper(ch2, mLoc);
 			}
@@ -100,7 +101,7 @@ namespace fibo
 			std::is_same<std::string, typename std::decay_t<TString>>::value
 			|| std::is_same<std::wstring, typename std::decay_t<TString>>::value>
 		>
-		_NODISCARD static bool equal(const TString& s1, const TString& s2, bool icase = false, const std::locale& loc = std::locale())
+		F_NODISCARD static bool equal(const TString& s1, const TString& s2, bool icase = false, const std::locale& loc = std::locale())
 		{
 			if (std::size(s1) != std::size(s2))
 			{
@@ -127,7 +128,7 @@ namespace fibo
 			std::is_same<std::string, typename std::decay_t<TString>>::value
 			|| std::is_same<std::wstring, typename std::decay_t<TString>>::value>
 		>
-		_NODISCARD static std::size_t search(const TString& s, const TString& ss, bool icase = false, const std::locale& loc = std::locale())
+		F_NODISCARD static std::size_t search(const TString& s, const TString& ss, bool icase = false, const std::locale& loc = std::locale())
 		{
 			auto ssSz = std::size(ss);
 			if (std::size(s) < ssSz)
@@ -165,7 +166,7 @@ namespace fibo
 			|| std::is_same<std::wstring, typename std::decay_t<TString>>::value>,
 			typename Regex = std::conditional_t<std::is_same<std::string, typename std::decay_t<TString>>::value, std::regex, std::wregex>
 		>
-		_NODISCARD static bool regexSearch(const TString& s, const TString& rex, bool icase = false, const std::locale& loc = std::locale()) noexcept
+		F_NODISCARD static bool regexSearch(const TString& s, const TString& rex, bool icase = false, const std::locale& loc = std::locale()) noexcept
 		{
 			// Invalid parameter
 			if (s.empty() || rex.empty()) {
