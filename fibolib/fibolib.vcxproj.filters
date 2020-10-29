@@ -22,6 +22,9 @@
     <Filter Include="3rd_party\fmt">
       <UniqueIdentifier>{d4dc139a-afc3-4631-abf3-b9b535614f16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logger">
+      <UniqueIdentifier>{602ce41c-b18e-4a09-bc6f-7eae5eab6ba8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -54,6 +57,12 @@
     <ClInclude Include="include\define.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\logger.h">
+      <Filter>logger</Filter>
+    </ClInclude>
+    <ClInclude Include="include\logger_define.h">
+      <Filter>logger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -85,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="source\windows\minidump.cpp">
       <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\logger.cpp">
+      <Filter>logger</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
