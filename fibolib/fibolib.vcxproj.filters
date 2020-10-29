@@ -25,6 +25,9 @@
     <Filter Include="logger">
       <UniqueIdentifier>{602ce41c-b18e-4a09-bc6f-7eae5eab6ba8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{c99f1b09-e320-4213-b875-7447111f886d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
