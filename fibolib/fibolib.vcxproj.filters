@@ -57,9 +57,6 @@
     <ClInclude Include="include\define.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\logger.h">
-      <Filter>logger</Filter>
-    </ClInclude>
     <ClInclude Include="include\logger_define.h">
       <Filter>logger</Filter>
     </ClInclude>
@@ -95,7 +92,10 @@
     <ClCompile Include="source\windows\minidump.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
-    <ClCompile Include="source\logger.cpp">
+    <ClCompile Include="source\fibo_logger.cpp">
+      <Filter>logger</Filter>
+    </ClCompile>
+    <ClCompile Include="source\fibo_logger.ixx">
       <Filter>logger</Filter>
     </ClCompile>
   </ItemGroup>

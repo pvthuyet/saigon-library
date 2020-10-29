@@ -1,6 +1,7 @@
-#pragma once
 
-namespace fibo
+export module FiboLogger;
+
+export namespace fibo
 {
 	class Logger
 	{

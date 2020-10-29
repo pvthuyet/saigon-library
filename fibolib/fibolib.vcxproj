@@ -168,7 +168,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\define.h" />
-    <ClInclude Include="include\logger.h" />
     <ClInclude Include="include\logger_define.h" />
     <ClInclude Include="include\path_utils.h" />
     <ClInclude Include="include\string_utils.h" />
@@ -183,7 +182,8 @@
   <ItemGroup>
     <ClCompile Include="3rd_party\fmtlib\src\format.cc" />
     <ClCompile Include="3rd_party\fmtlib\src\os.cc" />
-    <ClCompile Include="source\logger.cpp" />
+    <ClCompile Include="source\fibo_logger.cpp" />
+    <ClCompile Include="source\fibo_logger.ixx" />
     <ClCompile Include="source\path_utils.cpp" />
     <ClCompile Include="source\string_utils.cpp" />
     <ClCompile Include="source\task.cpp" />
