@@ -1,5 +1,6 @@
+#include "minidump.h"
+
 #ifdef _WIN32
-#include "windows/minidump.h"
 #define WIN_32_LEAN_AND_MEAN
 #include <windows.h>
 #include <Dbghelp.h>
@@ -20,7 +21,7 @@ std::string gBinaryModule;
 const std::string gCrashDumpFilename = "crashdump.mdmp";
 unsigned int gDumpType = MiniDumpNormal;
 
-namespace fibo::WindowsApi
+namespace fibo::MiniDump
 {
 	// Purpose: Creates a new file and dumps the exception info into it
 	bool writeDump(PEXCEPTION_POINTERS pExceptionInfo, MINIDUMP_TYPE minidumpType)
@@ -65,7 +66,7 @@ namespace fibo::WindowsApi
 		return 0;
 	}
 
-	void startMonitering(const std::string& binDir, unsigned int dumpType)
+	void monitoring(const std::string& binDir, unsigned int dumpType)
 	{
 		gBinaryModule = binDir;
 		gDumpType = dumpType;
@@ -77,4 +78,4 @@ namespace fibo::WindowsApi
 		return gCrashDumpFilename;
 	}
 }
-#endif // _WIN32
+#endif

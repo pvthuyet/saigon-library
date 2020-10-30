@@ -54,14 +54,14 @@
     <ClInclude Include="include\windows\string_api.h">
       <Filter>Windows</Filter>
     </ClInclude>
-    <ClInclude Include="include\windows\minidump.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
     <ClInclude Include="include\define.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\logger_define.h">
       <Filter>logger</Filter>
+    </ClInclude>
+    <ClInclude Include="include\minidump.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -92,14 +92,14 @@
     <ClCompile Include="source\windows\string_api.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
-    <ClCompile Include="source\windows\minidump.cpp">
-      <Filter>Windows</Filter>
-    </ClCompile>
     <ClCompile Include="source\fibo_logger.cpp">
       <Filter>logger</Filter>
     </ClCompile>
     <ClCompile Include="source\fibo_logger.ixx">
       <Filter>logger</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\minidump.cpp">
+      <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
