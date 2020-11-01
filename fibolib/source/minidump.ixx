@@ -1,12 +1,32 @@
-#include "minidump.h"
-
 #ifdef _WIN32
+#include <string>
 #define WIN_32_LEAN_AND_MEAN
 #include <windows.h>
 #include <Dbghelp.h>
 
+#define DBGHELP_DLL			"DbgHelp.dll"
+#define F_WRITEDUMP			"MiniDumpWriteDump"
+
+export module Minidump;
+
+std::string gBinaryModule;
+const std::string gCrashDumpFilename = "crashdump.mdmp";
+unsigned int gDumpType = MiniDumpNormal;
+
+
+export namespace fibo::MiniDump
+{
+	std::string getDumpFileName()
+	{
+		return gCrashDumpFilename;
+	}
+
+	void monitoring(const std::string& binDir = "", 
+		unsigned int dumpType = MiniDumpNormal | MiniDumpWithFullMemoryInfo | MiniDumpWithThreadInfo);
+}
+
 // MiniDumpWriteDump() function declaration (so we can just get the function directly from windows)
-typedef BOOL(WINAPI *MINIDUMPWRITEDUMP)
+typedef BOOL(WINAPI* MINIDUMPWRITEDUMP)
 (
 	HANDLE hProcess,
 	DWORD dwPid,
@@ -17,9 +37,6 @@ typedef BOOL(WINAPI *MINIDUMPWRITEDUMP)
 	CONST PMINIDUMP_CALLBACK_INFORMATION CallbackParam
 	);
 
-std::string gBinaryModule;
-const std::string gCrashDumpFilename = "crashdump.mdmp";
-unsigned int gDumpType = MiniDumpNormal;
 
 namespace fibo::MiniDump
 {
@@ -28,13 +45,13 @@ namespace fibo::MiniDump
 	{
 		// get the function pointer directly so that we don't have to include the .lib, and that
 		// we can easily change it to using our own dll when this code is used on win98/ME/2K machines
-		HMODULE hDbgHelpDll = ::LoadLibraryA("DbgHelp.dll");
+		HMODULE hDbgHelpDll = ::LoadLibraryA(DBGHELP_DLL);
 		if (!hDbgHelpDll) {
 			return false;
 		}
 
 		BOOL ret = FALSE;
-		MINIDUMPWRITEDUMP pfnMiniDumpWrite = (MINIDUMPWRITEDUMP) ::GetProcAddress(hDbgHelpDll, "MiniDumpWriteDump");
+		MINIDUMPWRITEDUMP pfnMiniDumpWrite = (MINIDUMPWRITEDUMP) ::GetProcAddress(hDbgHelpDll, F_WRITEDUMP);
 
 		if (pfnMiniDumpWrite)
 		{
@@ -71,11 +88,6 @@ namespace fibo::MiniDump
 		gBinaryModule = binDir;
 		gDumpType = dumpType;
 		::SetUnhandledExceptionFilter(unhandledExceptionFilter);
-	}
-
-	std::string getDumpFileName()
-	{
-		return gCrashDumpFilename;
 	}
 }
 #endif

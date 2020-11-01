@@ -60,9 +60,6 @@
     <ClInclude Include="include\logger_define.h">
       <Filter>logger</Filter>
     </ClInclude>
-    <ClInclude Include="include\minidump.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -98,8 +95,8 @@
     <ClCompile Include="source\fibo_logger.ixx">
       <Filter>logger</Filter>
     </ClCompile>
-    <ClCompile Include="source\windows\minidump.cpp">
-      <Filter>Windows</Filter>
+    <ClCompile Include="source\minidump.ixx">
+      <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

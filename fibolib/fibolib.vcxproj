@@ -169,7 +169,6 @@
   <ItemGroup>
     <ClInclude Include="include\define.h" />
     <ClInclude Include="include\logger_define.h" />
-    <ClInclude Include="include\minidump.h" />
     <ClInclude Include="include\path_utils.h" />
     <ClInclude Include="include\string_utils.h" />
     <ClInclude Include="include\task.h" />
@@ -184,12 +183,12 @@
     <ClCompile Include="3rd_party\fmtlib\src\os.cc" />
     <ClCompile Include="source\fibo_logger.cpp" />
     <ClCompile Include="source\fibo_logger.ixx" />
+    <ClCompile Include="source\minidump.ixx" />
     <ClCompile Include="source\path_utils.cpp" />
     <ClCompile Include="source\string_utils.cpp" />
     <ClCompile Include="source\task.cpp" />
     <ClCompile Include="source\task_timer.cpp" />
     <ClCompile Include="source\windows\file_api.cpp" />
-    <ClCompile Include="source\windows\minidump.cpp" />
     <ClCompile Include="source\windows\string_api.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
