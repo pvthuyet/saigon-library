@@ -3,8 +3,8 @@
 #include <random>
 
 #if USE_WINDOWS_API
-#include "windows/string_api.h"
-using OSAPI	= fibo::WindowsApi::StringApi;
+//#include "windows/string_api.h"
+//using OSAPI	= fibo::WindowsApi::StringApi;
 #else
 using OSAPI = fibo::Standard;
 #endif // _WIN32
@@ -15,12 +15,14 @@ namespace fibo
 {
 	std::string StringUtils::convert(std::wstring_view str, unsigned int codePage)
 	{
-		return OSAPI::wc2mb(str, codePage);
+		//return OSAPI::wc2mb(str, codePage);
+		return std::string{};
 	}
 
 	std::wstring StringUtils::convert(std::string_view str, unsigned int codePage)
 	{
-		return OSAPI::mb2wc(str, codePage);
+		//return OSAPI::mb2wc(str, codePage);
+		return std::wstring{};
 	}
 
 	std::string StringUtils::randAlphabetString(unsigned len)

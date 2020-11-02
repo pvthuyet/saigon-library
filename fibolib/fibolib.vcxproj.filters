@@ -51,9 +51,6 @@
     <ClInclude Include="include\windows\file_api.h">
       <Filter>Windows</Filter>
     </ClInclude>
-    <ClInclude Include="include\windows\string_api.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
     <ClInclude Include="include\define.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -86,17 +83,17 @@
     <ClCompile Include="source\windows\file_api.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
-    <ClCompile Include="source\windows\string_api.cpp">
-      <Filter>Windows</Filter>
-    </ClCompile>
     <ClCompile Include="source\fibo_logger.cpp">
       <Filter>logger</Filter>
     </ClCompile>
     <ClCompile Include="source\fibo_logger.ixx">
       <Filter>logger</Filter>
     </ClCompile>
-    <ClCompile Include="source\minidump.ixx">
-      <Filter>Modules</Filter>
+    <ClCompile Include="source\windows\windows_string_api.ixx">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\minidump.ixx">
+      <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

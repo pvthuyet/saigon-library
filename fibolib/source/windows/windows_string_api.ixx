@@ -1,20 +1,20 @@
 #ifdef _WIN32
-
-#include "windows/string_api.h"
 #include <Windows.h>
+#include "define.h"
 #include <fmt/format.h>
+#include <string>
 
-using namespace std;
+export module WindowsStringApi;
 
-namespace fibo::WindowsApi
+export namespace fibo::StringApi
 {
-	string StringApi::wc2mb(std::wstring_view str, unsigned int codePage)
+	F_NODISCARD std::string wc2mb(std::wstring_view str, unsigned int codePage = CP_UTF8) // 65001: CP_UTF8
 	{
 		int len = static_cast<int>(str.length());
 
 		// There is no data to convert
 		if (0 == len) {
-			return string{};
+			return std::string{};
 		}
 
 		auto numOfChars = ::WideCharToMultiByte(codePage, 0, str.data(), len, NULL, 0, NULL, NULL);
@@ -26,8 +26,8 @@ namespace fibo::WindowsApi
 				__LINE__));
 		}
 
-		std::string strResult(numOfChars, 0);
-		auto retVal = ::WideCharToMultiByte(codePage, 0, str.data(), len, &strResult[0], numOfChars, NULL, NULL);
+		std::string mstr(numOfChars, 0);
+		auto retVal = ::WideCharToMultiByte(codePage, 0, str.data(), len, &mstr[0], numOfChars, NULL, NULL);
 		if (0 == retVal)
 		{
 			throw std::runtime_error(fmt::format("Failed to convert wide char to multibyte. Error: {}. {}:{}",
@@ -35,16 +35,16 @@ namespace fibo::WindowsApi
 				__FILE__,
 				__LINE__));
 		}
-		return strResult;
+		return mstr;
 	}
 
-	wstring StringApi::mb2wc(std::string_view str, unsigned int codePage)
+	F_NODISCARD std::wstring mb2wc(std::string_view str, unsigned int codePage = CP_UTF8)
 	{
 		int len = static_cast<int>(str.length());
-		
+
 		// There is no data to convert
 		if (0 == len) {
-			return wstring{};
+			return std::wstring{};
 		}
 
 		int numOfWideChars = ::MultiByteToWideChar(codePage, 0, str.data(), len, NULL, 0);
@@ -56,8 +56,8 @@ namespace fibo::WindowsApi
 				__LINE__));
 		}
 
-		std::wstring strResult(numOfWideChars, 0);
-		auto retVal = ::MultiByteToWideChar(codePage, 0, str.data(), len, &strResult[0], numOfWideChars);
+		std::wstring wstr(numOfWideChars, 0);
+		auto retVal = ::MultiByteToWideChar(codePage, 0, str.data(), len, &wstr[0], numOfWideChars);
 		if (0 == retVal)
 		{
 			throw std::runtime_error(fmt::format("Failed to convert multibyte to wide char. Error: {}. {}:{}",
@@ -65,7 +65,7 @@ namespace fibo::WindowsApi
 				__FILE__,
 				__LINE__));
 		}
-		return strResult;
+		return wstr;
 	}
 }
 #endif // _WIN32

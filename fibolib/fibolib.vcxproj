@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -174,7 +174,6 @@
     <ClInclude Include="include\task.h" />
     <ClInclude Include="include\task_timer.h" />
     <ClInclude Include="include\windows\file_api.h" />
-    <ClInclude Include="include\windows\string_api.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -183,13 +182,13 @@
     <ClCompile Include="3rd_party\fmtlib\src\os.cc" />
     <ClCompile Include="source\fibo_logger.cpp" />
     <ClCompile Include="source\fibo_logger.ixx" />
-    <ClCompile Include="source\minidump.ixx" />
     <ClCompile Include="source\path_utils.cpp" />
     <ClCompile Include="source\string_utils.cpp" />
     <ClCompile Include="source\task.cpp" />
     <ClCompile Include="source\task_timer.cpp" />
     <ClCompile Include="source\windows\file_api.cpp" />
-    <ClCompile Include="source\windows\string_api.cpp" />
+    <ClCompile Include="source\windows\minidump.ixx" />
+    <ClCompile Include="source\windows\windows_string_api.ixx" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
