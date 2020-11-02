@@ -7,23 +7,7 @@
 #define DBGHELP_DLL			"DbgHelp.dll"
 #define F_WRITEDUMP			"MiniDumpWriteDump"
 
-export module Minidump;
-
-std::string gBinaryModule;
-const std::string gCrashDumpFilename = "crashdump.mdmp";
-unsigned int gDumpType = MiniDumpNormal;
-
-
-export namespace fibo::MiniDump
-{
-	std::string getDumpFileName()
-	{
-		return gCrashDumpFilename;
-	}
-
-	void monitoring(const std::string& binDir = "", 
-		unsigned int dumpType = MiniDumpNormal | MiniDumpWithFullMemoryInfo | MiniDumpWithThreadInfo);
-}
+export module FiboMinidump;
 
 // MiniDumpWriteDump() function declaration (so we can just get the function directly from windows)
 typedef BOOL(WINAPI* MINIDUMPWRITEDUMP)
@@ -37,9 +21,27 @@ typedef BOOL(WINAPI* MINIDUMPWRITEDUMP)
 	CONST PMINIDUMP_CALLBACK_INFORMATION CallbackParam
 	);
 
+std::string gBinaryModule;
+const std::string gCrashDumpFilename = "crashdump.mdmp";
+unsigned int gDumpType = MiniDumpNormal;
+
 
 namespace fibo::MiniDump
 {
+	export std::string getDumpFileName()
+	{
+		return gCrashDumpFilename;
+	}
+
+	long WINAPI unhandledExceptionFilter(PEXCEPTION_POINTERS pExceptionInfo);
+	export void monitoring(const std::string& binDir = "",
+		unsigned int dumpType = MiniDumpNormal | MiniDumpWithFullMemoryInfo | MiniDumpWithThreadInfo)
+	{
+		gBinaryModule = binDir;
+		gDumpType = dumpType;
+		::SetUnhandledExceptionFilter(unhandledExceptionFilter);
+	}
+
 	// Purpose: Creates a new file and dumps the exception info into it
 	bool writeDump(PEXCEPTION_POINTERS pExceptionInfo, MINIDUMP_TYPE minidumpType)
 	{
@@ -81,13 +83,6 @@ namespace fibo::MiniDump
 		// If that doesn't work, then write a smaller one.
 		writeDump(pExceptionInfo, (MINIDUMP_TYPE)gDumpType);
 		return 0;
-	}
-
-	void monitoring(const std::string& binDir, unsigned int dumpType)
-	{
-		gBinaryModule = binDir;
-		gDumpType = dumpType;
-		::SetUnhandledExceptionFilter(unhandledExceptionFilter);
 	}
 }
 #endif

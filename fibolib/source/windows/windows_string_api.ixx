@@ -1,8 +1,8 @@
 #ifdef _WIN32
-#include <Windows.h>
 #include "define.h"
 #include <fmt/format.h>
 #include <string>
+#include <Windows.h>
 
 export module WindowsStringApi;
 
