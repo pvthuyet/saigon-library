@@ -1,5 +1,4 @@
 #include "path_utils.h"
-#include "string_utils.h"
 #include <filesystem>
 #include <fmt/core.h>
 
@@ -9,6 +8,8 @@ using OSAPI	= fibo::WindowsApi::FileApi;
 #else
 using OSAPI = fibo::Standard;
 #endif // _WIN32
+
+import FiboStringUtils;
 
 namespace fs = std::filesystem;
 

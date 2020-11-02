@@ -182,8 +182,8 @@
     <ClCompile Include="3rd_party\fmtlib\src\os.cc" />
     <ClCompile Include="source\fibo_logger.cpp" />
     <ClCompile Include="source\fibo_logger.ixx" />
+    <ClCompile Include="source\fibo_string_utils.ixx" />
     <ClCompile Include="source\path_utils.cpp" />
-    <ClCompile Include="source\string_utils.cpp" />
     <ClCompile Include="source\task.cpp" />
     <ClCompile Include="source\task_timer.cpp" />
     <ClCompile Include="source\windows\file_api.cpp" />

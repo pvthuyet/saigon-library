@@ -68,9 +68,6 @@
     <ClCompile Include="source\task_timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\string_utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\path_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -94,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="source\fibo_logger.cpp">
       <Filter>logger</Filter>
+    </ClCompile>
+    <ClCompile Include="source\fibo_string_utils.ixx">
+      <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
