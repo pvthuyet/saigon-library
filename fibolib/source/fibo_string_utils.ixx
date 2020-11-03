@@ -8,6 +8,32 @@
 #include <regex>
 #include <type_traits>
 
+
+template<class T> struct tag_t {};
+template<class T> constexpr tag_t<T> tag{};
+
+template<class T> constexpr std::char_traits<T> tag_char{};
+
+namespace dectect_string {
+	template<class T, class ...Ts>
+	constexpr bool is_stringlike(tag_t<T>, Ts&&...) { return false; }
+	template<class T, class A>
+	constexpr bool is_stringlike(tag_t<std::basic_string<T, A>>) { return true; }
+	template<class T>
+	constexpr bool dectect = is_stringlike(tag<T>);
+}
+
+namespace dectect_charactor {
+	template<class T, class ...Ts>
+	constexpr bool is_characterlike(std::char_traits<T>, Ts&&...) { return false; }
+	template<class T>
+	constexpr bool is_characterlike(std::char_traits<T>) { return true; }
+	template<class T>
+	constexpr bool dectect = is_characterlike(tag_char<T>);
+}
+
+
+
 using fstring		= std::string;
 using fwstring		= std::wstring;
 using fstring_view	= std::string_view;
@@ -20,8 +46,8 @@ template<class _Ty>
 inline constexpr bool is_wide_string_v = fibo_is_any_of_v<std::remove_cv_t<_Ty>, fwstring, fwstring_view, wchar_t*>;
 
 template<typename T>
-concept StringType =	requires(T s) { {s} -> std::convertible_to<fstring_view>; }
-						|| requires(T s) { {s} -> std::convertible_to<fwstring_view>; };
+concept StringType = requires(T s) { {s} -> std::convertible_to<fstring_view>; } or
+					 requires(T s) { {s} -> std::convertible_to<fwstring_view>; };
 
 template<StringType _Ty>
 using TRegex = std::conditional_t<is_wide_string_v<_Ty>, std::wregex, std::regex>;
