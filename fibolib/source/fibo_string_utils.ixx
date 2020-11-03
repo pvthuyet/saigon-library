@@ -9,6 +9,7 @@
 #include <type_traits>
 
 
+// https://stackoverflow.com/questions/51128745/how-can-i-check-if-a-template-type-parameter-is-a-character-type-or-a-string-typ
 template<class T> struct tag_t {};
 template<class T> constexpr tag_t<T> tag{};
 
