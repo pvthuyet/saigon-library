@@ -1,9 +1,9 @@
 
 export module FiboLogger;
 
-export namespace fibo
+namespace fibo
 {
-	class Logger
+	export class Logger
 	{
 	public:
 		static Logger& createLogger();

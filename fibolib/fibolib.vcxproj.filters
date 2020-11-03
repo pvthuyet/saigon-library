@@ -42,9 +42,6 @@
     <ClInclude Include="include\task_timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\string_utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\path_utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -9,30 +9,29 @@
 #include <type_traits>
 
 
-// https://stackoverflow.com/questions/51128745/how-can-i-check-if-a-template-type-parameter-is-a-character-type-or-a-string-typ
-template<class T> struct tag_t {};
-template<class T> constexpr tag_t<T> tag{};
-
-template<class T> constexpr std::char_traits<T> tag_char{};
-
-namespace dectect_string {
-	template<class T, class ...Ts>
-	constexpr bool is_stringlike(tag_t<T>, Ts&&...) { return false; }
-	template<class T, class A>
-	constexpr bool is_stringlike(tag_t<std::basic_string<T, A>>) { return true; }
-	template<class T>
-	constexpr bool dectect = is_stringlike(tag<T>);
-}
-
-namespace dectect_charactor {
-	template<class T, class ...Ts>
-	constexpr bool is_characterlike(std::char_traits<T>, Ts&&...) { return false; }
-	template<class T>
-	constexpr bool is_characterlike(std::char_traits<T>) { return true; }
-	template<class T>
-	constexpr bool dectect = is_characterlike(tag_char<T>);
-}
-
+//// https://stackoverflow.com/questions/51128745/how-can-i-check-if-a-template-type-parameter-is-a-character-type-or-a-string-typ
+//template<class T> struct tag_t {};
+//template<class T> constexpr tag_t<T> tag{};
+//
+//template<class T> constexpr std::char_traits<T> tag_char{};
+//
+//namespace dectect_string {
+//	template<class T, class ...Ts>
+//	constexpr bool is_stringlike(tag_t<T>, Ts&&...) { return false; }
+//	template<class T, class A>
+//	constexpr bool is_stringlike(tag_t<std::basic_string<T, A>>) { return true; }
+//	template<class T>
+//	constexpr bool dectect = is_stringlike(tag<T>);
+//}
+//
+//namespace dectect_charactor {
+//	template<class T, class ...Ts>
+//	constexpr bool is_characterlike(std::char_traits<T>, Ts&&...) { return false; }
+//	template<class T>
+//	constexpr bool is_characterlike(std::char_traits<T>) { return true; }
+//	template<class T>
+//	constexpr bool dectect = is_characterlike(tag_char<T>);
+//}
 
 
 using fstring		= std::string;
@@ -44,11 +43,20 @@ template <class _Ty, class... _Types>
 inline constexpr bool fibo_is_any_of_v = std::disjunction_v<std::is_same<_Ty, _Types>...>; // true if and only if _Ty is in _Types
 
 template<class _Ty>
-inline constexpr bool is_wide_string_v = fibo_is_any_of_v<std::remove_cv_t<_Ty>, fwstring, fwstring_view, wchar_t*>;
+inline constexpr bool is_wide_string_v = fibo_is_any_of_v<std::remove_cv_t<_Ty>, fwstring, fwstring_view, wchar_t, wchar_t[], const wchar_t[], wchar_t*>;
+
+template<class _Ty>
+inline constexpr bool is_string_v = fibo_is_any_of_v<std::remove_cv_t<_Ty>, fstring, fstring_view, char, char[], const char[], char*>;
+
+template<class _Ty>
+inline constexpr bool is_text_v = is_string_v<_Ty> or is_wide_string_v<_Ty>;
 
 template<typename T>
 concept StringType = requires(T s) { {s} -> std::convertible_to<fstring_view>; } or
 					 requires(T s) { {s} -> std::convertible_to<fwstring_view>; };
+
+template<typename T>
+concept TokenType = std::is_same_v<T, std::string>;
 
 template<StringType _Ty>
 using TRegex = std::conditional_t<is_wide_string_v<_Ty>, std::wregex, std::regex>;
@@ -128,11 +136,15 @@ namespace fibo::StringUtils
 	/// <param name="s"></param>
 	/// <param name="rexToken"></param>
 	/// <returns></returns>
-	export template<StringType _Ty>
-	F_NODISCARD auto split(const _Ty& str, const _Ty& token)
+	export template<typename _SRC, typename _TOKEN>
+	F_NODISCARD auto split(const _SRC& str, const _TOKEN& token)
 	{
-		using ReturnType = ReturnStringType<_Ty>;
-		using SV = StringViewType<_Ty>;
+		static_assert(StringType<_SRC>, "_SRC is not text");
+		static_assert(StringType<_TOKEN>, "_TOKEN is not text");
+		static_assert(is_wide_string_v<_SRC> == is_wide_string_v<_TOKEN>, "_SRC and _TOKEN are not the same type");
+
+		using ReturnType = ReturnStringType<_SRC>;
+		using SV = StringViewType<_SRC>;
 		SV src{ str };
 		SV token_sv{ token };
 
@@ -143,7 +155,7 @@ namespace fibo::StringUtils
 
 		std::vector<ReturnType> result;
 
-		TRegex<_Ty> rex(token_sv.data());
+		TRegex<_SRC> rex(token_sv.data());
 		std::copy(TRegexTokenIt<SV>(std::cbegin(src), std::cend(src), rex, -1),
 			TRegexTokenIt<SV>(),
 			std::back_inserter(result));

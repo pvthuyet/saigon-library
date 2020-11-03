@@ -170,7 +170,6 @@
     <ClInclude Include="include\define.h" />
     <ClInclude Include="include\logger_define.h" />
     <ClInclude Include="include\path_utils.h" />
-    <ClInclude Include="include\string_utils.h" />
     <ClInclude Include="include\task.h" />
     <ClInclude Include="include\task_timer.h" />
     <ClInclude Include="include\windows\file_api.h" />
