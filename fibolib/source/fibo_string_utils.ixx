@@ -99,4 +99,31 @@ namespace fibo::StringUtils
 
 		return result;
 	}
+
+	export template<typename TString1, typename TString2> requires TStringParam<TString1, TString2>
+	F_NODISCARD bool equal(const TString1& s1, const TString2& s2, bool icase = false, const std::locale& loc = std::locale())
+	{
+		using TStringView = TStringView_t<TString1>;
+		TStringView sv1{ s1 };
+		TStringView sv2{ s2 };
+
+		if (std::size(sv1) != std::size(sv2)) {
+			return false;
+		}
+
+		//++ TODO range
+		if (icase) {
+			return std::equal(std::cbegin(sv1), 
+				std::cend(sv1), 
+				std::cbegin(sv2), 
+				std::cend(sv2), 
+				[&loc](const auto& c1, const auto& c2) {
+					return std::toupper(c1, loc) == std::toupper(c2, loc);
+				});
+		}
+		return std::equal(std::cbegin(sv1), 
+			std::cend(sv1), 
+			std::cbegin(sv2), 
+			std::cend(sv2));
+	}
 }
