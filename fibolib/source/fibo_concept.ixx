@@ -1,6 +1,6 @@
 #include <string>
 #include <regex>
-#include <type_traits>
+#include <concepts>
 
 export module FiboConcept;
 
@@ -18,9 +18,7 @@ export namespace fibo
 		requires(T t, U u) {
 			{ t } -> std::convertible_to<std::string_view>;
 			{ u } -> std::convertible_to<std::string_view>;
-	} or
-		requires(T t, U u)
-	{
+	} or requires(T t, U u) {
 		{ t } -> std::convertible_to<std::wstring_view>;
 		{ u } -> std::convertible_to<std::wstring_view>;
 	};
