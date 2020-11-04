@@ -92,5 +92,8 @@
     <ClCompile Include="source\fibo_string_utils.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="source\fibo_concept.ixx">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

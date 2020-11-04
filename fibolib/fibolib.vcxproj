@@ -179,6 +179,7 @@
   <ItemGroup>
     <ClCompile Include="3rd_party\fmtlib\src\format.cc" />
     <ClCompile Include="3rd_party\fmtlib\src\os.cc" />
+    <ClCompile Include="source\fibo_concept.ixx" />
     <ClCompile Include="source\fibo_logger.cpp" />
     <ClCompile Include="source\fibo_logger.ixx" />
     <ClCompile Include="source\fibo_string_utils.ixx" />
