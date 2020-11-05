@@ -74,7 +74,7 @@ namespace fibo::StringUtils
 	/// <param name="s"></param>
 	/// <param name="token"></param>
 	/// <returns></returns>
-	export template<typename SRC, typename TOKEN> requires Stringable<SRC, TOKEN>
+	export template<typename SRC, typename TOKEN> requires StringablePair<SRC, TOKEN>
 	F_NODISCARD auto split(const SRC& s, const TOKEN& token)
 	{
 		using TString = TString_t<SRC>;
@@ -100,7 +100,7 @@ namespace fibo::StringUtils
 		return result;
 	}
 
-	export template<typename TString1, typename TString2> requires Stringable<TString1, TString2>
+	export template<typename TString1, typename TString2> requires StringablePair<TString1, TString2>
 	F_NODISCARD bool equal(const TString1& s1, const TString2& s2, bool icase = false, const std::locale& loc = std::locale())
 	{
 		using TStringView = TStringView_t<TString1>;
