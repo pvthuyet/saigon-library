@@ -19,7 +19,7 @@ export namespace fibo
 	inline constexpr bool is_wide_string_v = is_any_of_v<std::decay_t<TWString>, std::wstring, std::wstring_view, wchar_t, wchar_t const, wchar_t*, wchar_t const*>;
 
 	template<typename T, typename U>
-	concept TStringParam =
+	concept Stringable =
 		requires(T t, U u) {
 			{ t } -> std::convertible_to<std::string_view>;
 			{ u } -> std::convertible_to<std::string_view>;
