@@ -1,6 +1,6 @@
 #include "path_utils.h"
 #include <filesystem>
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 #if USE_WINDOWS_API
 #include "windows/file_api.h"

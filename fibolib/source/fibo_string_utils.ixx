@@ -6,6 +6,7 @@
 #include <locale>
 #include <algorithm>
 #include <regex>
+#include <stdexcept>
 
 import FiboConcept;
 #ifdef _WIN32
@@ -103,6 +104,20 @@ namespace fibo::StringUtils
 	export template<typename TString1, typename TString2> requires StringablePair<TString1, TString2>
 	F_NODISCARD bool equal(const TString1& s1, const TString2& s2, bool icase = false, const std::locale& loc = std::locale())
 	{
+		// Valid nullptr for s1 and s2
+		if constexpr (std::is_pointer_v<TString1>) {
+			if (nullptr == s1) {
+				throw std::invalid_argument("invalid");
+			}
+		}
+
+		if constexpr (std::is_pointer_v<TString2>) {
+			if (nullptr == s2) {
+				auto s = fmt::format("abc");
+				throw std::invalid_argument("");
+			}
+		}
+
 		using TStringView = tstring_view_t<TString1>;
 		TStringView sv1{ s1 };
 		TStringView sv2{ s2 };
