@@ -77,8 +77,8 @@ namespace fibo::StringUtils
 	export template<typename SRC, typename TOKEN> requires StringablePair<SRC, TOKEN>
 	F_NODISCARD auto split(const SRC& s, const TOKEN& token)
 	{
-		using TString = TString_t<SRC>;
-		using TStringView = TStringView_t<SRC>;
+		using TString = t_string_t<SRC>;
+		using TStringView = t_string_view_t<SRC>;
 		TStringView sv{ s };
 		TStringView tokv{ token };
 
@@ -89,8 +89,8 @@ namespace fibo::StringUtils
 
 		std::vector<TString> result;
 
-		using TRegex = TRegex_t<SRC>;
-		using TRegexTokenIt = TRegexTokenIt_t<TStringView>;
+		using TRegex = t_regex_t<SRC>;
+		using TRegexTokenIt = t_regex_token_iterator_t<TStringView>;
 
 		TRegex rex(tokv.data());
 		std::copy(TRegexTokenIt(std::cbegin(sv), std::cend(sv), rex, -1),
@@ -103,7 +103,7 @@ namespace fibo::StringUtils
 	export template<typename TString1, typename TString2> requires StringablePair<TString1, TString2>
 	F_NODISCARD bool equal(const TString1& s1, const TString2& s2, bool icase = false, const std::locale& loc = std::locale())
 	{
-		using TStringView = TStringView_t<TString1>;
+		using TStringView = t_string_view_t<TString1>;
 		TStringView sv1{ s1 };
 		TStringView sv2{ s2 };
 

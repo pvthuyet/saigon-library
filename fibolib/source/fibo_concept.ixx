@@ -4,31 +4,13 @@
 
 export module FiboConcept;
 
-export namespace fibo
+namespace fibo
 {
 	template<typename T>
-	using RootType = std::remove_cvref_t<std::remove_pointer_t<std::decay_t<T>>>;
+	using primitive_t = std::remove_cvref_t<std::remove_pointer_t<std::decay_t<T>>>;
 
 	template <class T, class... Ts>
 	inline constexpr bool is_any_of_v = std::disjunction_v<std::is_same<T, Ts>...>; // true if and only if _Ty is in Ts
-
-	// Character type *****************************************
-	template<class T>
-	inline constexpr bool is_character_v = is_any_of_v<RootType<T>,
-		char, 
-		wchar_t,
-		char8_t,
-		char16_t,
-		char32_t
-	>;
-
-	template<bool Test, typename TChar>
-	struct CharElement {
-		using CharacterElement = RootType<TChar>;
-	};
-
-	template<typename TChar> requires is_character_v<TChar>
-	using CharacterElement = RootType<TChar>;
 
 	// String type ********************************************
 	template<class T>
@@ -45,11 +27,8 @@ export namespace fibo
 		std::u32string_view
 	>;
 
-	template<typename TString> requires is_string_v<TString>
-	using StringElement = typename TString::value_type;
-
 	// String able *******************************************
-	template<typename T>
+	export template<typename T>
 	concept Stringable = requires(T t) {
 		{ t } -> std::convertible_to<std::string_view>;
 	} or requires(T t) {
@@ -62,7 +41,7 @@ export namespace fibo
 		{ t } -> std::convertible_to<std::u32string_view>;
 	};
 
-	template<typename T, typename U>
+	export template<typename T, typename U>
 	concept StringablePair = requires(T t, U u) {
 		{ t } -> std::convertible_to<std::string_view>;
 		{ u } -> std::convertible_to<std::string_view>;
@@ -80,27 +59,24 @@ export namespace fibo
 		{ u } -> std::convertible_to<std::u32string_view>;
 	};
 
-	template<Stringable TString>
-	using TRegex_t = std::conditional_t<
-		is_string_v<TString>, 
-		std::basic_regex<StringElement<TString>>,
-		std::basic_regex<CharacterElement<TString>>
-	>;
+	template<bool Condition, Stringable TString>
+	struct PrimitiveString : std::type_identity<typename TString::value_type> {};
 
-	template<typename TString> requires is_string_v<TString>
-	using TRegexTokenIt_t = std::regex_token_iterator<typename TString::const_iterator>;
+	template<Stringable TChar>
+	struct PrimitiveString<false, TChar> : std::type_identity<primitive_t<TChar>> {};
 
-	template<Stringable TString>
-	using TString_t = std::conditional_t<
-		is_string_v<TString>,
-		std::basic_string<StringElement<TString>>,
-		std::basic_string<CharacterElement<TString>>
-	>;
+	export template<Stringable TString>
+	using primitive_string_t = typename PrimitiveString<is_string_v<TString>, TString>::type;
 
-	template<Stringable TString>
-	using TStringView_t = std::conditional_t<
-		is_string_v<TString>,
-		std::basic_string_view<StringElement<TString>>,
-		std::basic_string_view<CharacterElement<TString>>
-	>;
+	export template<Stringable TString>
+	using t_regex_t = std::basic_regex<primitive_string_t<TString>>;
+
+	export template<typename TString> requires is_string_v<TString>
+	using t_regex_token_iterator_t = std::regex_token_iterator<typename TString::const_iterator>;
+
+	export template<Stringable TString>
+	using t_string_t = std::basic_string<primitive_string_t<TString>>;
+
+	export template<Stringable TString>
+	using t_string_view_t = std::basic_string_view<primitive_string_t<TString>>;
 }
