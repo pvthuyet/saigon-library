@@ -28,8 +28,8 @@ namespace fibo
 	>;
 
 	// String able *******************************************
-	export template<typename T>
-	concept Stringable = requires(T t) {
+	export template<typename T> 
+	concept Stringable = (not std::is_null_pointer_v<T>) and (requires(T t) {
 		{ t } -> std::convertible_to<std::string_view>;
 	} or requires(T t) {
 		{ t } -> std::convertible_to<std::wstring_view>;
@@ -39,10 +39,10 @@ namespace fibo
 		{ t } -> std::convertible_to<std::u16string_view>;
 	} or requires(T t) {
 		{ t } -> std::convertible_to<std::u32string_view>;
-	};
+	});
 
 	export template<typename T, typename U>
-	concept StringablePair = requires(T t, U u) {
+	concept StringablePair = (not std::is_null_pointer_v<T>) and (not std::is_null_pointer_v<U>) and (requires(T t, U u) {
 		{ t } -> std::convertible_to<std::string_view>;
 		{ u } -> std::convertible_to<std::string_view>;
 	} or requires(T t, U u) {
@@ -57,7 +57,7 @@ namespace fibo
 	} or requires(T t, U u) {
 		{ t } -> std::convertible_to<std::u32string_view>;
 		{ u } -> std::convertible_to<std::u32string_view>;
-	};
+	});
 
 	template<bool Condition, Stringable TString>
 	struct PrimitiveString : std::type_identity<typename TString::value_type> {};
@@ -69,14 +69,14 @@ namespace fibo
 	using primitive_string_t = typename PrimitiveString<is_string_v<TString>, TString>::type;
 
 	export template<Stringable TString>
-	using t_regex_t = std::basic_regex<primitive_string_t<TString>>;
+	using tregex_t = std::basic_regex<primitive_string_t<TString>>;
 
 	export template<typename TString> requires is_string_v<TString>
-	using t_regex_token_iterator_t = std::regex_token_iterator<typename TString::const_iterator>;
+	using tregex_token_iterator_t = std::regex_token_iterator<typename TString::const_iterator>;
 
 	export template<Stringable TString>
-	using t_string_t = std::basic_string<primitive_string_t<TString>>;
+	using tstring_t = std::basic_string<primitive_string_t<TString>>;
 
 	export template<Stringable TString>
-	using t_string_view_t = std::basic_string_view<primitive_string_t<TString>>;
+	using tstring_view_t = std::basic_string_view<primitive_string_t<TString>>;
 }
