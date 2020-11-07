@@ -36,20 +36,8 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\task.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\task_timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\path_utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\windows\file_api.h">
       <Filter>Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="include\define.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\logger_define.h">
       <Filter>logger</Filter>
@@ -57,15 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\task.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\task_timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\path_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="3rd_party\fmtlib\src\format.cc">
@@ -94,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="source\fibo_concept.ixx">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\fibo_minidump.cpp">
+      <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

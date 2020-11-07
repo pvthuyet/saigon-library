@@ -1,23 +1,15 @@
-#include "define.h"
-#include <string>
-#include <chrono>
-#include <random>
-#include <vector>
-#include <locale>
-#include <algorithm>
-#include <regex>
-#include <stdexcept>
+export module FiboStringUtils;
 
+import std.core;
 import FiboConcept;
+
 #ifdef _WIN32
-import WindowsStringApi;
+//import WindowsStringApi;
 #define FIBO_CP_UTF8	65001 // CP_UTF8
 #else
 #define FIBO_CP_UTF8	65001 //++ TODO define for Linux
 //++ TODO
 #endif // _WIN32
-
-export module FiboStringUtils;
 
 namespace fibo::StringUtils
 {
@@ -27,9 +19,10 @@ namespace fibo::StringUtils
 	/// <param name="str"></param>
 	/// <param name="codePage"></param>
 	/// <returns></returns>
-	export F_NODISCARD std::string convert(std::wstring_view str, unsigned int codePage = FIBO_CP_UTF8)
+	export [[nodiscard]] std::string convert(std::wstring_view str, unsigned int codePage = FIBO_CP_UTF8)
 	{
-		return StringApi::wc2mb(str, codePage);
+		//return StringApi::wc2mb(str, codePage);
+		return std::string{};
 	}
 
 	/// <summary>
@@ -38,9 +31,10 @@ namespace fibo::StringUtils
 	/// <param name="str"></param>
 	/// <param name="codePage"></param>
 	/// <returns></returns>
-	export F_NODISCARD std::wstring convert(std::string_view str, unsigned int codePage = FIBO_CP_UTF8)
+	export [[nodiscard]] std::wstring convert(std::string_view str, unsigned int codePage = FIBO_CP_UTF8)
 	{
-		return StringApi::mb2wc(str, codePage);
+		//return StringApi::mb2wc(str, codePage);
+		return std::wstring{};
 	}
 
 	/// <summary>
@@ -48,7 +42,7 @@ namespace fibo::StringUtils
 	/// </summary>
 	/// <param name="len"></param>
 	/// <returns></returns>
-	export F_NODISCARD std::string randAlphabet(unsigned len)
+	export [[nodiscard]] std::string randAlphabet(unsigned len)
 	{
 		constexpr const char alphabet[] =
 		{ '0','1','2','3','4','5','6','7','8','9',
@@ -76,7 +70,7 @@ namespace fibo::StringUtils
 	/// <param name="token"></param>
 	/// <returns></returns>
 	export template<typename SRC, typename TOKEN> requires StringablePair<SRC, TOKEN>
-	F_NODISCARD auto split(const SRC& s, const TOKEN& token)
+	[[nodiscard]] auto split(const SRC& s, const TOKEN& token)
 	{
 		using TString = tstring_t<SRC>;
 		using TStringView = tstring_view_t<SRC>;
@@ -102,7 +96,7 @@ namespace fibo::StringUtils
 	}
 
 	export template<typename TString1, typename TString2> requires StringablePair<TString1, TString2>
-	F_NODISCARD bool equal(const TString1& s1, const TString2& s2, bool icase = false, const std::locale& loc = std::locale())
+	[[nodiscard]] bool equal(const TString1& s1, const TString2& s2, bool icase = false, const std::locale& loc = std::locale())
 	{
 		// Valid nullptr for s1 and s2
 		if constexpr (std::is_pointer_v<TString1>) {
@@ -113,7 +107,7 @@ namespace fibo::StringUtils
 
 		if constexpr (std::is_pointer_v<TString2>) {
 			if (nullptr == s2) {
-				auto s = fmt::format("abc");
+				//auto s = fmt::format("abc");
 				throw std::invalid_argument("");
 			}
 		}
@@ -140,5 +134,6 @@ namespace fibo::StringUtils
 			std::cend(sv1), 
 			std::cbegin(sv2), 
 			std::cend(sv2));
+		return true;
 	}
 }

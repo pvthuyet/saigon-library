@@ -1,8 +1,7 @@
-#include <string>
-#include <regex>
-#include <concepts>
-
 export module FiboConcept;
+
+import std.core;
+import std.regex;
 
 namespace fibo
 {
