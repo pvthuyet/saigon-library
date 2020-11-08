@@ -1,6 +1,6 @@
 #ifdef _WIN32
 #include "define.h"
-#include "stdafx.h"
+#include "fibo_std.h"
 
 export module Fibo.WindowsStringApi;
 

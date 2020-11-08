@@ -1,5 +1,5 @@
 #ifdef _WIN32
-#include "stdafx.h"
+#include "fibo_std.h"
 #include <Dbghelp.h>
 
 #define DBGHELP_DLL			"DbgHelp.dll"

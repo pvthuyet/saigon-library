@@ -1,5 +1,5 @@
 #include "define.h"
-#include "stdafx.h"
+#include "fibo_std.h"
 
 export module Fibo.StringUtils;
 

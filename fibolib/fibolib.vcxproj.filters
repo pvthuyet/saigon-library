@@ -39,10 +39,10 @@
     <ClInclude Include="include\define.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\stdafx.h">
+    <ClInclude Include="include\targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\targetver.h">
+    <ClInclude Include="include\fibo_std.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,7 +77,7 @@
     <ClCompile Include="source\windows\fibo_minidump.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
-    <ClCompile Include="source\stdafx.cpp">
+    <ClCompile Include="source\fibo_std.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

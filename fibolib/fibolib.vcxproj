@@ -169,7 +169,7 @@
   <ItemGroup>
     <ClInclude Include="include\define.h" />
     <ClInclude Include="include\logger_define.h" />
-    <ClInclude Include="include\stdafx.h" />
+    <ClInclude Include="include\fibo_std.h" />
     <ClInclude Include="include\targetver.h" />
     <ClInclude Include="include\windows\file_api.h" />
   </ItemGroup>
@@ -180,7 +180,7 @@
     <ClCompile Include="source\fibo_logger.cpp" />
     <ClCompile Include="source\fibo_logger.ixx" />
     <ClCompile Include="source\fibo_string_utils.ixx" />
-    <ClCompile Include="source\stdafx.cpp" />
+    <ClCompile Include="source\fibo_std.cpp" />
     <ClCompile Include="source\windows\fibo_minidump.cpp" />
     <ClCompile Include="source\windows\file_api.cpp" />
     <ClCompile Include="source\windows\fibo_minidump.ixx" />
