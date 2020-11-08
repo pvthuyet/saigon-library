@@ -64,7 +64,7 @@ namespace fibo
 	template<Stringable TChar>
 	struct PrimitiveString<false, TChar> : std::type_identity<primitive_t<TChar>> {};
 
-	export template<Stringable TString>
+	template<Stringable TString>
 	using primitive_string_t = typename PrimitiveString<is_string_v<TString>, TString>::type;
 
 	export template<Stringable TString>

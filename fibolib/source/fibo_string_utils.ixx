@@ -1,3 +1,5 @@
+#include "define.h"
+
 export module FiboStringUtils;
 
 import std.core;
@@ -10,6 +12,8 @@ import FiboConcept;
 #define FIBO_CP_UTF8	65001 //++ TODO define for Linux
 //++ TODO
 #endif // _WIN32
+
+
 
 namespace fibo::StringUtils
 {
@@ -66,25 +70,38 @@ namespace fibo::StringUtils
 	/// <summary>
 	/// Parse a string by token
 	/// </summary>
-	/// <param name="s"></param>
+	/// <param name="str"></param>
 	/// <param name="token"></param>
 	/// <returns></returns>
-	export template<typename SRC, typename TOKEN> requires StringablePair<SRC, TOKEN>
-	[[nodiscard]] auto split(const SRC& s, const TOKEN& token)
+	export template<typename S1, typename S2> requires fibo::StringablePair<S1, S2>
+	[[nodiscard]] auto split(const S1& str, const S2& token)
 	{
-		using TString = tstring_t<SRC>;
-		using TStringView = tstring_view_t<SRC>;
-		TStringView sv{ s };
+		// Valid nullptr for s1 and s2
+		if constexpr (std::is_pointer_v<S1>) {
+			if (nullptr == str) {
+				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument. " })); //++ TODO use fmt
+			}
+		}
+
+		if constexpr (std::is_pointer_v<S2>) {
+			if (nullptr == token) {
+				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument. " })); //++ TODO use fmt
+			}
+		}
+
+		using TString = tstring_t<S1>;
+		using TStringView = tstring_view_t<S1>;
+		TStringView sv{ str };
 		TStringView tokv{ token };
 
 		if (sv.empty()) return std::vector<TString>{};
 
 		// Invalid parameter
-		if (tokv.empty()) return std::vector<TString>{ TString{ s } };
+		if (tokv.empty()) return std::vector<TString>{ TString{ str } };
 
 		std::vector<TString> result;
 
-		using TRegex = tregex_t<SRC>;
+		using TRegex = tregex_t<S1>;
 		using TRegexTokenIt = tregex_token_iterator_t<TStringView>;
 
 		TRegex rex(tokv.data());
@@ -95,24 +112,23 @@ namespace fibo::StringUtils
 		return result;
 	}
 
-	export template<typename TString1, typename TString2> requires StringablePair<TString1, TString2>
-	[[nodiscard]] bool equal(const TString1& s1, const TString2& s2, bool icase = false, const std::locale& loc = std::locale())
+	export template<typename S1, typename S2> requires fibo::StringablePair<S1, S2>
+	[[nodiscard]] bool equal(const S1& s1, const S2& s2, bool icase = false, const std::locale& loc = std::locale())
 	{
 		// Valid nullptr for s1 and s2
-		if constexpr (std::is_pointer_v<TString1>) {
+		if constexpr (std::is_pointer_v<S1>) {
 			if (nullptr == s1) {
-				throw std::invalid_argument("invalid");
+				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument. " })); //++ TODO use fmt
 			}
 		}
 
-		if constexpr (std::is_pointer_v<TString2>) {
+		if constexpr (std::is_pointer_v<S2>) {
 			if (nullptr == s2) {
-				//auto s = fmt::format("abc");
-				throw std::invalid_argument("");
+				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument. " })); //++ TODO use fmt
 			}
 		}
 
-		using TStringView = tstring_view_t<TString1>;
+		using TStringView = tstring_view_t<S1>;
 		TStringView sv1{ s1 };
 		TStringView sv2{ s2 };
 
