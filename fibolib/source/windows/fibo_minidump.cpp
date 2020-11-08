@@ -6,7 +6,7 @@
 #define DBGHELP_DLL			"DbgHelp.dll"
 #define F_WRITEDUMP			"MiniDumpWriteDump"
 
-module FiboMinidump;
+module Fibo.Minidump;
 
 import std.core;
 

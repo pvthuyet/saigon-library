@@ -1,4 +1,4 @@
-export module FiboMinidump;
+export module Fibo.Minidump;
 
 import std.core;
 

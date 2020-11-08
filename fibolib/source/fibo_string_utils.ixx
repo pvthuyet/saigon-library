@@ -1,9 +1,9 @@
 #include "define.h"
 
-export module FiboStringUtils;
+export module Fibo.StringUtils;
 
 import std.core;
-import FiboConcept;
+import Fibo.Concept;
 
 #ifdef _WIN32
 //import WindowsStringApi;

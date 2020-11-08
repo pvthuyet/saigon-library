@@ -1,4 +1,4 @@
-export module FiboConcept;
+export module Fibo.Concept;
 
 import std.core;
 import std.regex;
