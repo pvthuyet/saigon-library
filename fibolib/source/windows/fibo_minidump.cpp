@@ -1,6 +1,5 @@
 #ifdef _WIN32
-#define WIN_32_LEAN_AND_MEAN
-#include <windows.h>
+#include "stdafx.h"
 #include <Dbghelp.h>
 
 #define DBGHELP_DLL			"DbgHelp.dll"
@@ -8,7 +7,6 @@
 
 module Fibo.Minidump;
 
-import std.core;
 
 // MiniDumpWriteDump() function declaration (so we can just get the function directly from windows)
 typedef BOOL(WINAPI* MINIDUMPWRITEDUMP)

@@ -1,18 +1,14 @@
 #include "define.h"
+#include "stdafx.h"
 
 export module Fibo.StringUtils;
 
-import std.core;
 import Fibo.Concept;
-
 #ifdef _WIN32
-//import WindowsStringApi;
-#define FIBO_CP_UTF8	65001 // CP_UTF8
+import Fibo.WindowsStringApi;
 #else
-#define FIBO_CP_UTF8	65001 //++ TODO define for Linux
 //++ TODO
 #endif // _WIN32
-
 
 
 namespace fibo::StringUtils
@@ -25,8 +21,7 @@ namespace fibo::StringUtils
 	/// <returns></returns>
 	export [[nodiscard]] std::string convert(std::wstring_view str, unsigned int codePage = FIBO_CP_UTF8)
 	{
-		//return StringApi::wc2mb(str, codePage);
-		return std::string{};
+		return StringApi::wc2mb(str, codePage);
 	}
 
 	/// <summary>
@@ -37,8 +32,7 @@ namespace fibo::StringUtils
 	/// <returns></returns>
 	export [[nodiscard]] std::wstring convert(std::string_view str, unsigned int codePage = FIBO_CP_UTF8)
 	{
-		//return StringApi::mb2wc(str, codePage);
-		return std::wstring{};
+		return StringApi::mb2wc(str, codePage);
 	}
 
 	/// <summary>
@@ -79,13 +73,13 @@ namespace fibo::StringUtils
 		// Valid nullptr for s1 and s2
 		if constexpr (std::is_pointer_v<S1>) {
 			if (nullptr == str) {
-				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument. " })); //++ TODO use fmt
+				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument" })); //++ TODO use fmt
 			}
 		}
 
 		if constexpr (std::is_pointer_v<S2>) {
 			if (nullptr == token) {
-				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument. " })); //++ TODO use fmt
+				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument" })); //++ TODO use fmt
 			}
 		}
 
@@ -118,13 +112,13 @@ namespace fibo::StringUtils
 		// Valid nullptr for s1 and s2
 		if constexpr (std::is_pointer_v<S1>) {
 			if (nullptr == s1) {
-				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument. " })); //++ TODO use fmt
+				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument" })); //++ TODO use fmt
 			}
 		}
 
 		if constexpr (std::is_pointer_v<S2>) {
 			if (nullptr == s2) {
-				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument. " })); //++ TODO use fmt
+				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument" })); //++ TODO use fmt
 			}
 		}
 

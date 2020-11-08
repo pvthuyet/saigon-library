@@ -1,6 +1,6 @@
-export module Fibo.Minidump;
+#include <string>
 
-import std.core;
+export module Fibo.Minidump;
 
 export namespace fibo::MiniDump
 {

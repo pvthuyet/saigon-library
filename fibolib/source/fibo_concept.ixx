@@ -1,7 +1,6 @@
-export module Fibo.Concept;
+#include "stdafx.h"
 
-import std.core;
-import std.regex;
+export module Fibo.Concept;
 
 namespace fibo
 {

@@ -30,12 +30,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\windows\file_api.h">
       <Filter>Windows</Filter>
     </ClInclude>
@@ -45,11 +39,14 @@
     <ClInclude Include="include\define.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="3rd_party\fmtlib\src\format.cc">
       <Filter>3rd_party\fmt</Filter>
     </ClCompile>
@@ -79,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="source\windows\fibo_minidump.cpp">
       <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\stdafx.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

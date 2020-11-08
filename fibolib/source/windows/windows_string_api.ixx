@@ -1,10 +1,8 @@
 #ifdef _WIN32
 #include "define.h"
-#include <fmt/format.h>
-#include <string>
-#include <Windows.h>
+#include "stdafx.h"
 
-export module WindowsStringApi;
+export module Fibo.WindowsStringApi;
 
 export namespace fibo::StringApi
 {
@@ -20,20 +18,14 @@ export namespace fibo::StringApi
 		auto numOfChars = ::WideCharToMultiByte(codePage, 0, str.data(), len, NULL, 0, NULL, NULL);
 		if (0 == numOfChars)
 		{
-			throw std::runtime_error(fmt::format("Failed to convert wide char to multibyte. Error: {}. {}:{}",
-				::GetLastError(),
-				__FILE__,
-				__LINE__));
+			throw std::runtime_error(F_EXCEPTION_MESSAGE_WINDOWS(std::string{ "Failed to convert wide char to multibyte" }));
 		}
 
 		std::string mstr(numOfChars, 0);
 		auto retVal = ::WideCharToMultiByte(codePage, 0, str.data(), len, &mstr[0], numOfChars, NULL, NULL);
 		if (0 == retVal)
 		{
-			throw std::runtime_error(fmt::format("Failed to convert wide char to multibyte. Error: {}. {}:{}",
-				::GetLastError(),
-				__FILE__,
-				__LINE__));
+			throw std::runtime_error(F_EXCEPTION_MESSAGE_WINDOWS(std::string{ "Failed to convert wide char to multibyte" }));
 		}
 		return mstr;
 	}
@@ -50,20 +42,14 @@ export namespace fibo::StringApi
 		int numOfWideChars = ::MultiByteToWideChar(codePage, 0, str.data(), len, NULL, 0);
 		if (0 == numOfWideChars)
 		{
-			throw std::runtime_error(fmt::format("Failed to convert multibyte to wide char. Error: {}. {}:{}",
-				::GetLastError(),
-				__FILE__,
-				__LINE__));
+			throw std::runtime_error(F_EXCEPTION_MESSAGE_WINDOWS(std::string{ "Failed to convert multibyte to wide char" }));
 		}
 
 		std::wstring wstr(numOfWideChars, 0);
 		auto retVal = ::MultiByteToWideChar(codePage, 0, str.data(), len, &wstr[0], numOfWideChars);
 		if (0 == retVal)
 		{
-			throw std::runtime_error(fmt::format("Failed to convert multibyte to wide char. Error: {}. {}:{}",
-				::GetLastError(),
-				__FILE__,
-				__LINE__));
+			throw std::runtime_error(F_EXCEPTION_MESSAGE_WINDOWS(std::string{ "Failed to convert multibyte to wide char" }));
 		}
 		return wstr;
 	}
