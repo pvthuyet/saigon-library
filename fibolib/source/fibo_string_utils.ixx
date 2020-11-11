@@ -19,7 +19,7 @@ namespace fibo::StringUtils
 	/// <param name="str"></param>
 	/// <param name="codePage"></param>
 	/// <returns></returns>
-	export [[nodiscard]] std::string convert(std::wstring_view str, unsigned int codePage = FIBO_CP_UTF8)
+	export [[nodiscard]] auto convert(std::wstring_view str, unsigned int codePage = FIBO_CP_UTF8)
 	{
 		return StringApi::wc2mb(str, codePage);
 	}
@@ -30,7 +30,7 @@ namespace fibo::StringUtils
 	/// <param name="str"></param>
 	/// <param name="codePage"></param>
 	/// <returns></returns>
-	export [[nodiscard]] std::wstring convert(std::string_view str, unsigned int codePage = FIBO_CP_UTF8)
+	export [[nodiscard]] auto convert(std::string_view str, unsigned int codePage = FIBO_CP_UTF8)
 	{
 		return StringApi::mb2wc(str, codePage);
 	}
@@ -40,7 +40,7 @@ namespace fibo::StringUtils
 	/// </summary>
 	/// <param name="len"></param>
 	/// <returns></returns>
-	export [[nodiscard]] std::string randAlphabet(unsigned len)
+	export [[nodiscard]] auto randAlphabet(unsigned len)
 	{
 		constexpr const char alphabet[] =
 		{ '0','1','2','3','4','5','6','7','8','9',
@@ -107,7 +107,7 @@ namespace fibo::StringUtils
 	}
 
 	export template<typename S1, typename S2> requires fibo::StringablePair<S1, S2>
-	[[nodiscard]] bool equal(const S1& s1, const S2& s2, bool icase = false, const std::locale& loc = std::locale())
+	[[nodiscard]] constexpr auto equal(const S1& s1, const S2& s2, bool icase = false, const std::locale& loc = std::locale())
 	{
 		// Valid nullptr for s1 and s2
 		if constexpr (std::is_pointer_v<S1>) {
