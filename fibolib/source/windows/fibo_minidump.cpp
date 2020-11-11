@@ -76,7 +76,7 @@ namespace fibo::MiniDump
 		return gCrashDumpFilename;
 	}
 
-	void monitoring(std::string bin, unsigned int dumpType)
+	void monitoring(std::string_view bin, unsigned int dumpType)
 	{
 		gBinaryModule = bin;
 		gDumpType = dumpType;
