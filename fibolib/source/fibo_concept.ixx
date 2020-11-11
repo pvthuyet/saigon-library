@@ -1,3 +1,5 @@
+module;
+
 #include "fibo_std.h"
 
 export module Fibo.Concept;

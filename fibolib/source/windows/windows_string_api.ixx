@@ -1,4 +1,7 @@
+module;
+
 #ifdef _WIN32
+
 #include "define.h"
 #include "fibo_std.h"
 

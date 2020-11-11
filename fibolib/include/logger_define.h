@@ -1,3 +1,6 @@
+#ifndef LOGGER_DEFINE_H_
+#define LOGGER_DEFINE_H_
+
 #pragma once
 
 #ifdef _DEBUG
@@ -6,3 +9,5 @@
 #endif // _DEBUG
 #define SPDLOG_WCHAR_TO_UTF8_SUPPORT 1
 #include "spdlog/spdlog.h"
+
+#endif // !LOGGER_DEFINE_H_

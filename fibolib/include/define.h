@@ -1,3 +1,6 @@
+#ifndef DEFINE_H_
+#define DEFINE_H_
+
 #pragma once
 
 #define F_NODISCARD		_NODISCARD
@@ -10,3 +13,5 @@
 #define FIBO_CP_UTF8	65001 //++ TODO define for Linux
 //++ TODO
 #endif // _WIN32
+
+#endif

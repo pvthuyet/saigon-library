@@ -1,5 +1,6 @@
+module;
 
-export module FiboLogger;
+export module Fibo.Logger;
 
 namespace fibo
 {

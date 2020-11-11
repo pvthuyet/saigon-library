@@ -1,8 +1,8 @@
+module;
+
 #include "define.h"
 #include "fibo_std.h"
-
-export module Fibo.StringUtils;
-
+#include "fmt/core.h"
 import Fibo.Concept;
 #ifdef _WIN32
 import Fibo.WindowsStringApi;
@@ -10,6 +10,7 @@ import Fibo.WindowsStringApi;
 //++ TODO
 #endif // _WIN32
 
+export module Fibo.StringUtils;
 
 namespace fibo::StringUtils
 {
@@ -47,15 +48,16 @@ namespace fibo::StringUtils
 		  'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
 		  'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z' };
 
-		if (0 == len) return std::string{};
+		if (0 == len) {
+			return std::string{};
+		}
 
 		unsigned int seed = static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
 		std::default_random_engine gen(seed);
 		std::uniform_int_distribution<unsigned> dis(0, sizeof(alphabet) - 1);
 		std::string str(len, 0);
 
-		for (unsigned i = 0; i < len; ++i)
-		{
+		for (unsigned i = 0; i < len; ++i) {
 			str[i] = alphabet[dis(gen)];
 		}
 		return str;
@@ -73,13 +75,19 @@ namespace fibo::StringUtils
 		// Valid nullptr for s1 and s2
 		if constexpr (std::is_pointer_v<S1>) {
 			if (nullptr == str) {
-				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument" })); //++ TODO use fmt
+				throw std::invalid_argument(
+					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
+						__FILE__, 
+						__LINE__));
 			}
 		}
 
 		if constexpr (std::is_pointer_v<S2>) {
 			if (nullptr == token) {
-				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument" })); //++ TODO use fmt
+				throw std::invalid_argument(
+					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
+						__FILE__, 
+						__LINE__));
 			}
 		}
 
@@ -88,10 +96,14 @@ namespace fibo::StringUtils
 		TStringView sv{ str };
 		TStringView tokv{ token };
 
-		if (sv.empty()) return std::vector<TString>{};
+		if (sv.empty()) {
+			return std::vector<TString>{};
+		}
 
 		// Invalid parameter
-		if (tokv.empty()) return std::vector<TString>{ TString{ str } };
+		if (tokv.empty()) {
+			return std::vector<TString>{ TString{ str } };
+		}
 
 		std::vector<TString> result;
 
@@ -109,16 +121,23 @@ namespace fibo::StringUtils
 	export template<typename S1, typename S2> requires fibo::StringablePair<S1, S2>
 	[[nodiscard]] constexpr auto equal(const S1& s1, const S2& s2, bool icase = false, const std::locale& loc = std::locale())
 	{
+		auto s = fmt::format("{}", "equal");
 		// Valid nullptr for s1 and s2
 		if constexpr (std::is_pointer_v<S1>) {
 			if (nullptr == s1) {
-				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument" })); //++ TODO use fmt
+				throw std::invalid_argument(
+					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
+						__FILE__, 
+						__LINE__));
 			}
 		}
 
 		if constexpr (std::is_pointer_v<S2>) {
 			if (nullptr == s2) {
-				throw std::invalid_argument(F_EXCEPTION_MESSAGE(std::string{ "Invalid argument" })); //++ TODO use fmt
+				throw std::invalid_argument(
+					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
+						__FILE__, 
+						__LINE__));
 			}
 		}
 
@@ -140,10 +159,10 @@ namespace fibo::StringUtils
 					return std::toupper(c1, loc) == std::toupper(c2, loc);
 				});
 		}
+
 		return std::equal(std::cbegin(sv1), 
 			std::cend(sv1), 
 			std::cbegin(sv2), 
 			std::cend(sv2));
-		return true;
 	}
 }

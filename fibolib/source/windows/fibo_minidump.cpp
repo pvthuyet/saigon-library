@@ -1,3 +1,5 @@
+module;
+
 #ifdef _WIN32
 #include "fibo_std.h"
 #include <Dbghelp.h>
