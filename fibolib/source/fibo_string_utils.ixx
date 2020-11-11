@@ -20,7 +20,7 @@ namespace fibo::StringUtils
 	/// <param name="str"></param>
 	/// <param name="codePage"></param>
 	/// <returns></returns>
-	export [[nodiscard]] auto convert(std::wstring_view str, unsigned int codePage = FIBO_CP_UTF8)
+	export [[nodiscard]] auto convert(std::wstring_view str, unsigned int codePage = F_CP_UTF8)
 	{
 		return StringApi::wc2mb(str, codePage);
 	}
@@ -31,7 +31,7 @@ namespace fibo::StringUtils
 	/// <param name="str"></param>
 	/// <param name="codePage"></param>
 	/// <returns></returns>
-	export [[nodiscard]] auto convert(std::string_view str, unsigned int codePage = FIBO_CP_UTF8)
+	export [[nodiscard]] auto convert(std::string_view str, unsigned int codePage = F_CP_UTF8)
 	{
 		return StringApi::mb2wc(str, codePage);
 	}

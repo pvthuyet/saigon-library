@@ -80,5 +80,11 @@
     <ClCompile Include="source\fibo_std.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\windows\keyboard_manager.ixx">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\message_event.ixx">
+      <Filter>Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
