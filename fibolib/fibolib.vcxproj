@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\constants.h" />
     <ClInclude Include="include\define.h" />
     <ClInclude Include="include\logger_define.h" />
     <ClInclude Include="include\fibo_std.h" />

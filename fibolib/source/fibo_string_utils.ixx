@@ -3,6 +3,8 @@ module;
 #include "define.h"
 #include "fibo_std.h"
 #include "fmt/core.h"
+#include "constants.h"
+
 import Fibo.Concept;
 #ifdef _WIN32
 import Fibo.WindowsStringApi;

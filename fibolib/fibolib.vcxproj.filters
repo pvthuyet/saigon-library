@@ -45,6 +45,9 @@
     <ClInclude Include="include\fibo_std.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rd_party\fmtlib\src\format.cc">
