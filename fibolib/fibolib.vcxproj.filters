@@ -89,8 +89,5 @@
     <ClCompile Include="source\windows\message_event.ixx">
       <Filter>Windows</Filter>
     </ClCompile>
-    <ClCompile Include="source\windows\message_event.cpp">
-      <Filter>Windows</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
