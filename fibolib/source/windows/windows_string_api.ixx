@@ -2,14 +2,14 @@ module;
 
 #ifdef _WIN32
 
-#include "define.h"
+#include "fmt/core.h"
 #include "fibo_std.h"
 
 export module Fibo.WindowsStringApi;
 
 export namespace fibo::StringApi
 {
-	F_NODISCARD std::string wc2mb(std::wstring_view str, unsigned int codePage = CP_UTF8) // 65001: CP_UTF8
+	[[nodiscard]] auto wc2mb(std::wstring_view str, unsigned int codePage = CP_UTF8) // 65001: CP_UTF8
 	{
 		int len = static_cast<int>(str.length());
 
@@ -19,21 +19,29 @@ export namespace fibo::StringApi
 		}
 
 		auto numOfChars = ::WideCharToMultiByte(codePage, 0, str.data(), len, NULL, 0, NULL, NULL);
-		if (0 == numOfChars)
-		{
-			throw std::runtime_error(F_EXCEPTION_MESSAGE_WINDOWS(std::string{ "Failed to convert wide char to multibyte" }));
+		if (0 == numOfChars) {
+			throw std::system_error(
+				::GetLastError(),
+				std::system_category(),
+				fmt::format("Failed to convert wide char to multibyte. {}:{}",
+					__FILE__,
+					__LINE__));
 		}
 
 		std::string mstr(numOfChars, 0);
 		auto retVal = ::WideCharToMultiByte(codePage, 0, str.data(), len, &mstr[0], numOfChars, NULL, NULL);
-		if (0 == retVal)
-		{
-			throw std::runtime_error(F_EXCEPTION_MESSAGE_WINDOWS(std::string{ "Failed to convert wide char to multibyte" }));
+		if (0 == retVal) {
+			throw std::system_error(
+				::GetLastError(),
+				std::system_category(),
+				fmt::format("Failed to convert wide char to multibyte. {}:{}",
+					__FILE__,
+					__LINE__));
 		}
 		return mstr;
 	}
 
-	F_NODISCARD std::wstring mb2wc(std::string_view str, unsigned int codePage = CP_UTF8)
+	[[nodiscard]] auto mb2wc(std::string_view str, unsigned int codePage = CP_UTF8)
 	{
 		int len = static_cast<int>(str.length());
 
@@ -43,16 +51,24 @@ export namespace fibo::StringApi
 		}
 
 		int numOfWideChars = ::MultiByteToWideChar(codePage, 0, str.data(), len, NULL, 0);
-		if (0 == numOfWideChars)
-		{
-			throw std::runtime_error(F_EXCEPTION_MESSAGE_WINDOWS(std::string{ "Failed to convert multibyte to wide char" }));
+		if (0 == numOfWideChars) {
+			throw std::system_error(
+				::GetLastError(),
+				std::system_category(),
+				fmt::format("Failed to convert multibyte to wide char. {}:{}",
+					__FILE__,
+					__LINE__));
 		}
 
 		std::wstring wstr(numOfWideChars, 0);
 		auto retVal = ::MultiByteToWideChar(codePage, 0, str.data(), len, &wstr[0], numOfWideChars);
-		if (0 == retVal)
-		{
-			throw std::runtime_error(F_EXCEPTION_MESSAGE_WINDOWS(std::string{ "Failed to convert multibyte to wide char" }));
+		if (0 == retVal) {
+			throw std::system_error(
+				::GetLastError(),
+				std::system_category(),
+				fmt::format("Failed to convert multibyte to wide char. {}:{}",
+					__FILE__,
+					__LINE__));
 		}
 		return wstr;
 	}

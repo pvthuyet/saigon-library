@@ -2,7 +2,6 @@
 
 #ifdef _WIN32
 
-#include "define.h"
 #include <string>
 
 namespace fibo
@@ -15,9 +14,9 @@ namespace fibo::WindowsApi
 	class FileApi
 	{
 		friend class PathUtils;
-		F_NODISCARD static bool validPathLength(size_t len) noexcept;
-		F_NODISCARD static std::wstring absolutePath(std::wstring_view relativePath);
-		F_NODISCARD static std::wstring canonicalize(std::wstring_view sPath);
+		[[nodiscard]] static bool validPathLength(size_t len) noexcept;
+		[[nodiscard]] static std::wstring absolutePath(std::wstring_view relativePath);
+		[[nodiscard]] static std::wstring canonicalize(std::wstring_view sPath);
 	};
 }
 

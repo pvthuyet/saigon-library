@@ -1,6 +1,5 @@
 module;
 
-#include "define.h"
 #include "fibo_std.h"
 #include "fmt/core.h"
 #include "constants.h"

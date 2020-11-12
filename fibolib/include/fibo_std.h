@@ -18,7 +18,6 @@
 #endif // _WIN32
 
 // reference additional headers your program requires here
-#include <iostream>
 #include <regex>
 #include <chrono>
 #include <random>
