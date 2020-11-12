@@ -9,7 +9,7 @@ module Fibo.MessageEvent;
 
 namespace fibo
 {
-	MessageEvent::MessageEvent(gsl::not_null<WindowProcedure const*> parent) noexcept :
+	MessageEvent::MessageEvent(gsl::not_null<WindowProcedure*> parent) noexcept :
 		hWnd_{ nullptr },
 		hInst_{ nullptr },
 		className_{},
@@ -33,10 +33,10 @@ namespace fibo
 	{
 		if (this != &other) {
 			this->~MessageEvent();
-			hWnd_ = std::exchange(other.hWnd_, nullptr);
-			hInst_ = std::exchange(other.hInst_, nullptr),
-				className_ = std::exchange(other.className_, std::wstring{});
-			parent_ = std::exchange(other.parent_, nullptr);
+			hWnd_		= std::exchange(other.hWnd_, nullptr);
+			hInst_		= std::exchange(other.hInst_, nullptr);
+			className_	= std::exchange(other.className_, std::wstring{});
+			parent_		= std::exchange(other.parent_, nullptr);
 		}
 		return *this;
 	}
@@ -58,8 +58,7 @@ namespace fibo
 		{
 			throw std::system_error(::GetLastError(),
 				std::system_category(),
-				fmt::format("Failed to call GetModuleHandleA. Error: {}. {}:{}",
-					::GetLastError(),
+				fmt::format("Failed to call GetModuleHandleA. {}:{}",
 					__FILE__,
 					__LINE__));
 		}
@@ -69,14 +68,13 @@ namespace fibo
 		wndClass.hInstance = hInst_;
 		wndClass.lpszClassName = className_.c_str();
 
-		auto ret = ::RegisterClass(&wndClass);
-		if (not ret)
+		auto succ = ::RegisterClass(&wndClass);
+		if (not succ)
 		{
 			hInst_ = nullptr;
 			throw std::system_error(::GetLastError(),
 				std::system_category(),
-				fmt::format("Failed to call RegisterClassA. Error: {}. {}:{}",
-					::GetLastError(),
+				fmt::format("Failed to call RegisterClassA. {}:{}",
 					__FILE__,
 					__LINE__));
 		}
@@ -102,8 +100,7 @@ namespace fibo
 			hInst_ = nullptr;
 			throw std::system_error(err,
 				std::system_category(),
-				fmt::format("Failed to call CreateWindowExA. Error: {}. {}:{}",
-					::GetLastError(),
+				fmt::format("Failed to call CreateWindowExA. {}:{}",
 					__FILE__,
 					__LINE__));
 		}

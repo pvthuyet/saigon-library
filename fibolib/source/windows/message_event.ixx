@@ -15,7 +15,7 @@ namespace fibo
 	{
 	public:
 		virtual ~WindowProcedure() noexcept {}
-		virtual LRESULT procedure(HWND, UINT, WPARAM, LPARAM) const = 0;
+		virtual LRESULT procedure(HWND, UINT, WPARAM, LPARAM) = 0;
 	};
 
 	/// <summary>
@@ -24,7 +24,7 @@ namespace fibo
 	export class MessageEvent
 	{
 	public:
-		explicit MessageEvent(gsl::not_null<WindowProcedure const*> parent) noexcept;
+		explicit MessageEvent(gsl::not_null<WindowProcedure*> parent) noexcept;
 		~MessageEvent() noexcept;
 
 		// no copyable
@@ -48,6 +48,6 @@ namespace fibo
 		HWND hWnd_{ nullptr };
 		HINSTANCE hInst_{ nullptr };
 		std::wstring className_;
-		WindowProcedure const* parent_;
+		WindowProcedure* parent_;
 	};
 }
