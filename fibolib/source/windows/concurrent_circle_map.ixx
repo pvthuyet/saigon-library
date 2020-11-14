@@ -18,6 +18,14 @@ namespace fibo::Con
 		class KeyEqual = std::equal_to<KEY>>
 	class CircleMap
 	{
+	public:
+		using key_type		= KEY;
+		using mapped_type	= T;
+		using key_equal		= KeyEqual;
+		//using const_iterator_key	= typename Concurrency::concurrent_vector<KeyMapping>::const_iterator;
+		//using const_iterator		= typename Concurrency::concurrent_vector<T>::const_iterator;
+
+	private:
 		struct KeyMapping
 		{
 			static constexpr size_t InvalidPos = N + 1;
@@ -25,13 +33,6 @@ namespace fibo::Con
 			size_t	pos_{ InvalidPos };
 			constexpr explicit operator bool() const noexcept { return InvalidPos != pos_; }
 		};
-
-	public:
-		using key_type		= KEY;
-		using mapped_type	= T;
-		//using key_equal		= KeyEqual;
-		//using const_iterator_key	= typename Concurrency::concurrent_vector<KeyMapping>::const_iterator;
-		//using const_iterator		= typename Concurrency::concurrent_vector<T>::const_iterator;
 
 	public:
 		//++ TODO does compliler generate move ??? => YES
@@ -91,7 +92,7 @@ namespace fibo::Con
 					return ReturnType{ std::nullopt };
 				}
 
-				if (key == info.key_) {
+				if (key_equal{}(key, info.key_)) {
 					return ReturnType{ keys_[i] };
 				}
 			}
