@@ -56,6 +56,27 @@ namespace fibo::Con
 			return ReturnType{ std::nullopt };
 		}
 
+		template<class Condition>
+		auto find_if(Condition cond)
+		{
+			using ReturnType = std::optional<mapped_type>;
+
+			auto found = std::find_if(
+				std::execution::seq, 
+				std::cbegin(keys_), 
+				std::cend(keys_), [&cond, this](auto const& info) {
+					if (info) { //++ TODO using filter view
+						return cond(info.key_, this->vec_[info.pos_]);
+					}
+					return false;
+				});
+
+			if (std::cend(keys_) != found) {
+				return ReturnType{ vec_[found->pos_] };
+			}
+			return ReturnType{ std::nullopt };
+		}
+
 		mapped_type& operator[](key_type const& key)
 		{
 			auto found = findInternal(key);
@@ -88,7 +109,7 @@ namespace fibo::Con
 			using ReturnType = std::optional<std::reference_wrapper<KeyMapping const>>;
 			for (unsigned int i = 0; i < N; ++i) {
 				auto const& info = keys_[i];
-				if (!info) {
+				if (!info) { //++ TODO using filter view
 					return ReturnType{ std::nullopt };
 				}
 
