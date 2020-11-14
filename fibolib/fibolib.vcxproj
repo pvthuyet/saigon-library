@@ -182,7 +182,7 @@
     <ClCompile Include="source\fibo_logger.ixx" />
     <ClCompile Include="source\fibo_string_utils.ixx" />
     <ClCompile Include="source\fibo_std.cpp" />
-    <ClCompile Include="source\windows\concurrent_bounded_vector.ixx" />
+    <ClCompile Include="source\windows\concurrent_circle_map.ixx" />
     <ClCompile Include="source\windows\fibo_minidump.cpp" />
     <ClCompile Include="source\windows\file_api.cpp" />
     <ClCompile Include="source\windows\fibo_minidump.ixx" />

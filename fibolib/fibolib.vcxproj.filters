@@ -89,7 +89,7 @@
     <ClCompile Include="source\windows\message_event.ixx">
       <Filter>Windows</Filter>
     </ClCompile>
-    <ClCompile Include="source\windows\concurrent_bounded_vector.ixx">
+    <ClCompile Include="source\windows\concurrent_circle_map.ixx">
       <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>
