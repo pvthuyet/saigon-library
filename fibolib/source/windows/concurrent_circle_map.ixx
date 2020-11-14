@@ -98,10 +98,10 @@ namespace fibo::Con
 			return ReturnType{ std::nullopt };
 		}
 
-		constexpr size_t nextPos() noexcept { return pos_++ % N; }
+		constexpr size_t nextPos() noexcept { return posElement_++ % N; }
 
 	private:
-		std::atomic_size_t pos_{0};
+		std::atomic_size_t posElement_{0};
 		Concurrency::concurrent_vector<T> vec_{ N };
 		Concurrency::concurrent_vector<KeyMapping> keys_{ N };
 	};
