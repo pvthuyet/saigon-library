@@ -6,6 +6,7 @@ module;
 #include <optional>
 #include <limits>
 #include <unordered_map> //++ todo remove
+#include <map>
 
 export module Fibo.ConcurrentCircleMap;
 
@@ -22,6 +23,7 @@ namespace fibo::Con
 		using key_type		= KEY;
 		using mapped_type	= T;
 		using key_equal		= KeyEqual;
+		using size_type		= unsigned int;
 		//using const_iterator_key	= typename Concurrency::concurrent_vector<KeyMapping>::const_iterator;
 		//using const_iterator		= typename Concurrency::concurrent_vector<T>::const_iterator;
 
@@ -29,7 +31,7 @@ namespace fibo::Con
 		struct KeyMapping
 		{
 			static constexpr size_t InvalidPos = N + 1;
-			KEY		key_{};
+			key_type		key_{};
 			size_t	pos_{ InvalidPos };
 			constexpr explicit operator bool() const noexcept { return InvalidPos != pos_; }
 		};
@@ -60,19 +62,23 @@ namespace fibo::Con
 		auto find_if(Condition cond)
 		{
 			using ReturnType = std::optional<mapped_type>;
+			size_t foundPos = KeyMapping::InvalidPos;
+			for (int i = 0; i < N; ++i) {
+				auto const& item = keys_[i];
+				if (not item) { // Invalid item: TODO using filter view
+					break;
+				}
+				
+				// Match condition
+				if (cond(item.key_, vec_[item.pos_])) {
+					foundPos = item.pos_;
+					break;
+				}
+			}
 
-			auto found = std::find_if(
-				std::execution::seq, 
-				std::cbegin(keys_), 
-				std::cend(keys_), [&cond, this](auto const& info) {
-					if (info) { //++ TODO using filter view
-						return cond(info.key_, this->vec_[info.pos_]);
-					}
-					return false;
-				});
-
-			if (std::cend(keys_) != found) {
-				return ReturnType{ vec_[found->pos_] };
+			// found item
+			if (KeyMapping::InvalidPos != foundPos) {
+				return ReturnType{ vec_[foundPos] };
 			}
 			return ReturnType{ std::nullopt };
 		}
@@ -103,17 +109,22 @@ namespace fibo::Con
 			return vec_[pos];
 		}
 
+		constexpr size_type erase(key_type const& key)
+		{
+			return 1;
+		}
+
 	private:
 		auto findInternal(key_type const& key) const
 		{
 			using ReturnType = std::optional<std::reference_wrapper<KeyMapping const>>;
 			for (unsigned int i = 0; i < N; ++i) {
-				auto const& info = keys_[i];
-				if (!info) { //++ TODO using filter view
+				auto const& item = keys_[i];
+				if (not item) { //++ TODO using filter view
 					return ReturnType{ std::nullopt };
 				}
 
-				if (key_equal{}(key, info.key_)) {
+				if (keyComp_(key, item.key_)) {
 					return ReturnType{ keys_[i] };
 				}
 			}
@@ -126,6 +137,7 @@ namespace fibo::Con
 		std::atomic_size_t posElement_{0};
 		Concurrency::concurrent_vector<T> vec_{ N };
 		Concurrency::concurrent_vector<KeyMapping> keys_{ N };
+		key_equal keyComp_;
 	};
 
 	/**********************************************************************************************/
