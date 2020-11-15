@@ -16,21 +16,13 @@ TEST(CircleMap, constructor_fix_size)
 	EXPECT_EQ(mapSz, ciMap.size());
 }
 
-TEST(CircleMap, insert_item_by_reference_key)
+TEST(CircleMap, insert_item)
 {
 	DataType v{};
 	KeyType key = "key 1";
 	fibo::Con::CircleMap<KeyType, DataType, mapSz> ciMap{};
 	ciMap[key] = v;
 	EXPECT_EQ(v, ciMap[key]);
-}
-
-TEST(CircleMap, insert_item_by_move_key)
-{
-	DataType v{};
-	fibo::Con::CircleMap<KeyType, DataType, mapSz> ciMap{};
-	ciMap["key 1"] = v;
-	EXPECT_EQ(v, ciMap["key 1"]);
 }
 
 TEST(CircleMap, find_in_empty_circle_map)

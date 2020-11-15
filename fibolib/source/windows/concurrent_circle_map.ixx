@@ -1,6 +1,7 @@
 module;
 
 #include <concurrent_vector.h>
+#include <concurrent_unordered_map.h>
 #include <atomic>
 #include <execution>
 #include <optional>
@@ -15,26 +16,13 @@ namespace fibo::Con
 	export template<
 		class KEY, 
 		class T, 
-		unsigned int N = std::numeric_limits<unsigned int>::max(),
-		class KeyEqual = std::equal_to<KEY>>
+		unsigned int N = std::numeric_limits<unsigned int>::max()>
 	class CircleMap
 	{
 	public:
 		using key_type		= KEY;
 		using mapped_type	= T;
-		using key_equal		= KeyEqual;
 		using size_type		= unsigned int;
-		//using const_iterator_key	= typename Concurrency::concurrent_vector<KeyMapping>::const_iterator;
-		//using const_iterator		= typename Concurrency::concurrent_vector<T>::const_iterator;
-
-	private:
-		struct InternalData
-		{
-			size_t pos_{ InvalidPos };
-			key_type key_{};
-			mapped_type value_{};
-			constexpr explicit operator bool() const noexcept { return InvalidPos != pos_; }
-		};
 
 	public:
 		//++ TODO does compliler generate move ??? => YES
@@ -48,57 +36,37 @@ namespace fibo::Con
 		/// <returns>Must return by value of T and wrapped by std::optional. 
 		/// Can't return reference because of multiple threads
 		/// </returns>
-		auto find(key_type const& key)
+		auto find(key_type const& key) const
 		{
 			using ReturnType = std::optional<mapped_type>;
-			auto found = findInternal(key);
-			return found ? ReturnType{ found->get().value_ } : ReturnType{ std::nullopt };
+			auto opos = findInternal(key);
+			return opos ? ReturnType{ data_[*opos] } : ReturnType{ std::nullopt };
 		}
 
 		template<class Condition>
-		auto find_if(Condition cond)
+		auto find_if(Condition cond) const
 		{
 			using ReturnType = std::optional<mapped_type>;
 
-			for (int i = 0; i < N; ++i) {
-				auto const& item = data_[i];
-				if (not item) { // Invalid item: TODO using filter view
-					return ReturnType{ std::nullopt };
-				}
-				
-				// Match condition
-				if (cond(item.key_, item.key_)) {
-					ReturnType{ item.value_ };
+			for (auto const& [k, p] : keys_) {
+				if (cond(k, data_[p])) {
+					return ReturnType{ data_[p] };
 				}
 			}
-
 			return ReturnType{ std::nullopt };
 		}
 
 		mapped_type& operator[](key_type const& key)
 		{
-			auto found = findInternal(key);
-			if (found) {
-				return found->get().value_;
+			auto opos = findInternal(key);
+			if (opos) {
+				return data_[*opos];
 			}
 
 			// Not found => create new pair
 			auto pos = nextPos();
-			data_[pos] = InternalData{ .pos_ = pos, .key_ = key };
-			return data_[pos].value_;
-		}
-
-		mapped_type& operator[](key_type&& key)
-		{
-			auto found = findInternal(key);
-			if (found) {
-				return found->get().value_;
-			}
-
-			// Not found => create new pair
-			auto pos = nextPos();
-			data_[pos] = InternalData{ .pos_ = pos, .key_ = std::move(key) };
-			return data_[pos].value_;
+			keys_[key] = pos;
+			return data_[pos];
 		}
 
 		constexpr size_type erase(key_type const& key)
@@ -107,29 +75,22 @@ namespace fibo::Con
 		}
 
 	private:
-		auto findInternal(key_type const& key) 
+		auto findInternal(key_type const& key) const
 		{
-			using ReturnType = std::optional<std::reference_wrapper<InternalData>>;
-			for (unsigned int i = 0; i < N; ++i) {
-				auto& item = data_[i];
-				if (not item) { //++ TODO using filter view
-					return ReturnType{ std::nullopt };
-				}
-
-				if (keyComp_(key, item.key_)) {
-					return ReturnType{ item };
-				}
+			using ReturnType = std::optional<size_type>;
+			auto found = keys_.find(key);
+			if (std::cend(keys_) == found) {
+				return ReturnType{ std::nullopt };
 			}
-			return ReturnType{ std::nullopt };
+			return ReturnType{ found->second };
 		}
 
 		constexpr size_t nextPos() noexcept { return lastPos_++ % N; }
 
 	private:
 		std::atomic_size_t lastPos_{0};
-		Concurrency::concurrent_vector<InternalData> data_{ N };
-		key_equal keyComp_;
-		static constexpr size_t InvalidPos = N + 1;
+		Concurrency::concurrent_vector<mapped_type> data_{ N };
+		Concurrency::concurrent_unordered_map<key_type, size_type> keys_;
 	};
 
 	/**********************************************************************************************/
