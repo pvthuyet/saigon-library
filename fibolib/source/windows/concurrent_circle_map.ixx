@@ -23,9 +23,45 @@ namespace fibo::Con
 		using key_type		= KEY;
 		using mapped_type	= T;
 		using size_type		= unsigned int;
+		using ConVec = Concurrency::concurrent_vector<mapped_type>;
+		using ConMap = Concurrency::concurrent_unordered_map<key_type, size_type>;
 
 	public:
-		//++ TODO does compliler generate move ??? => YES
+		CircleMap() = default;
+
+		// copyable
+		CircleMap(CircleMap const& other) :
+			lastPos_{ other.lastPos_.load(std::memory_order_relaxed) },
+			data_{ other.data_ },
+			keys_{other.keys_ }
+		{}
+
+		CircleMap& operator=(CircleMap const& other)
+		{
+			auto tmp(other);
+			*this = std::move(tmp);
+			return *this;
+		}
+
+		// movable
+		CircleMap(CircleMap&& other) noexcept:
+			lastPos_{ other.lastPos_.load(std::memory_order_relaxed) },
+			data_{ std::exchange(other.data_,  ConVec{}) },
+			keys_{ std::exchange(other.keys_, ConMap{}) }
+		{
+			other.lastPos_.store(0, std::memory_order_relaxed);
+		}
+
+		CircleMap& operator=(CircleMap&& other) noexcept
+		{
+			if (this not_eq &other) {
+				lastPos_.store(other.lastPos_.load(std::memory_order_relaxed));
+				data_ = std::exchange(other.data_, ConVec{});
+				keys_ = std::exchange(other.keys_, ConMap{});
+				other.lastPos_.store(0, std::memory_order_relaxed);
+			}
+			return *this;
+		}
 
 		constexpr size_t size() const noexcept { return N; }
 
@@ -69,9 +105,14 @@ namespace fibo::Con
 			return data_[pos];
 		}
 
-		constexpr size_type erase(key_type const& key)
+		/// <summary>
+		/// unsafe_earase maybe race condition
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		constexpr auto unsafe_erase(key_type const& key)
 		{
-			return 1;
+			return keys_.unsafe_erase(key);
 		}
 
 	private:
@@ -89,8 +130,8 @@ namespace fibo::Con
 
 	private:
 		std::atomic_size_t lastPos_{0};
-		Concurrency::concurrent_vector<mapped_type> data_{ N };
-		Concurrency::concurrent_unordered_map<key_type, size_type> keys_;
+		ConVec data_{ N };
+		ConMap keys_;
 	};
 
 	/**********************************************************************************************/
