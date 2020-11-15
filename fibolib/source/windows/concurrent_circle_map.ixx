@@ -28,11 +28,11 @@ namespace fibo::Con
 		//using const_iterator		= typename Concurrency::concurrent_vector<T>::const_iterator;
 
 	private:
-		struct KeyMapping
+		struct InternalData
 		{
-			static constexpr size_t InvalidPos = N + 1;
-			key_type		key_{};
-			size_t	pos_{ InvalidPos };
+			size_t pos_{ InvalidPos };
+			key_type key_{};
+			mapped_type value_{};
 			constexpr explicit operator bool() const noexcept { return InvalidPos != pos_; }
 		};
 
@@ -52,34 +52,26 @@ namespace fibo::Con
 		{
 			using ReturnType = std::optional<mapped_type>;
 			auto found = findInternal(key);
-			if (found) {
-				return ReturnType{ vec_[found->get().pos_] };
-			}
-			return ReturnType{ std::nullopt };
+			return found ? ReturnType{ found->get().value_ } : ReturnType{ std::nullopt };
 		}
 
 		template<class Condition>
 		auto find_if(Condition cond)
 		{
 			using ReturnType = std::optional<mapped_type>;
-			size_t foundPos = KeyMapping::InvalidPos;
+
 			for (int i = 0; i < N; ++i) {
-				auto const& item = keys_[i];
+				auto const& item = data_[i];
 				if (not item) { // Invalid item: TODO using filter view
-					break;
+					return ReturnType{ std::nullopt };
 				}
 				
 				// Match condition
-				if (cond(item.key_, vec_[item.pos_])) {
-					foundPos = item.pos_;
-					break;
+				if (cond(item.key_, item.key_)) {
+					ReturnType{ item.value_ };
 				}
 			}
 
-			// found item
-			if (KeyMapping::InvalidPos != foundPos) {
-				return ReturnType{ vec_[foundPos] };
-			}
 			return ReturnType{ std::nullopt };
 		}
 
@@ -87,26 +79,26 @@ namespace fibo::Con
 		{
 			auto found = findInternal(key);
 			if (found) {
-				return vec_[found->get().pos_];
+				return found->get().value_;
 			}
 
 			// Not found => create new pair
 			auto pos = nextPos();
-			keys_[pos] = KeyMapping{ .key_ = key, .pos_ = pos };
-			return vec_[pos];
+			data_[pos] = InternalData{ .pos_ = pos, .key_ = key };
+			return data_[pos].value_;
 		}
 
 		mapped_type& operator[](key_type&& key)
 		{
 			auto found = findInternal(key);
 			if (found) {
-				return vec_[found->get().pos_];
+				return found->get().value_;
 			}
 
 			// Not found => create new pair
 			auto pos = nextPos();
-			keys_[pos] = KeyMapping{ .key_ = std::move(key), .pos_ = pos };
-			return vec_[pos];
+			data_[pos] = InternalData{ .pos_ = pos, .key_ = std::move(key) };
+			return data_[pos].value_;
 		}
 
 		constexpr size_type erase(key_type const& key)
@@ -115,29 +107,29 @@ namespace fibo::Con
 		}
 
 	private:
-		auto findInternal(key_type const& key) const
+		auto findInternal(key_type const& key) 
 		{
-			using ReturnType = std::optional<std::reference_wrapper<KeyMapping const>>;
+			using ReturnType = std::optional<std::reference_wrapper<InternalData>>;
 			for (unsigned int i = 0; i < N; ++i) {
-				auto const& item = keys_[i];
+				auto& item = data_[i];
 				if (not item) { //++ TODO using filter view
 					return ReturnType{ std::nullopt };
 				}
 
 				if (keyComp_(key, item.key_)) {
-					return ReturnType{ keys_[i] };
+					return ReturnType{ item };
 				}
 			}
 			return ReturnType{ std::nullopt };
 		}
 
-		constexpr size_t nextPos() noexcept { return posElement_++ % N; }
+		constexpr size_t nextPos() noexcept { return lastPos_++ % N; }
 
 	private:
-		std::atomic_size_t posElement_{0};
-		Concurrency::concurrent_vector<T> vec_{ N };
-		Concurrency::concurrent_vector<KeyMapping> keys_{ N };
+		std::atomic_size_t lastPos_{0};
+		Concurrency::concurrent_vector<InternalData> data_{ N };
 		key_equal keyComp_;
+		static constexpr size_t InvalidPos = N + 1;
 	};
 
 	/**********************************************************************************************/

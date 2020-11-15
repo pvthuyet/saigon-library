@@ -3,17 +3,10 @@
   <ItemGroup>
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="test_path_utils.cpp">
-      <Filter>path utils</Filter>
-    </ClCompile>
-    <ClCompile Include="test_string_utils.cpp" />
+    <ClCompile Include="test_circle_map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="test_path_utils.h">
-      <Filter>path utils</Filter>
-    </ClInclude>
-    <ClInclude Include="test_string_utils.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
