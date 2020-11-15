@@ -28,6 +28,7 @@ namespace fibo::Con
 
 	public:
 		CircleMap() = default;
+		~CircleMap() noexcept = default;
 
 		// copyable
 		CircleMap(CircleMap const& other) :
