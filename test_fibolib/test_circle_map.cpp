@@ -48,3 +48,14 @@ TEST(CircleMap, find_not_found_item)
 	auto found = ciMap.find("key 2");
 	EXPECT_TRUE(not found);
 }
+
+TEST(CircleMap, find_if_available_item)
+{
+	DataType v{};
+	fibo::Con::CircleMap<KeyType, DataType, mapSz> ciMap{};
+	ciMap["key 1"] = v;
+	auto found = ciMap.find_if([&](auto const& k, auto const& val) {
+		return val == v;
+		});
+	EXPECT_EQ(v, *found);
+}
