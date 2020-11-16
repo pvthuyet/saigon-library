@@ -102,7 +102,7 @@ namespace fibo::Con
 
 			// Not found => create new pair
 			auto pos = nextPos();
-			keys_[key] = pos;
+			keys_[key] = static_cast<size_type>(pos);
 			return data_[pos];
 		}
 

@@ -1,7 +1,7 @@
 #include "pch.h"
 
 import Fibo.ConcurrentCircleMap;
-constexpr int mapSz = 100;
+constexpr unsigned int mapSz = 1024;
 
 using KeyType = std::string;
 struct DataType 
@@ -29,15 +29,12 @@ TestCirMap initMap(int sz = mapSz)
 TEST(CircleMap, constructor_fix_size)
 {
 	TestCirMap ciMap;
-	TestCirMap ciMap1 = initMap();
-	ciMap = ciMap1;
-	TestCirMap ciMap3{ std::move(ciMap1) };
 	EXPECT_EQ(mapSz, ciMap.size());
 }
 
-TEST(CircleMap, insert_item)
+TEST(CircleMap, insert_item_success)
 {
-	DataType v{};
+	DataType v{1};
 	KeyType key = "key 1";
 	TestCirMap ciMap{};
 	ciMap[key] = v;
@@ -53,26 +50,23 @@ TEST(CircleMap, find_in_empty_circle_map)
 
 TEST(CircleMap, find_available_item)
 {
-	DataType v{};
-	TestCirMap ciMap{};
-	ciMap["key 1"] = v;
+	DataType v{1};
+	TestCirMap ciMap = initMap();
 	auto found = ciMap.find("key 1");
 	EXPECT_EQ(v, *found);
 }
 
 TEST(CircleMap, find_not_found_item)
 {
-	TestCirMap ciMap{};
-	ciMap["key 1"] = DataType{};
-	auto found = ciMap.find("key 2");
+	TestCirMap ciMap = initMap();
+	auto found = ciMap.find("key -1");
 	EXPECT_TRUE(not found);
 }
 
 TEST(CircleMap, find_if_available_item)
 {
-	DataType v{};
-	TestCirMap ciMap{};
-	ciMap["key 1"] = v;
+	DataType v{1};
+	TestCirMap ciMap = initMap();
 	auto found = ciMap.find_if([&](auto const& k, auto const& val) {
 		return val == v;
 		});
