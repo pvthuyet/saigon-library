@@ -48,6 +48,12 @@
     <ClInclude Include="include\constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\windows\handle_deleter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\windows\scope.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rd_party\fmtlib\src\format.cc">

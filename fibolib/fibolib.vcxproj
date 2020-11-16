@@ -173,6 +173,8 @@
     <ClInclude Include="include\fibo_std.h" />
     <ClInclude Include="include\targetver.h" />
     <ClInclude Include="include\windows\file_api.h" />
+    <ClInclude Include="include\windows\handle_deleter.hpp" />
+    <ClInclude Include="include\windows\scope.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rd_party\fmtlib\src\format.cc" />

@@ -10,4 +10,7 @@
 #define SPDLOG_WCHAR_TO_UTF8_SUPPORT 1
 #include "spdlog/spdlog.h"
 
+#define LOGENTER	SPDLOG_INFO("Enter {")
+#define LOGEXIT		SPDLOG_INFO("Exit }")
+
 #endif // !LOGGER_DEFINE_H_

@@ -27,7 +27,7 @@ namespace fibo::Con
 		using ConMap = Concurrency::concurrent_unordered_map<key_type, size_type>;
 
 	public:
-		CircleMap() = default;
+		CircleMap() noexcept(std::is_nothrow_constructible_v<ConVec> and std::is_nothrow_constructible_v<ConMap>) = default;
 		~CircleMap() noexcept = default;
 
 		// copyable
