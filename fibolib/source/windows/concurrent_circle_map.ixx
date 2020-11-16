@@ -64,7 +64,8 @@ namespace fibo::Con
 			return *this;
 		}
 
-		constexpr size_t size() const noexcept { return N; }
+		constexpr auto maxSize() const noexcept { return N; }
+		constexpr auto size() const noexcept { return keys_.size(); }
 
 		/// <summary>
 		/// Find the value in map by key

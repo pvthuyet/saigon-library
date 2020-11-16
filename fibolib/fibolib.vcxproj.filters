@@ -98,5 +98,8 @@
     <ClCompile Include="source\windows\concurrent_circle_map.ixx">
       <Filter>Windows</Filter>
     </ClCompile>
+    <ClCompile Include="source\windows\clipboard.ixx">
+      <Filter>Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

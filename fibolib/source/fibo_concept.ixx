@@ -1,6 +1,8 @@
 module;
 
-#include "fibo_std.h"
+#include <concepts>
+#include <string>
+#include <regex>
 
 export module Fibo.Concept;
 
