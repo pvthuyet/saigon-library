@@ -2,6 +2,7 @@ module;
 
 #include "windows/scope.hpp"
 #include "windows/handle_deleter.hpp"
+#include "define.h"
 #include <vector>
 #include <string>
 
@@ -9,9 +10,9 @@ export module Fibo.Clipboard;
 
 namespace fibo::Clipboard
 {
-	export std::vector<std::wstring> getCopyingFiles()
+	export std::vector<fistdpmr::wstring> getCopyingFiles()
 	{
-		std::vector<std::wstring> filePaths{};
+		std::vector<fistdpmr::wstring> filePaths{};
 
 		using std::experimental::make_unique_resource_checked;
 		auto cbOpen = make_unique_resource_checked(
