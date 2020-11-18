@@ -44,7 +44,9 @@ namespace fibo::Clipboard
 					auto numFiles = ::DragQueryFileW(static_cast<HDROP>(hDrop.get()), 0xFFFFFFFF, nullptr, 0);
 					if (not numFiles) return filePaths;
 
+					//++ IMPORTANT: NEVER EVER FORGET RESERVE
 					filePaths.reserve(numFiles);
+
 					wchar_t paths[MAX_PATH] = { 0 };
 					for (UINT i = 0; i < numFiles; ++i) {
 						auto len = ::DragQueryFileW(static_cast<HDROP>(hDrop.get()), i, paths, MAX_PATH);
