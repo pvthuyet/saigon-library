@@ -2,7 +2,7 @@ module;
 
 #include "windows/scope.hpp"
 #include "windows/handle_deleter.hpp"
-#include "define.h"
+#include "fibo_define.h"
 #include <vector>
 #include <string>
 

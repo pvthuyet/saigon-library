@@ -1,8 +1,13 @@
 module;
 
-#include "fibo_std.h"
 #include "fmt/core.h"
 #include "constants.h"
+#include "fibo_define.h"
+#include <execution>
+#include <algorithm>
+#include <string>
+#include <regex>
+#include <random>
 
 import Fibo.Concept;
 #ifdef _WIN32
@@ -74,18 +79,18 @@ namespace fibo::StringUtils
 	[[nodiscard]] auto split(const S1& str, const S2& token)
 	{
 		// Valid nullptr for s1 and s2
-		if constexpr (std::is_pointer_v<S1>) {
+		if constexpr (fistd::is_pointer_v<S1>) {
 			if (nullptr == str) {
-				throw std::invalid_argument(
+				throw fistd::invalid_argument(
 					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
 						__FILE__, 
 						__LINE__));
 			}
 		}
 
-		if constexpr (std::is_pointer_v<S2>) {
+		if constexpr (fistd::is_pointer_v<S2>) {
 			if (nullptr == token) {
-				throw std::invalid_argument(
+				throw fistd::invalid_argument(
 					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
 						__FILE__, 
 						__LINE__));
@@ -98,15 +103,27 @@ namespace fibo::StringUtils
 		TStringView tokv{ token };
 
 		if (sv.empty()) {
-			return std::vector<TString>{};
+			return fistdpmr::vector<TString>{};
 		}
 
 		// Invalid parameter
-		if (tokv.empty()) {
-			return std::vector<TString>{ TString{ str } };
+		auto tokenSize = tokv.size();
+		if (0 == tokenSize) {
+			return fistdpmr::vector<TString>{ TString{ str } };
 		}
 
-		std::vector<TString> result;
+		// count number of token in str
+		size_t numToken = 0;
+		if (1 == tokenSize) {
+			auto ch = tokv.front();
+			numToken = std::count(std::execution::seq, std::cbegin(sv), std::cend(sv), ch);
+		}
+		else {
+			//++ TODO
+		}
+
+		fistdpmr::vector<TString> result;
+		result.reserve(numToken + 1);
 
 		using TRegex = tregex_t<S1>;
 		using TRegexTokenIt = tregex_token_iterator_t<TStringView>;
