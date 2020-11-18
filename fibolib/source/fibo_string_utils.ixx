@@ -122,6 +122,10 @@ namespace fibo::StringUtils
 			//++ TODO
 		}
 
+		if (0 == numToken) {
+			return fistdpmr::vector<TString>(1, str);
+		}
+
 		fistdpmr::vector<TString> result;
 		result.reserve(numToken + 1);
 
