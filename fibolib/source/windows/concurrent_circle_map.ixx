@@ -27,14 +27,14 @@ namespace fibo::Con
 		using ConMap = Concurrency::concurrent_unordered_map<key_type, size_type>;
 
 	public:
-		CircleMap() noexcept(std::is_nothrow_constructible_v<ConVec> and std::is_nothrow_constructible_v<ConMap>) = default;
+		CircleMap() noexcept(std::is_nothrow_constructible_v<ConVec>and std::is_nothrow_constructible_v<ConMap>) = default;
 		~CircleMap() noexcept = default;
 
 		// copyable
 		CircleMap(CircleMap const& other) :
-			lastPos_{ other.lastPos_.load(std::memory_order_relaxed) },
-			data_{ other.data_ },
-			keys_{other.keys_ }
+			mLastPos{ other.mLastPos.load(std::memory_order_relaxed) },
+			mData{ other.mData },
+			mKeys{other.mKeys }
 		{}
 
 		CircleMap& operator=(CircleMap const& other)
@@ -46,26 +46,26 @@ namespace fibo::Con
 
 		// movable
 		CircleMap(CircleMap&& other) noexcept:
-			lastPos_{ other.lastPos_.load(std::memory_order_relaxed) },
-			data_{ std::exchange(other.data_,  ConVec{}) },
-			keys_{ std::exchange(other.keys_, ConMap{}) }
+			mLastPos{ other.mLastPos.load(std::memory_order_relaxed) },
+			mData{ std::exchange(other.mData,  ConVec{}) },
+			mKeys{ std::exchange(other.mKeys, ConMap{}) }
 		{
-			other.lastPos_.store(0, std::memory_order_relaxed);
+			other.mLastPos.store(0, std::memory_order_relaxed);
 		}
 
 		CircleMap& operator=(CircleMap&& other) noexcept
 		{
 			if (this not_eq &other) {
-				lastPos_.store(other.lastPos_.load(std::memory_order_relaxed));
-				data_ = std::exchange(other.data_, ConVec{});
-				keys_ = std::exchange(other.keys_, ConMap{});
-				other.lastPos_.store(0, std::memory_order_relaxed);
+				mLastPos.store(other.mLastPos.load(std::memory_order_relaxed));
+				mData = std::exchange(other.mData, ConVec{});
+				mKeys = std::exchange(other.mKeys, ConMap{});
+				other.mLastPos.store(0, std::memory_order_relaxed);
 			}
 			return *this;
 		}
 
 		constexpr auto maxSize() const noexcept { return N; }
-		constexpr auto size() const noexcept { return keys_.size(); }
+		constexpr auto size() const noexcept { return mKeys.size(); }
 
 		/// <summary>
 		/// Find the value in map by key
@@ -78,7 +78,7 @@ namespace fibo::Con
 		{
 			using ReturnType = std::optional<mapped_type>;
 			auto opos = findInternal(key);
-			return opos ? ReturnType{ data_[*opos] } : ReturnType{ std::nullopt };
+			return opos ? ReturnType{ mData[*opos] } : ReturnType{ std::nullopt };
 		}
 
 		template<class Condition>
@@ -86,9 +86,9 @@ namespace fibo::Con
 		{
 			using ReturnType = std::optional<mapped_type>;
 
-			for (auto const& [k, p] : keys_) {
-				if (cond(k, data_[p])) {
-					return ReturnType{ data_[p] };
+			for (auto const& [k, p] : mKeys) {
+				if (cond(k, mData[p])) {
+					return ReturnType{ mData[p] };
 				}
 			}
 			return ReturnType{ std::nullopt };
@@ -98,13 +98,13 @@ namespace fibo::Con
 		{
 			auto opos = findInternal(key);
 			if (opos) {
-				return data_[*opos];
+				return mData[*opos];
 			}
 
 			// Not found => create new pair
 			auto pos = nextPos();
-			keys_[key] = static_cast<size_type>(pos);
-			return data_[pos];
+			mKeys[key] = static_cast<size_type>(pos);
+			return mData[pos];
 		}
 
 		/// <summary>
@@ -114,26 +114,26 @@ namespace fibo::Con
 		/// <returns></returns>
 		constexpr auto unsafe_erase(key_type const& key)
 		{
-			return keys_.unsafe_erase(key);
+			return mKeys.unsafe_erase(key);
 		}
 
 	private:
 		auto findInternal(key_type const& key) const
 		{
 			using ReturnType = std::optional<size_type>;
-			auto found = keys_.find(key);
-			if (std::cend(keys_) == found) {
+			auto found = mKeys.find(key);
+			if (std::cend(mKeys) == found) {
 				return ReturnType{ std::nullopt };
 			}
 			return ReturnType{ found->second };
 		}
 
-		constexpr size_t nextPos() noexcept { return lastPos_++ % N; }
+		constexpr size_t nextPos() noexcept { return mLastPos++ % N; }
 
 	private:
-		std::atomic_size_t lastPos_{0};
-		ConVec data_{ N };
-		ConMap keys_;
+		std::atomic_size_t mLastPos{0};
+		ConVec mData{ N };
+		ConMap mKeys; // Doesn't have reserve()
 	};
 
 	/**********************************************************************************************/
