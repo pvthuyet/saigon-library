@@ -16,7 +16,7 @@ namespace cppcoro
 #if __cpp_lib_filesystem >= 201703L
 	using path = std::filesystem::path;
 #else
-	using path = std::experimental::filesystem::path;
+	using path = std::filesystem::path;
 #endif
 }
 
