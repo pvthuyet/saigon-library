@@ -12,7 +12,7 @@ struct DataType
 	constexpr auto operator<=>(DataType const&) const noexcept = default;
 };
 
-using TestCirMap = fibo::Con::CircleMap<KeyType, DataType, mapSz>;
+using TestCirMap = fibo::Con::circle_map<KeyType, DataType, mapSz>;
 
 TestCirMap initMap(int sz = mapSz)
 {
@@ -26,13 +26,13 @@ TestCirMap initMap(int sz = mapSz)
 	return mp;
 }
 
-TEST(CircleMap, constructor_fix_size)
+TEST(circle_map, constructor_fix_size)
 {
 	TestCirMap ciMap;
 	EXPECT_EQ(mapSz, ciMap.size());
 }
 
-TEST(CircleMap, insert_item_success)
+TEST(circle_map, insert_item_success)
 {
 	DataType v{1};
 	KeyType key = "key 1";
@@ -41,14 +41,14 @@ TEST(CircleMap, insert_item_success)
 	EXPECT_EQ(v, ciMap[key]);
 }
 
-TEST(CircleMap, find_in_empty_circle_map)
+TEST(circle_map, find_in_empty_circle_map)
 {
 	TestCirMap ciMap{};
 	auto found = ciMap.find("key 1");
 	EXPECT_TRUE(not found);
 }
 
-TEST(CircleMap, find_available_item)
+TEST(circle_map, find_available_item)
 {
 	DataType v{1};
 	TestCirMap ciMap = initMap();
@@ -56,14 +56,14 @@ TEST(CircleMap, find_available_item)
 	EXPECT_EQ(v, *found);
 }
 
-TEST(CircleMap, find_not_found_item)
+TEST(circle_map, find_not_found_item)
 {
 	TestCirMap ciMap = initMap();
 	auto found = ciMap.find("key -1");
 	EXPECT_TRUE(not found);
 }
 
-TEST(CircleMap, find_if_available_item)
+TEST(circle_map, find_if_available_item)
 {
 	DataType v{1};
 	TestCirMap ciMap = initMap();

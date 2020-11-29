@@ -98,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions);USE_WINDOWS_API</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;3rd_party\cppcoro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
@@ -115,7 +115,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;USE_WINDOWS_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;3rd_party\cppcoro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions);USE_WINDOWS_API</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;3rd_party\cppcoro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
@@ -155,7 +155,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions);USE_WINDOWS_API</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;3rd_party\cppcoro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
@@ -167,6 +167,87 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\async_auto_reset_event.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\async_generator.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\async_latch.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\async_manual_reset_event.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\async_mutex.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\async_scope.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\awaitable_traits.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\broken_promise.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\cancellation_registration.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\cancellation_source.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\cancellation_token.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\config.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\any.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\get_awaiter.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\is_awaiter.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\lightweight_manual_reset_event.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\manual_lifetime.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\remove_rvalue_reference.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\sync_wait_task.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\unwrap_reference.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\void_value.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\when_all_counter.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\when_all_ready_awaitable.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\when_all_task.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\win32.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\detail\win32_overlapped_operation.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\file.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\file_buffering_mode.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\file_open_mode.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\file_read_operation.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\file_share_mode.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\file_write_operation.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\fmap.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\generator.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\inline_scheduler.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\io_service.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\is_awaitable.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\multi_producer_sequencer.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\ipv4_address.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\ipv4_endpoint.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\ipv6_address.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\ipv6_endpoint.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\ip_address.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\ip_endpoint.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\socket.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\socket_accept_operation.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\socket_connect_operation.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\socket_disconnect_operation.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\socket_recv_from_operation.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\socket_recv_operation.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\socket_send_operation.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\net\socket_send_to_operation.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\on_scope_exit.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\operation_cancelled.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\path.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\readable_file.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\read_only_file.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\read_write_file.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\recursive_generator.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\resume_on.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\round_robin_scheduler.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\schedule_on.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\sequence_barrier.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\sequence_range.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\sequence_traits.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\shared_task.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\single_consumer_async_auto_reset_event.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\single_consumer_event.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\single_producer_sequencer.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\static_thread_pool.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\sync_wait.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\task.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\when_all.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\when_all_ready.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\writable_file.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\include\cppcoro\write_only_file.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\lib\auto_reset_event.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\lib\cancellation_state.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\lib\socket_helpers.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\lib\spin_mutex.hpp" />
+    <ClInclude Include="3rd_party\cppcoro\lib\spin_wait.hpp" />
     <ClInclude Include="include\constants.h" />
     <ClInclude Include="include\fibo_define.h" />
     <ClInclude Include="include\logger_define.h" />
@@ -177,6 +258,43 @@
     <ClInclude Include="include\windows\scope.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rd_party\cppcoro\lib\async_auto_reset_event.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\async_manual_reset_event.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\async_mutex.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\auto_reset_event.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\cancellation_registration.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\cancellation_source.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\cancellation_state.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\cancellation_token.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\file.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\file_read_operation.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\file_write_operation.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\io_service.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\ipv4_address.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\ipv4_endpoint.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\ipv6_address.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\ipv6_endpoint.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\ip_address.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\ip_endpoint.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\lightweight_manual_reset_event.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\readable_file.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\read_only_file.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\read_write_file.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\socket.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\socket_accept_operation.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\socket_connect_operation.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\socket_disconnect_operation.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\socket_helpers.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\socket_recv_from_operation.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\socket_recv_operation.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\socket_send_operation.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\socket_send_to_operation.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\spin_mutex.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\spin_wait.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\static_thread_pool.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\win32.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\writable_file.cpp" />
+    <ClCompile Include="3rd_party\cppcoro\lib\write_only_file.cpp" />
     <ClCompile Include="3rd_party\fmtlib\src\format.cc" />
     <ClCompile Include="3rd_party\fmtlib\src\os.cc" />
     <ClCompile Include="source\fibo_concept.ixx" />
@@ -192,6 +310,12 @@
     <ClCompile Include="source\windows\keyboard_manager.ixx" />
     <ClCompile Include="source\windows\message_event.ixx" />
     <ClCompile Include="source\windows\windows_string_api.ixx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="3rd_party\cppcoro\lib\build.cake" />
+    <None Include="3rd_party\cppcoro\lib\build.cakec" />
+    <None Include="3rd_party\cppcoro\lib\use.cake" />
+    <None Include="3rd_party\cppcoro\lib\use.cakec" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
