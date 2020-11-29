@@ -12,93 +12,93 @@ namespace fibo
 	/// <summary>
 	/// 
 	/// </summary>
-	export class WindowProcedure
+	export class window_procedure
 	{
 	public:
-		virtual ~WindowProcedure() noexcept {}
+		virtual ~window_procedure() noexcept {}
 		virtual LRESULT procedure(HWND, UINT, WPARAM, LPARAM) = 0;
 	};
 
 	/// <summary>
 	/// 
 	/// </summary>
-	export class MessageEvent
+	export class message_event
 	{
 	public:
-		explicit MessageEvent(gsl::not_null<WindowProcedure*> parent) noexcept;
-		~MessageEvent() noexcept;
+		explicit message_event(gsl::not_null<window_procedure*> parent) noexcept;
+		~message_event() noexcept;
 
 		// no copyable
-		MessageEvent(MessageEvent const&) = delete;
-		MessageEvent& operator=(MessageEvent const&) = delete;
+		message_event(message_event const&) = delete;
+		message_event& operator=(message_event const&) = delete;
 
 		// movable
-		MessageEvent(MessageEvent&& other) noexcept;
-		MessageEvent& operator=(MessageEvent&& other) noexcept;
+		message_event(message_event&& other) noexcept;
+		message_event& operator=(message_event&& other) noexcept;
 
-		void registerWndClass(std::wstring_view className);
-		void unregisterWndClass() noexcept;
+		void register_window_class(std::wstring_view className);
+		void unregister_window_class() noexcept;
 
-		HWND getWndHandle() const;
+		HWND get_handle() const;
 
 	private:
 		LRESULT procedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) const;
-		static LRESULT CALLBACK WndProcCb(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+		static LRESULT CALLBACK procedure_callback(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 	private:
-		HWND hWnd_{ nullptr };
-		HINSTANCE hInst_{ nullptr };
-		std::wstring className_;
-		WindowProcedure* parent_;
+		HWND mHwnd{ nullptr };
+		HINSTANCE mHinst{ nullptr };
+		std::wstring mClassName;
+		window_procedure* mParent;
 	};
 
 	/*******************************************************************************/
-	MessageEvent::MessageEvent(gsl::not_null<WindowProcedure*> parent) noexcept :
-		hWnd_{ nullptr },
-		hInst_{ nullptr },
-		className_{},
-		parent_{ parent }
+	message_event::message_event(gsl::not_null<window_procedure*> parent) noexcept :
+		mHwnd{ nullptr },
+		mHinst{ nullptr },
+		mClassName{},
+		mParent{ parent }
 	{}
 
-	MessageEvent::~MessageEvent() noexcept
+	message_event::~message_event() noexcept
 	{
-		unregisterWndClass();
+		unregister_window_class();
 	}
 
 	// movable
-	MessageEvent::MessageEvent(MessageEvent&& other) noexcept :
-		hWnd_{ std::exchange(other.hWnd_, nullptr) },
-		hInst_{ std::exchange(other.hInst_, nullptr) },
-		className_{ std::exchange(other.className_, std::wstring{}) },
-		parent_{ std::exchange(other.parent_, nullptr) }
+	message_event::message_event(message_event&& other) noexcept :
+		mHwnd{ std::exchange(other.mHwnd, nullptr) },
+		mHinst{ std::exchange(other.mHinst, nullptr) },
+		mClassName{ std::exchange(other.mClassName, std::wstring{}) },
+		mParent{ std::exchange(other.mParent, nullptr) }
 	{}
 
-	MessageEvent& MessageEvent::operator=(MessageEvent&& other) noexcept
+	message_event& message_event::operator=(message_event&& other) noexcept
 	{
 		if (this != &other) {
-			this->~MessageEvent();
-			hWnd_ = std::exchange(other.hWnd_, nullptr);
-			hInst_ = std::exchange(other.hInst_, nullptr);
-			className_ = std::exchange(other.className_, std::wstring{});
-			parent_ = std::exchange(other.parent_, nullptr);
+			this->~message_event();
+			mHwnd = std::exchange(other.mHwnd, nullptr);
+			mHinst = std::exchange(other.mHinst, nullptr);
+			mClassName = std::exchange(other.mClassName, std::wstring{});
+			mParent = std::exchange(other.mParent, nullptr);
 		}
 		return *this;
 	}
 
-	HWND MessageEvent::getWndHandle() const
+	HWND message_event::get_handle() const
 	{
-		return hWnd_;
+		return mHwnd;
 	}
 
-	void MessageEvent::registerWndClass(std::wstring_view className)
+	void message_event::register_window_class(std::wstring_view className)
 	{
-		if (hWnd_) {
+		if (mHwnd) {
 			return;
 		}
 
-		className_ = className;
-		hInst_ = ::GetModuleHandle(nullptr);
-		if (not hInst_)
+		mClassName = className;
+		mHinst = ::GetModuleHandle(nullptr);
+		if (not mHinst)
 		{
 			throw std::system_error(::GetLastError(),
 				std::system_category(),
@@ -108,14 +108,14 @@ namespace fibo
 		}
 
 		WNDCLASS wndClass{};
-		wndClass.lpfnWndProc = WndProcCb;
-		wndClass.hInstance = hInst_;
-		wndClass.lpszClassName = className_.c_str();
+		wndClass.lpfnWndProc = procedure_callback;
+		wndClass.hInstance = mHinst;
+		wndClass.lpszClassName = mClassName.c_str();
 
 		auto succ = ::RegisterClass(&wndClass);
 		if (not succ)
 		{
-			hInst_ = nullptr;
+			mHinst = nullptr;
 			throw std::system_error(::GetLastError(),
 				std::system_category(),
 				fmt::format("Failed to call RegisterClassA. {}:{}",
@@ -123,7 +123,7 @@ namespace fibo
 					__LINE__));
 		}
 
-		hWnd_ = ::CreateWindowEx(
+		mHwnd = ::CreateWindowEx(
 			0,
 			wndClass.lpszClassName,
 			L"message event name",
@@ -134,14 +134,14 @@ namespace fibo
 			CW_USEDEFAULT,
 			HWND_MESSAGE,
 			NULL,
-			hInst_,
+			mHinst,
 			this);
 
-		if (not hWnd_)
+		if (not mHwnd)
 		{
 			auto err = ::GetLastError();
-			::UnregisterClass(wndClass.lpszClassName, hInst_);
-			hInst_ = nullptr;
+			::UnregisterClass(wndClass.lpszClassName, mHinst);
+			mHinst = nullptr;
 			throw std::system_error(err,
 				std::system_category(),
 				fmt::format("Failed to call CreateWindowExA. {}:{}",
@@ -150,37 +150,37 @@ namespace fibo
 		}
 	}
 
-	void MessageEvent::unregisterWndClass() noexcept
+	void message_event::unregister_window_class() noexcept
 	{
-		if (hWnd_) {
-			::DestroyWindow(hWnd_);
+		if (mHwnd) {
+			::DestroyWindow(mHwnd);
 		}
 
-		if (hInst_) {
-			::UnregisterClass(className_.c_str(), hInst_);
+		if (mHinst) {
+			::UnregisterClass(mClassName.c_str(), mHinst);
 		}
-		hInst_ = nullptr;
-		hWnd_ = nullptr;
+		mHinst = nullptr;
+		mHwnd = nullptr;
 	}
 
-	LRESULT MessageEvent::procedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) const
+	LRESULT message_event::procedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) const
 	{
-		return parent_->procedure(hWnd, uMsg, wParam, lParam);
+		return mParent->procedure(hWnd, uMsg, wParam, lParam);
 	}
 
-	LRESULT MessageEvent::WndProcCb(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+	LRESULT message_event::procedure_callback(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
-		MessageEvent* pThis = nullptr;
+		message_event* pThis = nullptr;
 		if (WM_NCCREATE == uMsg) {
 			// Recover the "this" pointer which was passed as a parameter to CreateWindowExA
 			LPCREATESTRUCTA lpcs = reinterpret_cast<LPCREATESTRUCTA>(lParam);
-			pThis = static_cast<MessageEvent*>(lpcs->lpCreateParams);
+			pThis = static_cast<message_event*>(lpcs->lpCreateParams);
 			// Put the value in a safe place for future use
 			::SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pThis));
 		}
 		else {
 			// Recover the "this" pointer from where our WM_NCCREATE handler stashed it
-			pThis = reinterpret_cast<MessageEvent*>(::GetWindowLongPtr(hWnd, GWLP_USERDATA));
+			pThis = reinterpret_cast<message_event*>(::GetWindowLongPtr(hWnd, GWLP_USERDATA));
 		}
 
 		if (pThis) {
