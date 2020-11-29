@@ -79,18 +79,18 @@ namespace fibo::StringUtils
 	[[nodiscard]] auto split(const S1& str, const S2& token)
 	{
 		// Valid nullptr for s1 and s2
-		if constexpr (fistd::is_pointer_v<S1>) {
+		if constexpr (std::is_pointer_v<S1>) {
 			if (nullptr == str) {
-				throw fistd::invalid_argument(
+				throw std::invalid_argument(
 					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
 						__FILE__, 
 						__LINE__));
 			}
 		}
 
-		if constexpr (fistd::is_pointer_v<S2>) {
+		if constexpr (std::is_pointer_v<S2>) {
 			if (nullptr == token) {
-				throw fistd::invalid_argument(
+				throw std::invalid_argument(
 					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
 						__FILE__, 
 						__LINE__));
@@ -103,13 +103,13 @@ namespace fibo::StringUtils
 		TStringView tokv{ token };
 
 		if (sv.empty()) {
-			return fistdpmr::vector<TString>{};
+			return fipmr::vector<TString>{};
 		}
 
 		// Invalid parameter
 		auto tokenSize = tokv.size();
 		if (0 == tokenSize) {
-			return fistdpmr::vector<TString>{ TString{ str } };
+			return fipmr::vector<TString>{ TString{ str } };
 		}
 
 		// count number of token in str
@@ -123,10 +123,10 @@ namespace fibo::StringUtils
 		}
 
 		if (0 == numToken) {
-			return fistdpmr::vector<TString>(1, str);
+			return fipmr::vector<TString>(1, str);
 		}
 
-		fistdpmr::vector<TString> result;
+		fipmr::vector<TString> result;
 		result.reserve(numToken + 1);
 
 		using TRegex = tregex_t<S1>;

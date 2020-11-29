@@ -10,9 +10,9 @@ export module Fibo.Clipboard;
 
 namespace fibo::Clipboard
 {
-	export std::vector<fistdpmr::wstring> getCopyingFiles()
+	export std::vector<fipmr::wstring> getCopyingFiles()
 	{
-		std::vector<fistdpmr::wstring> filePaths{};
+		std::vector<fipmr::wstring> filePaths{};
 
 		using std::experimental::make_unique_resource_checked;
 		auto cbOpen = make_unique_resource_checked(
