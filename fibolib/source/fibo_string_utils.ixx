@@ -76,7 +76,7 @@ namespace fibo::StringUtils
 	/// <param name="token"></param>
 	/// <returns></returns>
 	export template<typename S1, typename S2> requires fibo::StringablePair<S1, S2>
-	[[nodiscard]] auto split(const S1& str, const S2& token)
+	[[nodiscard]] auto split_regex(const S1& str, const S2& token, size_t maxElement = 0)
 	{
 		// Valid nullptr for s1 and s2
 		if constexpr (std::is_pointer_v<S1>) {
@@ -102,32 +102,10 @@ namespace fibo::StringUtils
 		TStringView sv{ str };
 		TStringView tokv{ token };
 
-		if (sv.empty()) {
-			return fipmr::vector<TString>{};
-		}
-
-		// Invalid parameter
-		auto tokenSize = tokv.size();
-		if (0 == tokenSize) {
-			return fipmr::vector<TString>{ TString{ str } };
-		}
-
-		// count number of token in str
-		size_t numToken = 0;
-		if (1 == tokenSize) {
-			auto ch = tokv.front();
-			numToken = std::count(std::execution::seq, std::cbegin(sv), std::cend(sv), ch);
-		}
-		else {
-			//++ TODO
-		}
-
-		if (0 == numToken) {
-			return fipmr::vector<TString>(1, str);
-		}
-
 		fipmr::vector<TString> result;
-		result.reserve(numToken + 1);
+		if (maxElement > 0) {
+			result.reserve(maxElement);
+		}
 
 		using TRegex = tregex_t<S1>;
 		using TRegexTokenIt = tregex_token_iterator_t<TStringView>;
