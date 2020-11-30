@@ -8,6 +8,7 @@ module;
 #include <string>
 #include <regex>
 #include <random>
+#include <concepts>
 
 import Fibo.Concept;
 #ifdef _WIN32
@@ -20,33 +21,16 @@ export module Fibo.StringUtils;
 
 namespace fibo::StringUtils
 {
-	/// <summary>
-	/// Maps a UTF-16 (wide character) string to a new character string
-	/// </summary>
-	/// <param name="str"></param>
-	/// <param name="codePage"></param>
-	/// <returns></returns>
 	export [[nodiscard]] auto convert(std::wstring_view str, unsigned int codePage = F_CP_UTF8)
 	{
 		return StringApi::wc2mb(str, codePage);
 	}
 
-	/// <summary>
-	/// Maps a character string to a UTF-16 (wide character) string
-	/// </summary>
-	/// <param name="str"></param>
-	/// <param name="codePage"></param>
-	/// <returns></returns>
 	export [[nodiscard]] auto convert(std::string_view str, unsigned int codePage = F_CP_UTF8)
 	{
 		return StringApi::mb2wc(str, codePage);
 	}
 
-	/// <summary>
-	/// Random an alphabet string from 0-9a-zA-Z
-	/// </summary>
-	/// <param name="len"></param>
-	/// <returns></returns>
 	export [[nodiscard]] auto randAlphabet(unsigned len)
 	{
 		constexpr const char alphabet[] =
@@ -69,12 +53,52 @@ namespace fibo::StringUtils
 		return str;
 	}
 
-	/// <summary>
-	/// Parse a string by token
-	/// </summary>
-	/// <param name="str"></param>
-	/// <param name="token"></param>
-	/// <returns></returns>
+	export template<class S, class F> requires(fibo::Stringable<S> && std::predicate<F, typename fibo::tstring_t<S>::value_type>)
+	[[nodiscard]] auto split(const S& str, F&& pre, size_t maxElement = 0)
+	{
+		// Valid nullptr for s1 and s2
+		if constexpr (std::is_pointer_v<S>) {
+			if (nullptr == str) {
+				throw std::invalid_argument(
+					fmt::format("Invalid argument. The input string is nullptr. {}:{}",
+						__FILE__,
+						__LINE__));
+			}
+		}
+
+		using TString = tstring_t<S>;
+		using TStringView = tstring_view_t<S>;
+		TStringView sv{ str };
+
+		fipmr::vector<TString> result;
+		if (maxElement > 0) {
+			result.reserve(maxElement);
+		}
+
+		auto substr = [](auto const& s, auto const& first, auto const& last) {
+			auto const pos = std::distance(std::cbegin(s), first);
+			auto const count = std::distance(first, last);
+			return s.substr(pos, count);
+		};
+		auto itBegin = std::cbegin(sv);
+		auto itEnd = std::cend(sv);
+		do {
+			itEnd = std::find_if(itBegin, std::cend(sv), pre);
+			result.emplace_back(substr(sv, itBegin, itEnd));
+			if (itEnd != std::cend(sv)) {
+				itBegin = itEnd + 1;
+			}
+
+			// skip contiguous separator
+			while (itEnd != std::cend(sv) && pre(*itBegin)) {
+				++itBegin;
+			}
+
+		} while (itEnd != std::cend(sv));
+
+		return result;
+	}
+
 	export template<typename S1, typename S2> requires fibo::StringablePair<S1, S2>
 	[[nodiscard]] auto split_regex(const S1& str, const S2& token, size_t maxElement = 0)
 	{
@@ -82,7 +106,7 @@ namespace fibo::StringUtils
 		if constexpr (std::is_pointer_v<S1>) {
 			if (nullptr == str) {
 				throw std::invalid_argument(
-					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
+					fmt::format("Invalid argument. The input string is nullptr. {}:{}", 
 						__FILE__, 
 						__LINE__));
 			}
@@ -91,7 +115,7 @@ namespace fibo::StringUtils
 		if constexpr (std::is_pointer_v<S2>) {
 			if (nullptr == token) {
 				throw std::invalid_argument(
-					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
+					fmt::format("Invalid argument. The input token is nullptr. {}:{}", 
 						__FILE__, 
 						__LINE__));
 			}

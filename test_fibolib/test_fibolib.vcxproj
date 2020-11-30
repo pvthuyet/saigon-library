@@ -43,6 +43,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="test_circle_map.cpp" />
+    <ClCompile Include="test_string_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\fibolib\fibolib.vcxproj">
