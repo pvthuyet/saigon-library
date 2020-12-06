@@ -5,13 +5,13 @@
 #include <iterator>
 #include <iostream>
 
-import Fibo.StringUtils;
+import Saigon.StringUtils;
 
 TEST(string_utils, split)
 {
-	auto vec = fibo::StringUtils::split("hello   world from split",
-		[sep = ' '](auto const c) { 
-		return c == sep; 
+	auto vec = saigon::StringUtils::split("--hello--world-from-split-",
+		[](auto const ch) { 
+		return ch == '-'; 
 	});
 	EXPECT_EQ(4, vec.size());
 }

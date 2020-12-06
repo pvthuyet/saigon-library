@@ -1,13 +1,13 @@
 module;
 
 #ifdef _WIN32
-
 #include "fmt/core.h"
-#include "fibo_std.h"
+#include <windows.h>
+#include <system_error>
 
-export module Fibo.WindowsStringApi;
+export module Saigon.WindowsStringApi;
 
-export namespace fibo::StringApi
+export namespace saigon::StringApi
 {
 	[[nodiscard]] auto wc2mb(std::wstring_view str, unsigned int codePage = CP_UTF8) // 65001: CP_UTF8
 	{

@@ -3,11 +3,11 @@ module;
 #include <concepts>
 #include <string>
 #include <regex>
-#include "fibo_define.h"
+#include "defines.h"
 
-export module Fibo.Concept;
+export module Saigon.Concepts;
 
-namespace fibo
+namespace saigon
 {
 	template<typename T>
 	using primitive_t = std::remove_cvref_t<std::remove_pointer_t<std::decay_t<T>>>;

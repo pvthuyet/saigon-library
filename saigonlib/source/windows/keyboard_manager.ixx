@@ -3,9 +3,9 @@ module;
 #include "jthread/jthread.hpp"
 #include <Windows.h>
 
-export module Fibo.KeyboardManager;
+export module Saigon.KeyboardManager;
 
-namespace fibo
+namespace saigon
 {
 	export class KeyboardManager
 	{

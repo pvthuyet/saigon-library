@@ -1,13 +1,14 @@
 module;
 
 #ifdef _WIN32
-#include "fibo_std.h"
+#include <windows.h>
 #include <Dbghelp.h>
+#include <string>
 
 #define DBGHELP_DLL			"DbgHelp.dll"
 #define F_WRITEDUMP			"MiniDumpWriteDump"
 
-module Fibo.Minidump;
+module Saigon.Minidump;
 
 
 // MiniDumpWriteDump() function declaration (so we can just get the function directly from windows)
@@ -26,7 +27,7 @@ std::string gBinaryModule;
 const std::string gCrashDumpFilename = "crashdump.mdmp";
 unsigned int gDumpType = MiniDumpNormal;
 
-namespace fibo::MiniDump
+namespace saigon::MiniDump
 {
 	// Purpose: Creates a new file and dumps the exception info into it
 	bool writeDump(PEXCEPTION_POINTERS pExceptionInfo, MINIDUMP_TYPE minidumpType)

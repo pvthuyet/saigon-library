@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fibolib", "fibolib\fibolib.vcxproj", "{AA637D03-099A-4918-82CD-79E485864C78}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "saigonlib", "saigonlib\saigonlib.vcxproj", "{AA637D03-099A-4918-82CD-79E485864C78}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_fibolib", "test_fibolib\test_fibolib.vcxproj", "{6A7E6BE7-4E0E-458B-BCA5-CB06C47FD0A7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_saigonlib", "test_saigonlib\test_saigonlib.vcxproj", "{6A7E6BE7-4E0E-458B-BCA5-CB06C47FD0A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

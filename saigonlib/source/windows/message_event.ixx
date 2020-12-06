@@ -5,9 +5,9 @@ module;
 #include <string>
 #include <Windows.h>
 
-export module Fibo.MessageEvent;
+export module Saigon.MessageEvent;
 
-namespace fibo
+namespace saigon
 {
 	/// <summary>
 	/// 

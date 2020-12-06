@@ -2,7 +2,7 @@ module;
 
 #include "fmt/core.h"
 #include "constants.h"
-#include "fibo_define.h"
+#include "defines.h"
 #include <execution>
 #include <algorithm>
 #include <string>
@@ -10,16 +10,16 @@ module;
 #include <random>
 #include <concepts>
 
-import Fibo.Concept;
+export module Saigon.StringUtils;
+
+import Saigon.Concepts;
 #ifdef _WIN32
-import Fibo.WindowsStringApi;
+import Saigon.WindowsStringApi;
 #else
 //++ TODO
 #endif // _WIN32
 
-export module Fibo.StringUtils;
-
-namespace fibo::StringUtils
+namespace saigon::StringUtils
 {
 	export [[nodiscard]] auto convert(std::wstring_view str, unsigned int codePage = F_CP_UTF8)
 	{
@@ -53,7 +53,7 @@ namespace fibo::StringUtils
 		return str;
 	}
 
-	export template<class S, class F> requires(fibo::Stringable<S> && std::predicate<F, typename fibo::tstring_t<S>::value_type>)
+	export template<class S, class F> requires(saigon::Stringable<S> && std::predicate<F, typename saigon::tstring_t<S>::value_type>)
 	[[nodiscard]] auto split(const S& str, F&& pre, size_t maxElement = 0)
 	{
 		// Valid nullptr for s1 and s2
@@ -99,7 +99,7 @@ namespace fibo::StringUtils
 		return result;
 	}
 
-	export template<typename S1, typename S2> requires fibo::StringablePair<S1, S2>
+	export template<typename S1, typename S2> requires saigon::StringablePair<S1, S2>
 	[[nodiscard]] auto split_regex(const S1& str, const S2& token, size_t maxElement = 0)
 	{
 		// Valid nullptr for s1 and s2
@@ -142,7 +142,7 @@ namespace fibo::StringUtils
 		return result;
 	}
 
-	export template<typename S1, typename S2> requires fibo::StringablePair<S1, S2>
+	export template<typename S1, typename S2> requires saigon::StringablePair<S1, S2>
 	[[nodiscard]] constexpr auto equal(const S1& s1, const S2& s2, bool icase = false, const std::locale& loc = std::locale())
 	{
 		auto s = fmt::format("{}", "equal");

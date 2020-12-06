@@ -46,14 +46,14 @@
     <ClCompile Include="test_string_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\fibolib\fibolib.vcxproj">
-      <Project>{aa637d03-099a-4918-82cd-79e485864c78}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
     <None Include="test_data\path_utils.json" />
     <None Include="test_data\string_utils.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\saigonlib\saigonlib.vcxproj">
+      <Project>{aa637d03-099a-4918-82cd-79e485864c78}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

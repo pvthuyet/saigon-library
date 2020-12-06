@@ -6,9 +6,9 @@ module;
 #include "spdlog/async.h"
 #include <memory>
 
-module Fibo.Logger;
+module Saigon.Logger;
 
-namespace fibo
+namespace saigon
 {
 	Logger& Logger::createLogger()
 	{

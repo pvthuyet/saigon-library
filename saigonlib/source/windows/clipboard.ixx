@@ -2,13 +2,13 @@ module;
 
 #include "windows/scope.hpp"
 #include "windows/handle_deleter.hpp"
-#include "fibo_define.h"
+#include "defines.h"
 #include <vector>
 #include <string>
 
-export module Fibo.Clipboard;
+export module Saigon.Clipboard;
 
-namespace fibo::Clipboard
+namespace saigon::Clipboard
 {
 	export std::vector<fipmr::wstring> getCopyingFiles()
 	{

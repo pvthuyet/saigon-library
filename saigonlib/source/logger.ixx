@@ -1,8 +1,8 @@
 module;
 
-export module Fibo.Logger;
+export module Saigon.Logger;
 
-namespace fibo
+namespace saigon
 {
 	export class Logger
 	{

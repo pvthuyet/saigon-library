@@ -1,6 +1,6 @@
 #include "pch.h"
 
-import Fibo.ConcurrentCircleMap;
+import Saigon.ConcurrentCircleMap;
 constexpr unsigned int mapSz = 1024;
 
 using KeyType = std::string;
@@ -12,7 +12,7 @@ struct DataType
 	constexpr auto operator<=>(DataType const&) const noexcept = default;
 };
 
-using TestCirMap = fibo::Con::circle_map<KeyType, DataType, mapSz>;
+using TestCirMap = saigon::Con::circle_map<KeyType, DataType, mapSz>;
 
 TestCirMap initMap(int sz = mapSz)
 {
