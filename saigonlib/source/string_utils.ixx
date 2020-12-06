@@ -70,31 +70,29 @@ namespace saigon::StringUtils
 		using TStringView = tstring_view_t<S>;
 		TStringView sv{ str };
 
-		fipmr::vector<TString> result;
+		std::vector<TString> result;
 		if (maxElement > 0) {
 			result.reserve(maxElement);
 		}
 
-		auto substr = [](auto const& s, auto const& first, auto const& last) {
+		auto substr = [&result](auto const& s, auto const& first, auto const& last) {
 			auto const pos = std::distance(std::cbegin(s), first);
 			auto const count = std::distance(first, last);
-			return s.substr(pos, count);
+			if (count > 0) {
+				result.emplace_back(s.substr(pos, count));
+			}
 		};
-		auto itBegin = std::cbegin(sv);
-		auto itEnd = std::cend(sv);
-		do {
-			itEnd = std::find_if(itBegin, std::cend(sv), pre);
-			result.emplace_back(substr(sv, itBegin, itEnd));
-			if (itEnd != std::cend(sv)) {
-				itBegin = itEnd + 1;
-			}
 
-			// skip contiguous separator
-			while (itEnd != std::cend(sv) && pre(*itBegin)) {
-				++itBegin;
+		auto itNex = std::cbegin(sv);
+		for (;;) {
+			auto found = std::find_if(itNex, std::cend(sv), pre);
+			if (found == std::cend(sv)) {
+				break;
 			}
-
-		} while (itEnd != std::cend(sv));
+			substr(sv, itNex, found);
+			itNex = found + 1;
+		}
+		substr(sv, itNex, std::cend(sv));
 
 		return result;
 	}
@@ -126,18 +124,22 @@ namespace saigon::StringUtils
 		TStringView sv{ str };
 		TStringView tokv{ token };
 
-		fipmr::vector<TString> result;
+		std::vector<TString> result;
 		if (maxElement > 0) {
 			result.reserve(maxElement);
 		}
 
 		using TRegex = tregex_t<S1>;
-		using TRegexTokenIt = tregex_token_iterator_t<TStringView>;
+		using TRegexTokenIt = saigon::tregex_token_iterator_t<TStringView>;
 
 		TRegex rex(tokv.data());
-		std::copy(TRegexTokenIt(std::cbegin(sv), std::cend(sv), rex, -1),
+		std::copy_if(TRegexTokenIt(std::cbegin(sv), std::cend(sv), rex, -1),
 			TRegexTokenIt(),
-			std::back_inserter(result));
+			std::back_inserter(result),
+			[](auto const& it) {
+				return std::distance(it.first, it.second) > 0;
+			}
+		);
 
 		return result;
 	}

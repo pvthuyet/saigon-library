@@ -7,8 +7,8 @@ using KeyType = std::string;
 struct DataType 
 {
 	DataType() = default;
-	explicit DataType(int v) : value_{ v } {}
-	int value_{};
+	explicit DataType(int v) : mValue{ v } {}
+	int mValue{};
 	constexpr auto operator<=>(DataType const&) const noexcept = default;
 };
 
@@ -29,7 +29,7 @@ TestCirMap initMap(int sz = mapSz)
 TEST(circle_map, constructor_fix_size)
 {
 	TestCirMap ciMap;
-	EXPECT_EQ(mapSz, ciMap.size());
+	EXPECT_EQ(0, ciMap.size());
 }
 
 TEST(circle_map, insert_item_success)

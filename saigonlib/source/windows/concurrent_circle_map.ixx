@@ -65,13 +65,6 @@ namespace saigon::Con
 		constexpr auto max_size() const noexcept { return N; }
 		constexpr auto size() const noexcept { return mKeys.size(); }
 
-		/// <summary>
-		/// Find the value in map by key
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns>Must return by value of T and wrapped by std::optional. 
-		/// Can't return reference because of multiple threads
-		/// </returns>
 		auto find(key_type const& key) const
 		{
 			using ReturnType = std::optional<mapped_type>;
@@ -105,11 +98,6 @@ namespace saigon::Con
 			return mData[pos];
 		}
 
-		/// <summary>
-		/// unsafe_earase maybe race condition
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
 		constexpr auto unsafe_erase(key_type const& key)
 		{
 			return mKeys.unsafe_erase(key);
