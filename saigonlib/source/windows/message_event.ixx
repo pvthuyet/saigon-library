@@ -15,8 +15,14 @@ namespace saigon
 	export class window_procedure
 	{
 	public:
-		virtual ~window_procedure() noexcept {}
-		virtual LRESULT procedure(HWND, UINT, WPARAM, LPARAM) = 0;
+		virtual ~window_procedure() noexcept = default;
+		LRESULT procedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+		{
+			return do_procedure(hwnd, msg, wparam, lparam);
+		}
+
+	private:
+		virtual LRESULT do_procedure(HWND, UINT, WPARAM, LPARAM) = 0;
 	};
 
 	/// <summary>

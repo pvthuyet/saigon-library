@@ -13,21 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Windows">
-      <UniqueIdentifier>{38cc6919-8646-4591-83e8-7ce08c1c23c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rd_party">
-      <UniqueIdentifier>{1c2d3571-c276-4f73-9bbf-18a5fa6e6b5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rd_party\fmt">
-      <UniqueIdentifier>{d4dc139a-afc3-4631-abf3-b9b535614f16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="logger">
-      <UniqueIdentifier>{602ce41c-b18e-4a09-bc6f-7eae5eab6ba8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modules">
-      <UniqueIdentifier>{c99f1b09-e320-4213-b875-7447111f886d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cppcoro">
       <UniqueIdentifier>{64f16ae1-25b7-4ed6-9ff1-74874458f8f2}</UniqueIdentifier>
     </Filter>
@@ -43,13 +28,28 @@
     <Filter Include="cppcoro\src">
       <UniqueIdentifier>{716bec97-9a9f-425d-b647-3fc416d74d63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rd party">
+      <UniqueIdentifier>{1c2d3571-c276-4f73-9bbf-18a5fa6e6b5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd party\fmt">
+      <UniqueIdentifier>{d4dc139a-afc3-4631-abf3-b9b535614f16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logger">
+      <UniqueIdentifier>{602ce41c-b18e-4a09-bc6f-7eae5eab6ba8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{c99f1b09-e320-4213-b875-7447111f886d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{38cc6919-8646-4591-83e8-7ce08c1c23c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\windows\file_api.h">
       <Filter>Windows</Filter>
     </ClInclude>
     <ClInclude Include="include\logger_define.h">
-      <Filter>logger</Filter>
+      <Filter>Logger</Filter>
     </ClInclude>
     <ClInclude Include="include\constants.h">
       <Filter>Header Files</Filter>
@@ -309,10 +309,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rd_party\fmtlib\src\format.cc">
-      <Filter>3rd_party\fmt</Filter>
+      <Filter>3rd party\fmt</Filter>
     </ClCompile>
     <ClCompile Include="3rd_party\fmtlib\src\os.cc">
-      <Filter>3rd_party\fmt</Filter>
+      <Filter>3rd party\fmt</Filter>
     </ClCompile>
     <ClCompile Include="source\windows\file_api.cpp">
       <Filter>Windows</Filter>
@@ -444,10 +444,10 @@
       <Filter>cppcoro\src</Filter>
     </ClCompile>
     <ClCompile Include="source\logger.cpp">
-      <Filter>logger</Filter>
+      <Filter>Logger</Filter>
     </ClCompile>
     <ClCompile Include="source\logger.ixx">
-      <Filter>logger</Filter>
+      <Filter>Logger</Filter>
     </ClCompile>
     <ClCompile Include="source\concepts.ixx">
       <Filter>Modules</Filter>
