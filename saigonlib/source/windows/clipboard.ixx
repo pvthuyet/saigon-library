@@ -58,4 +58,12 @@ namespace saigon::Clipboard
 		}
 		return filePaths;
 	}
+
+	/// <summary>
+	/// TODO: use coroutine
+	/// </summary>
+	export fipmr::wstring getCopyingFiles2()
+	{
+		return fipmr::wstring{};
+	}
 }
