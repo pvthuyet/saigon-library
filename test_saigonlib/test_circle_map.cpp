@@ -72,3 +72,16 @@ TEST(circle_map, find_if_available_item)
 		});
 	EXPECT_EQ(v, *found);
 }
+
+TEST(circle_map, erase_item)
+{
+	DataType v{ 1 };
+	TestCirMap ciMap = initMap();
+	auto found = ciMap.find("key 1");
+	EXPECT_EQ(v, *found);
+
+	// erase
+	ciMap.erase("key 1");
+	auto found2 = ciMap.find("key 1");
+	EXPECT_TRUE(not found2);
+}

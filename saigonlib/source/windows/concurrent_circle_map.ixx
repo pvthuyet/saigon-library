@@ -14,9 +14,10 @@ namespace saigon::Con
 	export template<
 		class KEY, 
 		class T, 
-		unsigned int N = std::numeric_limits<unsigned int>::max()>
+		unsigned int N = std::numeric_limits<unsigned int>::max() - 1> requires (N < std::numeric_limits<unsigned int>::max())
 	class circle_map final
 	{
+		static constexpr unsigned int INVALID_POS = N + 1;
 	public:
 		using key_type		= KEY;
 		using mapped_type	= T;
@@ -98,9 +99,12 @@ namespace saigon::Con
 			return mData[pos];
 		}
 
-		constexpr auto unsafe_erase(key_type const& key)
+		constexpr void erase(key_type const& key)
 		{
-			return mKeys.unsafe_erase(key);
+			auto found = mKeys.find(key);
+			if (std::cend(mKeys) not_eq found) {
+				found->second = INVALID_POS;
+			}
 		}
 
 	private:
@@ -108,7 +112,7 @@ namespace saigon::Con
 		{
 			using ReturnType = std::optional<size_type>;
 			auto found = mKeys.find(key);
-			if (std::cend(mKeys) == found) {
+			if (std::cend(mKeys) == found or INVALID_POS == found->second) {
 				return ReturnType{ std::nullopt };
 			}
 			return ReturnType{ found->second };
