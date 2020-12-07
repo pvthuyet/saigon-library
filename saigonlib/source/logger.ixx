@@ -4,15 +4,15 @@ export module Saigon.Logger;
 
 namespace saigon
 {
-	export class Logger
+	export class logger
 	{
 	public:
-		static Logger& createLogger();
-		Logger(Logger const&) = delete;
-		Logger& operator=(Logger const&) = delete;
+		static logger& create_logger();
+		logger(logger const&) = delete;
+		logger& operator=(logger const&) = delete;
 
 	private:
-		Logger();
+		logger();
 		void initialze();
 	};
 }

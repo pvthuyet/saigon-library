@@ -7,7 +7,7 @@ module;
 
 export module Saigon.WindowsStringApi;
 
-export namespace saigon::StringApi
+export namespace saigon::stringapi
 {
 	[[nodiscard]] auto wc2mb(std::wstring_view str, unsigned int codePage = CP_UTF8) // 65001: CP_UTF8
 	{

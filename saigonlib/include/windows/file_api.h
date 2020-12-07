@@ -9,7 +9,7 @@ namespace saigon
 	class PathUtils;
 }
 
-namespace saigon::WindowsApi
+namespace saigon::winapi
 {
 	class FileApi
 	{

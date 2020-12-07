@@ -8,7 +8,7 @@ module;
 
 export module Saigon.Clipboard;
 
-namespace saigon::Clipboard
+namespace saigon::clipboard
 {
 	export std::vector<fipmr::wstring> getCopyingFiles()
 	{

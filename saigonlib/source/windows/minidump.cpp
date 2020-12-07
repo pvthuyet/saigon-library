@@ -27,7 +27,7 @@ std::string gBinaryModule;
 const std::string gCrashDumpFilename = "crashdump.mdmp";
 unsigned int gDumpType = MiniDumpNormal;
 
-namespace saigon::MiniDump
+namespace saigon::dump
 {
 	// Purpose: Creates a new file and dumps the exception info into it
 	bool writeDump(PEXCEPTION_POINTERS pExceptionInfo, MINIDUMP_TYPE minidumpType)

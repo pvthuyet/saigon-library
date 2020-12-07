@@ -9,7 +9,7 @@
 constexpr int kMinAbPath = 3;
 constexpr int kMaxAbPath = MAX_PATH;
 
-namespace saigon::WindowsApi
+namespace saigon::winapi
 {
 	bool FileApi::validPathLength(size_t len) noexcept
 	{

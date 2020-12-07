@@ -9,7 +9,7 @@ module;
 
 export module Saigon.ConcurrentCircleMap;
 
-namespace saigon::Con
+namespace saigon::con
 {
 	export template<
 		class KEY, 

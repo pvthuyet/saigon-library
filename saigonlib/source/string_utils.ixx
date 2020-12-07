@@ -19,16 +19,16 @@ import Saigon.WindowsStringApi;
 //++ TODO
 #endif // _WIN32
 
-namespace saigon::StringUtils
+namespace saigon::stringutils
 {
 	export [[nodiscard]] auto convert(std::wstring_view str, unsigned int codePage = F_CP_UTF8)
 	{
-		return StringApi::wc2mb(str, codePage);
+		return stringapi::wc2mb(str, codePage);
 	}
 
 	export [[nodiscard]] auto convert(std::string_view str, unsigned int codePage = F_CP_UTF8)
 	{
-		return StringApi::mb2wc(str, codePage);
+		return stringapi::mb2wc(str, codePage);
 	}
 
 	export [[nodiscard]] auto randAlphabet(unsigned len)
