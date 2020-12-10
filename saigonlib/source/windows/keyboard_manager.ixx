@@ -1,6 +1,6 @@
 module;
 
-#include "jthread/jthread.hpp"
+#include <thread>
 #include <Windows.h>
 
 export module Saigon.KeyboardManager;
