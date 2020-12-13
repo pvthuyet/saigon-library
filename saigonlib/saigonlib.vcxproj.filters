@@ -464,6 +464,9 @@
     <ClCompile Include="source\windows\minidump.ixx">
       <Filter>Windows</Filter>
     </ClCompile>
+    <ClCompile Include="source\windows\common_utils.ixx">
+      <Filter>Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="3rd_party\cppcoro\lib\build.cake">

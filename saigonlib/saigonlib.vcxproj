@@ -300,6 +300,7 @@
     <ClCompile Include="source\logger.ixx" />
     <ClCompile Include="source\string_utils.ixx" />
     <ClCompile Include="source\windows\clipboard.ixx" />
+    <ClCompile Include="source\windows\common_utils.ixx" />
     <ClCompile Include="source\windows\concurrent_circle_map.ixx" />
     <ClCompile Include="source\windows\minidump.cpp" />
     <ClCompile Include="source\windows\file_api.cpp" />
