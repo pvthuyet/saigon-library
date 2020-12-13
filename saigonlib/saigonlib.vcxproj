@@ -313,6 +313,22 @@
     <None Include="3rd_party\cppcoro\lib\build.cakec" />
     <None Include="3rd_party\cppcoro\lib\use.cake" />
     <None Include="3rd_party\cppcoro\lib\use.cakec" />
+    <None Include="3rd_party\gsl\algorithm" />
+    <None Include="3rd_party\gsl\assert" />
+    <None Include="3rd_party\gsl\byte" />
+    <None Include="3rd_party\gsl\gsl" />
+    <None Include="3rd_party\gsl\gsl_algorithm" />
+    <None Include="3rd_party\gsl\gsl_assert" />
+    <None Include="3rd_party\gsl\gsl_byte" />
+    <None Include="3rd_party\gsl\gsl_narrow" />
+    <None Include="3rd_party\gsl\gsl_util" />
+    <None Include="3rd_party\gsl\multi_span" />
+    <None Include="3rd_party\gsl\narrow" />
+    <None Include="3rd_party\gsl\pointers" />
+    <None Include="3rd_party\gsl\span" />
+    <None Include="3rd_party\gsl\span_ext" />
+    <None Include="3rd_party\gsl\string_span" />
+    <None Include="3rd_party\gsl\util" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

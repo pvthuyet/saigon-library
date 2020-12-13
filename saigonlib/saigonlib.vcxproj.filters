@@ -43,6 +43,9 @@
     <Filter Include="Windows">
       <UniqueIdentifier>{38cc6919-8646-4591-83e8-7ce08c1c23c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rd party\gsl">
+      <UniqueIdentifier>{c7cc1b21-3901-48f7-8cd7-e0b978f2f073}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\windows\file_api.h">
@@ -474,6 +477,54 @@
     </None>
     <None Include="3rd_party\cppcoro\lib\use.cakec">
       <Filter>cppcoro\src</Filter>
+    </None>
+    <None Include="3rd_party\gsl\algorithm">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\assert">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\byte">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\gsl">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\gsl_algorithm">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\gsl_assert">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\gsl_byte">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\gsl_narrow">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\gsl_util">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\multi_span">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\narrow">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\pointers">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\span">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\span_ext">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\string_span">
+      <Filter>3rd party\gsl</Filter>
+    </None>
+    <None Include="3rd_party\gsl\util">
+      <Filter>3rd party\gsl</Filter>
     </None>
   </ItemGroup>
 </Project>
