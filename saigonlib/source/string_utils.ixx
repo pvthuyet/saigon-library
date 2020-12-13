@@ -217,10 +217,15 @@ namespace saigon::stringutils
 		using TStringView = tstring_view_t<S1>;
 		TStringView strv{ str };
 		TStringView subv{ sub };
-		if (not icase) {
-			return std::cend(strv) != strv.find(subv);
+
+		if (strv.empty() || subv.empty()) {
+			return false;
 		}
 
-		return true;
+		if (not icase) {
+			return TStringView::npos != strv.find(subv);
+		}
+
+		return false;
 	}
 }
