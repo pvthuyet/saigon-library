@@ -191,4 +191,36 @@ namespace saigon::stringutils
 			std::cbegin(sv2), 
 			std::cend(sv2));
 	}
+
+	export template<typename S1, typename S2> requires saigon::StringablePair<S1, S2>
+		[[nodiscard]] constexpr auto find(const S1& str, const S2& sub, bool icase = false, const std::locale& loc = std::locale())
+	{
+		// Valid nullptr for s1 and s2
+		if constexpr (std::is_pointer_v<S1>) {
+			if (nullptr == str) {
+				throw std::invalid_argument(
+					fmt::format("Invalid argument. The parameter is nullptr. {}:{}",
+						__FILE__,
+						__LINE__));
+			}
+		}
+
+		if constexpr (std::is_pointer_v<S2>) {
+			if (nullptr == sub) {
+				throw std::invalid_argument(
+					fmt::format("Invalid argument. The parameter is nullptr. {}:{}",
+						__FILE__,
+						__LINE__));
+			}
+		}
+
+		using TStringView = tstring_view_t<S1>;
+		TStringView strv{ str };
+		TStringView subv{ sub };
+		if (not icase) {
+			return std::cend(strv) != strv.find(subv);
+		}
+
+		return true;
+	}
 }
