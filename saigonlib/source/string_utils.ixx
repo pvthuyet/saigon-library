@@ -1,6 +1,5 @@
 module;
 
-#include "fmt/core.h"
 #include "constants.h"
 #include "defines.h"
 #include <execution>
@@ -9,6 +8,7 @@ module;
 #include <regex>
 #include <random>
 #include <concepts>
+#include <stdexcept>
 
 export module Saigon.StringUtils;
 
@@ -59,10 +59,7 @@ namespace saigon::stringutils
 		// Valid nullptr for s1 and s2
 		if constexpr (std::is_pointer_v<S>) {
 			if (nullptr == str) {
-				throw std::invalid_argument(
-					fmt::format("Invalid argument. The input string is nullptr. {}:{}",
-						__FILE__,
-						__LINE__));
+				throw std::invalid_argument("The parameter is null"); //++ TODO
 			}
 		}
 
@@ -103,19 +100,13 @@ namespace saigon::stringutils
 		// Valid nullptr for s1 and s2
 		if constexpr (std::is_pointer_v<S1>) {
 			if (nullptr == str) {
-				throw std::invalid_argument(
-					fmt::format("Invalid argument. The input string is nullptr. {}:{}", 
-						__FILE__, 
-						__LINE__));
+				throw std::invalid_argument("The parameter is null"); //++ TODO
 			}
 		}
 
 		if constexpr (std::is_pointer_v<S2>) {
 			if (nullptr == token) {
-				throw std::invalid_argument(
-					fmt::format("Invalid argument. The input token is nullptr. {}:{}", 
-						__FILE__, 
-						__LINE__));
+				throw std::invalid_argument("The parameter is null"); //++ TODO
 			}
 		}
 
@@ -147,23 +138,16 @@ namespace saigon::stringutils
 	export template<typename S1, typename S2> requires saigon::StringablePair<S1, S2>
 	[[nodiscard]] constexpr auto equal(const S1& s1, const S2& s2, bool icase = false, const std::locale& loc = std::locale())
 	{
-		auto s = fmt::format("{}", "equal");
 		// Valid nullptr for s1 and s2
 		if constexpr (std::is_pointer_v<S1>) {
 			if (nullptr == s1) {
-				throw std::invalid_argument(
-					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
-						__FILE__, 
-						__LINE__));
+				throw std::invalid_argument("The parameter is null"); //++ TODO
 			}
 		}
 
 		if constexpr (std::is_pointer_v<S2>) {
 			if (nullptr == s2) {
-				throw std::invalid_argument(
-					fmt::format("Invalid argument. The parameter is nullptr. {}:{}", 
-						__FILE__, 
-						__LINE__));
+				throw std::invalid_argument("The parameter is null"); //++ TODO
 			}
 		}
 
@@ -198,19 +182,13 @@ namespace saigon::stringutils
 		// Valid nullptr for s1 and s2
 		if constexpr (std::is_pointer_v<S1>) {
 			if (nullptr == str) {
-				throw std::invalid_argument(
-					fmt::format("Invalid argument. The parameter is nullptr. {}:{}",
-						__FILE__,
-						__LINE__));
+				throw std::invalid_argument("The parameter is null"); //++ TODO
 			}
 		}
 
 		if constexpr (std::is_pointer_v<S2>) {
 			if (nullptr == sub) {
-				throw std::invalid_argument(
-					fmt::format("Invalid argument. The parameter is nullptr. {}:{}",
-						__FILE__,
-						__LINE__));
+				throw std::invalid_argument("The parameter is null"); //++ TODO
 			}
 		}
 
