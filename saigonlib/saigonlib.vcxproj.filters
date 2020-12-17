@@ -48,9 +48,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\windows\file_api.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
     <ClInclude Include="include\logger_define.h">
       <Filter>Logger</Filter>
     </ClInclude>
@@ -309,6 +306,9 @@
     <ClInclude Include="include\defines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\config.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rd_party\fmtlib\src\format.cc">
@@ -316,12 +316,6 @@
     </ClCompile>
     <ClCompile Include="3rd_party\fmtlib\src\os.cc">
       <Filter>3rd party\fmt</Filter>
-    </ClCompile>
-    <ClCompile Include="source\windows\file_api.cpp">
-      <Filter>Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="source\windows\windows_string_api.ixx">
-      <Filter>Windows</Filter>
     </ClCompile>
     <ClCompile Include="source\windows\keyboard_manager.ixx">
       <Filter>Windows</Filter>
@@ -455,9 +449,6 @@
     <ClCompile Include="source\concepts.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="source\string_utils.ixx">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="source\windows\minidump.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
@@ -465,6 +456,27 @@
       <Filter>Windows</Filter>
     </ClCompile>
     <ClCompile Include="source\windows\common_utils.ixx">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\string_utils.ixx">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="source\string_utils.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\windows_string_api.ixx">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\windows_string_api.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\common_utils.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\message_event.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windows\clipboard.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>

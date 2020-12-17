@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef _WIN32
+#ifdef USE_WINDOWS_API
 
 #include <string>
 
@@ -20,4 +20,4 @@ namespace saigon::winapi
 	};
 }
 
-#endif
+#endif // USE_WINDOWS_API

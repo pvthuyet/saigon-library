@@ -1,57 +1,22 @@
 module;
 
 #include "constants.h"
-#include "defines.h"
-#include <execution>
 #include <algorithm>
 #include <string>
 #include <regex>
-#include <random>
 #include <concepts>
 #include <stdexcept>
 
 export module Saigon.StringUtils;
 
 import Saigon.Concepts;
-#ifdef _WIN32
-import Saigon.WindowsStringApi;
-#else
-//++ TODO
-#endif // _WIN32
 
 namespace saigon::stringutils
 {
-	export [[nodiscard]] auto convert(std::wstring_view str, unsigned int codePage = F_CP_UTF8)
-	{
-		return stringapi::wc2mb(str, codePage);
-	}
+	export [[nodiscard]] std::string convert(std::wstring_view str, unsigned int codePage = F_CP_UTF8);
+	export [[nodiscard]] std::wstring convert(std::string_view str, unsigned int codePage = F_CP_UTF8);
 
-	export [[nodiscard]] auto convert(std::string_view str, unsigned int codePage = F_CP_UTF8)
-	{
-		return stringapi::mb2wc(str, codePage);
-	}
-
-	export [[nodiscard]] auto randAlphabet(unsigned len)
-	{
-		constexpr const char alphabet[] =
-		{ '0','1','2','3','4','5','6','7','8','9',
-		  'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-		  'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z' };
-
-		if (0 == len) {
-			return std::string{};
-		}
-
-		unsigned int seed = static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
-		std::default_random_engine gen(seed);
-		std::uniform_int_distribution<unsigned> dis(0, sizeof(alphabet) - 1);
-		std::string str(len, 0);
-
-		for (unsigned i = 0; i < len; ++i) {
-			str[i] = alphabet[dis(gen)];
-		}
-		return str;
-	}
+	export [[nodiscard]] std::string randAlphabet(unsigned len);
 
 	export template<class S, class F> requires(saigon::Stringable<S> && std::predicate<F, typename saigon::tstring_t<S>::value_type>)
 	[[nodiscard]] auto split(const S& str, F&& pre, size_t maxElement = 0)

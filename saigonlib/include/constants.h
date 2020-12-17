@@ -1,8 +1,10 @@
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 
-#ifdef _WIN32
-static constexpr int F_CP_UTF8 = 65001; // CP_UTF8
-#endif // _WIN32
+#include "config.hpp"
 
-#endif // CONSTANTS_H_
+#ifdef SAIGON_OS_WINNT
+static constexpr int F_CP_UTF8 = 65001; // CP_UTF8
+#endif // _WINDOWS
+
+#endif // SAIGON_OS_WINNT

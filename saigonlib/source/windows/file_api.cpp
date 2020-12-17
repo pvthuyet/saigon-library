@@ -1,4 +1,4 @@
-#ifdef _WIN32
+#ifdef USE_WINDOWS_API
 
 #include "windows/file_api.h"
 #include <Windows.h>
@@ -49,4 +49,4 @@ namespace saigon::winapi
 		return std::wstring(wcAbsPath);
 	}
 }
-#endif // _WIN32
+#endif // USE_WINDOWS_API

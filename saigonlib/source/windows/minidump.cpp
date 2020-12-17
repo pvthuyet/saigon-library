@@ -1,6 +1,8 @@
 module;
 
-#ifdef _WIN32
+#include "config.hpp"
+
+#ifdef SAIGON_OS_WINNT
 #include <windows.h>
 #include <Dbghelp.h>
 #include <string>
@@ -84,4 +86,4 @@ namespace saigon::dump
 		::SetUnhandledExceptionFilter(unhandledExceptionFilter);
 	}
 }
-#endif
+#endif // SAIGON_OS_WINNT

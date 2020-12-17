@@ -96,7 +96,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions);USE_WINDOWS_API</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;3rd_party\cppcoro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -113,7 +113,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;USE_WINDOWS_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;3rd_party\cppcoro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -132,7 +132,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions);USE_WINDOWS_API</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;3rd_party\cppcoro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -153,7 +153,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions);USE_WINDOWS_API</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>3rd_party\fmtlib\include;3rd_party;include;3rd_party\cppcoro\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -248,10 +248,10 @@
     <ClInclude Include="3rd_party\cppcoro\lib\socket_helpers.hpp" />
     <ClInclude Include="3rd_party\cppcoro\lib\spin_mutex.hpp" />
     <ClInclude Include="3rd_party\cppcoro\lib\spin_wait.hpp" />
+    <ClInclude Include="include\config.hpp" />
     <ClInclude Include="include\constants.h" />
     <ClInclude Include="include\defines.h" />
     <ClInclude Include="include\logger_define.h" />
-    <ClInclude Include="include\windows\file_api.h" />
     <ClInclude Include="include\windows\handle_deleter.hpp" />
     <ClInclude Include="include\windows\scope.hpp" />
   </ItemGroup>
@@ -298,15 +298,19 @@
     <ClCompile Include="source\concepts.ixx" />
     <ClCompile Include="source\logger.cpp" />
     <ClCompile Include="source\logger.ixx" />
+    <ClCompile Include="source\string_utils.cpp" />
     <ClCompile Include="source\string_utils.ixx" />
+    <ClCompile Include="source\windows\clipboard.cpp" />
     <ClCompile Include="source\windows\clipboard.ixx" />
+    <ClCompile Include="source\windows\common_utils.cpp" />
     <ClCompile Include="source\windows\common_utils.ixx" />
     <ClCompile Include="source\windows\concurrent_circle_map.ixx" />
+    <ClCompile Include="source\windows\message_event.cpp" />
     <ClCompile Include="source\windows\minidump.cpp" />
-    <ClCompile Include="source\windows\file_api.cpp" />
     <ClCompile Include="source\windows\minidump.ixx" />
     <ClCompile Include="source\windows\keyboard_manager.ixx" />
     <ClCompile Include="source\windows\message_event.ixx" />
+    <ClCompile Include="source\windows\windows_string_api.cpp" />
     <ClCompile Include="source\windows\windows_string_api.ixx" />
   </ItemGroup>
   <ItemGroup>
