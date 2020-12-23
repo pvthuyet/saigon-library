@@ -5,6 +5,7 @@ module;
 #include <string>
 #include <vector>
 #include <windows.h>
+#include <array>
 
 module Saigon.CommonUtils;
 
@@ -13,7 +14,7 @@ namespace saigon
 	std::vector<std::wstring> enumerate_drives()
 	{
 		std::vector<std::wstring> drives;
-		wchar_t letter[] = { L'A', L':', L'\\', L'\0' };
+		std::array letter = { L'A', L':', L'\\', L'\0' };
 
 		// Get all drives in the system.
 		DWORD dwDriveMask = ::GetLogicalDrives();
@@ -29,11 +30,11 @@ namespace saigon
 			// if a drive is present,
 			if (dwDriveMask & 1) {
 				letter[0] = 'A' + i;
-				auto type = ::GetDriveTypeW(letter);
+				auto type = ::GetDriveTypeW(letter.data());
 				switch (type) {
 				case DRIVE_REMOVABLE:
 				case DRIVE_FIXED:
-					drives.emplace_back(letter);
+					drives.emplace_back(letter.data());
 					break;
 
 				default:

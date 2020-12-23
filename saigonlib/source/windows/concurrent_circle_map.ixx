@@ -6,6 +6,7 @@ module;
 #include <execution>
 #include <optional>
 #include <limits>
+#include <algorithm>
 
 export module Saigon.ConcurrentCircleMap;
 
@@ -73,16 +74,18 @@ namespace saigon::con
 			return opos ? ReturnType{ mData[*opos] } : ReturnType{ std::nullopt };
 		}
 
-		template<class Condition>
-		auto find_if(Condition cond) const
+		template<class Predicate>
+		auto find_if(Predicate pre) const
 		{
 			using ReturnType = std::optional<mapped_type>;
+			//auto fnd = std::find_if(mData.cbegin(), mData.cend(), pre);
+			auto found = std::ranges::find_if(mData, pre);
 
-			for (auto const& [k, p] : mKeys) {
-				if (cond(k, mData[p])) {
-					return ReturnType{ mData[p] };
-				}
+			//++ TODO unknow error 
+			if (mData.cend() != found) {
+				//return ReturnType{ *fnd };
 			}
+
 			return ReturnType{ std::nullopt };
 		}
 

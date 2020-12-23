@@ -12,7 +12,8 @@ struct DataType
 	constexpr auto operator<=>(DataType const&) const noexcept = default;
 };
 
-using TestCirMap = saigon::Con::circle_map<KeyType, DataType, mapSz>;
+using TestCirMap = saigon::con::circle_map<KeyType, DataType, mapSz>;
+
 
 TestCirMap initMap(int sz = mapSz)
 {
@@ -67,7 +68,7 @@ TEST(circle_map, find_if_available_item)
 {
 	DataType v{1};
 	TestCirMap ciMap = initMap();
-	auto found = ciMap.find_if([&](auto const& k, auto const& val) {
+	auto found = ciMap.find_if([&v](auto const& val) {
 		return val == v;
 		});
 	EXPECT_EQ(v, *found);

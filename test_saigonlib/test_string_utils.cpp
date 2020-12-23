@@ -9,7 +9,7 @@ import Saigon.StringUtils;
 
 TEST(string_utils, split)
 {
-	auto vec = saigon::StringUtils::split("--hello--world-from-split-",
+	auto vec = saigon::stringutils::split("--hello--world-from-split-",
 		[](auto const ch) { 
 		return ch == '-'; 
 	});
