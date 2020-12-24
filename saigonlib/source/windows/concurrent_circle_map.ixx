@@ -12,13 +12,14 @@ export module Saigon.ConcurrentCircleMap;
 
 namespace saigon::con
 {
+	//++ TODO: require default ctor T
 	export template<
 		class KEY, 
 		class T, 
 		unsigned int N = std::numeric_limits<unsigned int>::max() - 1> requires (N < std::numeric_limits<unsigned int>::max())
 	class circle_map final
 	{
-		static constexpr unsigned int INVALID_POS = N + 1;
+		static constexpr unsigned int INVALID_INDEX = N + 1;
 	public:
 		using key_type		= KEY;
 		using mapped_type	= T;
@@ -26,13 +27,18 @@ namespace saigon::con
 		using con_vec = Concurrency::concurrent_vector<mapped_type>;
 		using con_map = Concurrency::concurrent_unordered_map<key_type, size_type>;
 
+		using reference			= mapped_type&;
+		using const_reference	= const mapped_type&;
+		using optional_ref		= std::optional <std::reference_wrapper<mapped_type>>;
+		using optional_cref		= std::optional <std::reference_wrapper<const mapped_type>>;
+
 	public:
-		circle_map() noexcept(std::is_nothrow_constructible_v<con_vec>and std::is_nothrow_constructible_v<con_map>) = default;
+		circle_map() noexcept(std::is_nothrow_constructible_v<con_vec> and std::is_nothrow_constructible_v<con_map>) = default;
 		~circle_map() noexcept = default;
 
 		// copyable
 		circle_map(circle_map const& other) :
-			mLastPos{ other.mLastPos.load(std::memory_order_relaxed) },
+			mPushIndex{ other.mPushIndex.load(std::memory_order_relaxed) },
 			mData{ other.mData },
 			mKeys{other.mKeys }
 		{}
@@ -46,85 +52,88 @@ namespace saigon::con
 
 		// movable
 		circle_map(circle_map&& other) noexcept:
-			mLastPos{ other.mLastPos.load(std::memory_order_relaxed) },
+			mPushIndex{ other.mPushIndex.load(std::memory_order_relaxed) },
 			mData{ std::exchange(other.mData,  con_vec{}) },
 			mKeys{ std::exchange(other.mKeys, con_map{}) }
 		{
-			other.mLastPos.store(0, std::memory_order_relaxed);
+			other.mPushIndex.store(0, std::memory_order_relaxed);
 		}
 
 		circle_map& operator=(circle_map&& other) noexcept
 		{
 			if (this not_eq &other) {
-				mLastPos.store(other.mLastPos.load(std::memory_order_relaxed));
+				mPushIndex.store(other.mPushIndex.load(std::memory_order_relaxed));
 				mData = std::exchange(other.mData, con_vec{});
 				mKeys = std::exchange(other.mKeys, con_map{});
-				other.mLastPos.store(0, std::memory_order_relaxed);
+				other.mPushIndex.store(0, std::memory_order_relaxed);
 			}
 			return *this;
 		}
 
 		constexpr auto max_size() const noexcept { return N; }
-		constexpr auto size() const noexcept { return mKeys.size(); }
+		auto size() const noexcept { return mKeys.size(); }
 
-		auto find(key_type const& key) const
+		optional_cref find(key_type const& key) const
 		{
-			using ReturnType = std::optional<mapped_type>;
-			auto opos = find_internal(key);
-			return opos ? ReturnType{ mData[*opos] } : ReturnType{ std::nullopt };
+			auto pos = find_internal(key);
+			return (INVALID_INDEX == pos) ? optional_cref{ std::nullopt } : optional_cref{ mData[pos] };
 		}
 
 		template<class Predicate>
-		auto find_if(Predicate pre) const
+		optional_cref find_if(Predicate pre) const
 		{
-			using ReturnType = std::optional<mapped_type>;
 			//auto fnd = std::find_if(mData.cbegin(), mData.cend(), pre);
-			auto found = std::ranges::find_if(mData, pre);
+			//auto found = std::ranges::find_if(mData, pre);
 
 			//++ TODO unknow error 
-			if (mData.cend() != found) {
+			//if (mData.cend() != found) {
 				//return ReturnType{ *fnd };
-			}
+			//}
 
-			return ReturnType{ std::nullopt };
+			return optional_cref{ std::nullopt };
 		}
 
-		mapped_type& operator[](key_type const& key)
+		reference operator[](key_type const& key)
 		{
-			auto opos = find_internal(key);
-			if (opos) {
-				return mData[*opos];
+			auto pos = find_internal(key);
+			if (INVALID_INDEX != pos) {
+				return mData[pos];
 			}
 
 			// Not found => create new pair
-			auto pos = next_pos();
-			mKeys[key] = static_cast<size_type>(pos);
-			return mData[pos];
+			auto idx = next_push_index();
+			mKeys[key] = idx;
+			return mData[idx];
 		}
 
-		constexpr void erase(key_type const& key)
+		void erase(key_type const& key)
 		{
 			auto found = mKeys.find(key);
-			if (std::cend(mKeys) not_eq found) {
-				found->second = INVALID_POS;
+
+			// not found or invlid
+			if (std::cend(mKeys) == found  or INVALID_INDEX == found->second) {
+				return;
 			}
+
+			// reset data
+			mData[found->second] = mapped_type{};
+			found->second = INVALID_INDEX;
 		}
 
 	private:
-		auto find_internal(key_type const& key) const
+		size_type find_internal(key_type const& key) const
 		{
-			using ReturnType = std::optional<size_type>;
 			auto found = mKeys.find(key);
-			if (std::cend(mKeys) == found or INVALID_POS == found->second) {
-				return ReturnType{ std::nullopt };
+			if (std::cend(mKeys) == found or INVALID_INDEX == found->second) {
+				return INVALID_INDEX;
 			}
-			return ReturnType{ found->second };
+			return found->second;
 		}
 
-		constexpr size_t next_pos() noexcept { return mLastPos++ % N; }
+		constexpr size_type next_push_index() noexcept { return mPushIndex++ % N; }
 
 	private:
-		std::atomic_size_t mLastPos{0};
+		std::atomic<size_type> mPushIndex{0};
 		con_vec mData{ N };
 		con_map mKeys; // Doesn't have reserve()
 	};
