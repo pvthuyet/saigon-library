@@ -131,17 +131,14 @@ namespace saigon::con
 
 			// not empty
 			bool found = false;
-			size_type pos = mPopIndex.load(std::memory_order_relaxed);
-			size_type idx = pos + 1;
+			size_type pos = mPopIndex.load(std::memory_order_relaxed) + 1;
 			for (size_type i = 0; i < N; ++i) { // circle search
-				idx = idx - 1;
-				const auto& item = mData[idx];
+				const auto& item = mData[--pos];
 				if (item && pre(item)) {
 					found = true;
-					pos = idx;
 					break;
 				}
-				if (0 == idx) idx = N;
+				if (0 == pos) pos = N;
 			}
 
 			return found ? mData[pos] : EMPTY_ITEM;
@@ -171,15 +168,13 @@ namespace saigon::con
 			if (empty()) {
 				return;
 			}
-			size_type pos = mPopIndex.load(std::memory_order_relaxed);
-			size_type idx = pos + 1;
+			size_type pos = mPopIndex.load(std::memory_order_relaxed) + 1;
 			for (size_type i = 0; i < N; ++i) { // circle search
-				idx = idx - 1;
-				const auto& item = mData[idx];
+				const auto& item = mData[--pos];
 				if (item) {
 					invoke(item);
 				}
-				if (0 == idx) idx = N;
+				if (0 == pos) pos = N;
 			}
 		}
 
@@ -226,26 +221,20 @@ namespace saigon::con
 				return mPopIndex.load(std::memory_order_relaxed);
 			}
 
-			bool found = false;
 			size_type old = mPopIndex.load(std::memory_order_relaxed);
 			size_type next = old;
 			for (size_type i = 0; i < N; ++i) { // Circle search
 				next = (next + 1) % N;
 				if (mData[next]) {
-					found = true;
 					break;
 				}
 			}
 
 			// No more data
-			if (!found) {
+			if (next == old) {
 				// Mark as empty map
 				updateEmpty(true);
-			}
-
-			// The 'old' is already processed => should ignore it
-			if (found && next == old) {
-				next = (next + 1) % N;
+				next = (old + 1) % N; // The 'old' is already processed => should ignore it
 			}
 
 			// avaible item => update to atomic
