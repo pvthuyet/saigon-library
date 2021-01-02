@@ -131,7 +131,7 @@ namespace saigon::con
 
 			// not empty
 			bool found = false;
-			size_type pos = mPopIndex.load(std::memory_order_relaxed) + 1;
+			size_type pos = mPopIndex.load(std::memory_order_relaxed) + 1; // start with current pos
 			for (size_type i = 0; i < N; ++i) { // circle search
 				const auto& item = mData[--pos];
 				if (item && pre(item)) {
@@ -180,6 +180,16 @@ namespace saigon::con
 
 		reference operator[](key_type const& key)
 		{
+			//++ TODO
+			// Safe reset mKeys data
+			// reason: this called by push thread, always set empty is false
+			// pop thread update empty is true
+			// Whenever the empty is true, that mean no thread touch data
+			// So, safe to reset mKeys
+			//if (empty()) {
+			//	mKeys.clear();
+			//}
+
 			// This function is considered as add item to map
 			// Whenever it is called should change the empty state
 			updateEmpty(false);
@@ -234,7 +244,8 @@ namespace saigon::con
 			if (next == old) {
 				// Mark as empty map
 				updateEmpty(true);
-				next = (old + 1) % N; // The 'old' is already processed => should ignore it
+				// The 'old' is already processed => should ignore it
+				next = (old + 1) % N;
 			}
 
 			// avaible item => update to atomic
