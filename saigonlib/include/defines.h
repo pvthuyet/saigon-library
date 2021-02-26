@@ -5,4 +5,7 @@
 //++ TODO std::pmr
 #define fipmr		std
 
+#define SAIGON_NAMESPACE_BEGIN	namespace saigon {
+#define SAIGON_NAMESPACE_END	}
+
 #endif // FIBO_DEFINE_H_

@@ -295,6 +295,7 @@
     <ClCompile Include="3rd_party\cppcoro\lib\write_only_file.cpp" />
     <ClCompile Include="3rd_party\fmtlib\src\format.cc" />
     <ClCompile Include="3rd_party\fmtlib\src\os.cc" />
+    <ClCompile Include="include\core\algorithms.ixx" />
     <ClCompile Include="source\concepts.ixx" />
     <ClCompile Include="source\logger.cpp" />
     <ClCompile Include="source\logger.ixx" />

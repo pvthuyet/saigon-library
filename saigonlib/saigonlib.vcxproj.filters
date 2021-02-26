@@ -479,6 +479,9 @@
     <ClCompile Include="source\windows\clipboard.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
+    <ClCompile Include="include\core\algorithms.ixx">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="3rd_party\cppcoro\lib\build.cake">
